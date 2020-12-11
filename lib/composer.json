@@ -6,7 +6,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "../App"
+            "App\\": "../App",
+            "Model\\": "vendor/Model",
+            "RCFramework\\": "RCFramework",
+            "Entity\\": "vendor/Entity"
         }
     }
 }
+
+

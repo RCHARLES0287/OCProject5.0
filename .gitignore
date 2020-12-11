@@ -2,3 +2,4 @@ lib/vendor/*
 !lib/vendor/Entity
 !lib/vendor/Model
 .DS_Store
+cache
