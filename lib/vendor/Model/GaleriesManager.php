@@ -3,7 +3,7 @@
 
 namespace Model;
 
-use RCFramework\Managers;
+use RCFramework\Manager;
 use Entity\GalerieEntity;
 
 class GaleriesManager

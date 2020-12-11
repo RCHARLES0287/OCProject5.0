@@ -6,7 +6,7 @@ namespace RCFramework;
 
 use Model\DatabaseConnection;
 
-class Managers
+class Manager
 {
     protected $db = null;
 
