@@ -20,16 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3f5fefb-5670-4e4b-bb15-661bcc37f630" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Web/.htaccess" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/RCFramework/Managers.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/RCFramework/Utilitaires.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/DWJProjet5.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DWJProjet5.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/lib/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/lib/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/vendor/autoload.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/vendor/composer/ClassLoader.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/vendor/composer/InstalledVersions.php" beforeDir="false" />
@@ -351,7 +343,6 @@
       <change beforePath="$PROJECT_DIR$/lib/vendor/twig/twig/src/TwigTest.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/vendor/twig/twig/src/Util/DeprecationCollector.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/vendor/twig/twig/src/Util/TemplateDirIterator.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/main.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -427,7 +418,7 @@
       <workItem from="1607176046305" duration="1676000" />
       <workItem from="1607352899607" duration="239000" />
       <workItem from="1607448139278" duration="1899000" />
-      <workItem from="1607693275704" duration="7439000" />
+      <workItem from="1607693275704" duration="7999000" />
     </task>
     <task id="LOCAL-00001" summary="Création du projet 5">
       <created>1607448595698</created>
