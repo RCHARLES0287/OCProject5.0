@@ -3,9 +3,10 @@
 
 namespace Entity;
 
+use RCFramework\Entity;
 use RCFramework\Utilitaires
 
-class GalerieEntity
+class GalerieEntity extends Entity
 {
     private $nom_galerie;
     private $ordre_affichage;
