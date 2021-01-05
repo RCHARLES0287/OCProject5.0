@@ -40,7 +40,29 @@ class Page extends ApplicationComponent
         $content = ob_get_clean();
 
         ob_start();
-        require __DIR__ . '/../../App/' . $this->app->name() . '/Templates/layout.php';
+//        require __DIR__ . '/../../App/' . $this->app->name() . '/Templates/layout.php';
+
+        $page = 'test';
+
+        require __DIR__.'/lib/vendor/autoload.php';
+        $loader = new \Twig\Loader\FilesystemLoader('/App/View');
+        $twig = new \Twig\Environment($loader, [
+            'cache' => false
+        ]);
+
+        switch ($page) {
+            case 'galeries':
+                echo $twig->render('galeries.twig');
+                break;
+            case 'contact':
+                echo $twig->render('contact.twig');
+                break;
+            case 'panier':
+                echo $twig->render('panier.twig');
+                break;
+        }
+//        echo $twig->render('general_layout.twig');
+
         return ob_get_clean();
     }
 
