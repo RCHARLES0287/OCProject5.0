@@ -33,21 +33,23 @@ class Page extends ApplicationComponent
         }
 
 
-        extract($this->vars);
+//        extract($this->vars);
 
-        ob_start();
+        /*ob_start();
         require $this->contentFile;
-        $content = ob_get_clean();
+        $content = ob_get_clean();*/
 
         ob_start();
 //        require __DIR__ . '/../../App/' . $this->app->name() . '/Templates/layout.php';
 
         $page = 'test';
 
-        require __DIR__.'/lib/vendor/autoload.php';
-        $loader = new \Twig\Loader\FilesystemLoader('/App/View');
+//        Charge la bibliothèque Twig
+        $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../../App');
+//        Charge l'objet Twig
         $twig = new \Twig\Environment($loader, [
-            'cache' => false
+            'cache' => false,
+//            'cache' => __DIR__.'/../../cache/twig'
         ]);
 
         switch ($page) {
@@ -61,6 +63,7 @@ class Page extends ApplicationComponent
                 echo $twig->render('panier.twig');
                 break;
         }
+//        echo $twig->render('index.html', ['the' => 'variables', 'go' => 'here']);
 //        echo $twig->render('general_layout.twig');
 
         return ob_get_clean();

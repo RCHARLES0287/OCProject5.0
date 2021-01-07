@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Backend\Templates;
+namespace App\Backend;
 
 
 use RCFramework\Application;

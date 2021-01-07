@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Frontend\Templates;
+namespace App\Frontend;
 
 
 class FrontendApplication extends \RCFramework\Application
