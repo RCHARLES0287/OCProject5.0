@@ -6,7 +6,7 @@ namespace Model;
 use RCFramework\Manager;
 use Entity\GalerieEntity;
 
-class GaleriesManager
+class GaleriesManager extends Manager
 {
     public function __construct()
     {
