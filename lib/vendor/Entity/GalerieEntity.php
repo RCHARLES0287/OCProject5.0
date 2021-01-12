@@ -4,7 +4,7 @@
 namespace Entity;
 
 use RCFramework\Entity;
-use RCFramework\Utilitaires
+use RCFramework\Utilitaires;
 
 class GalerieEntity extends Entity
 {
