@@ -42,7 +42,7 @@ class Page extends ApplicationComponent
         ob_start();
 //        require __DIR__ . '/../../App/' . $this->app->name() . '/Templates/layout.php';
 
-        $page = 'test';
+//        $page = 'test';
 
 //        Charge la bibliothèque Twig
         $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../../App');
@@ -52,6 +52,8 @@ class Page extends ApplicationComponent
 //            'cache' => __DIR__.'/../../cache/twig'
         ]);
 
+        echo $twig->render($this->contentFile);
+/*
         switch ($page) {
             case 'galeries':
                 echo $twig->render('galeries.twig');
@@ -63,6 +65,7 @@ class Page extends ApplicationComponent
                 echo $twig->render('panier.twig');
                 break;
         }
+        */
 //        echo $twig->render('index.html', ['the' => 'variables', 'go' => 'here']);
 //        echo $twig->render('general_layout.twig');
 
