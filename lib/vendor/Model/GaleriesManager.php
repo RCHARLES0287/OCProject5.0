@@ -48,4 +48,17 @@ class GaleriesManager
         $req->bindValue('galerieId', $galerieId, \PDO::PARAM_INT);
         $req->execute();
     }
+
+    public function updateGalerie(GalerieEntity $modifiedGalery, $galerieId)
+    {
+        $req = $this->db->prepare('UPDATE rc_photographe_galeries
+                                    SET galeries_id=:galeries_id, galeries_nom=:galeries_nom, galeries_ordre_affichage=:galeries_ordre_affichage, galeries_chemin_miniature=:galeries_chemin_miniature
+                                    WHERE galeries_id=:galeries_id');
+        $req->execute(array(
+            'galeries_id' => $galerieId,
+            'galeries_nom' => $modifiedGalery->nom_galerie(),
+            'galeries_ordre_affichage' => $modifiedGalery->ordre_affichage(),
+            'galeries_chemin_miniature' => $modifiedGalery->chemin_miniature()
+        ));
+    }
 }
