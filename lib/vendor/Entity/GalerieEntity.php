@@ -8,12 +8,12 @@ use RCFramework\Utilitaires;
 
 class GalerieEntity extends Entity
 {
-    private $nom_galerie;
+    private string $nom_galerie;
     private $ordre_affichage;
     private $chemin_miniature;
 
 
-    public function setNom_galerie($nom_galerie)
+    public function setNom_galerie(string $nom_galerie)
     {
         if (Utilitaires::emptyMinusZero($nom_galerie))
         {
@@ -25,12 +25,15 @@ class GalerieEntity extends Entity
         }
     }
 
-    public function nom_galerie()
+    public function nom_galerie(): string
     {
         return $this->nom_galerie;
     }
 
-
+    /**
+     * @param string|int $ordre_affichage
+     * @throws \Exception
+     */
     public function setOrdre_affichage($ordre_affichage)
     {
         if (Utilitaires::emptyMinusZero($ordre_affichage))
@@ -43,6 +46,9 @@ class GalerieEntity extends Entity
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function ordre_affichage()
     {
         return $this->ordre_affichage;
