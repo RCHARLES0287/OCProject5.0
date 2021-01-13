@@ -75,7 +75,7 @@ abstract class BackController extends ApplicationComponent
 
         $this->view = $view;
 
-        $this->page->setContentFile(__DIR__ . '/../../App/' . $this->app->name() . '/Modules/' . $this->module . '/Views/' . $this->view . '.html.twig');
+        $this->page->setContentFile( $this->app->name() . '/Modules/' . $this->module . '/Views/' . $this->view . '.html.twig');
     }
 
     public function getModule(): string

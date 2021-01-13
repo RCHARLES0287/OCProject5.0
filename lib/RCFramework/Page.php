@@ -32,18 +32,6 @@ class Page extends ApplicationComponent
             throw new \RuntimeException('La vue ' . $this->contentFile . ' n\'existe pas');
         }
 
-
-//        extract($this->vars);
-
-        /*ob_start();
-        require $this->contentFile;
-        $content = ob_get_clean();*/
-
-        ob_start();
-//        require __DIR__ . '/../../App/' . $this->app->name() . '/Templates/layout.php';
-
-//        $page = 'test';
-
 //        Charge la bibliothèque Twig
         $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../../App');
 //        Charge l'objet Twig
@@ -52,22 +40,10 @@ class Page extends ApplicationComponent
 //            'cache' => __DIR__.'/../../cache/twig'
         ]);
 
-        echo $twig->render($this->contentFile);
-/*
-        switch ($page) {
-            case 'galeries':
-                echo $twig->render('galeries.twig');
-                break;
-            case 'contact':
-                echo $twig->render('contact.twig');
-                break;
-            case 'panier':
-                echo $twig->render('panier.twig');
-                break;
-        }
-        */
-//        echo $twig->render('index.html', ['the' => 'variables', 'go' => 'here']);
-//        echo $twig->render('general_layout.twig');
+        ob_start();
+
+///TODO Penser à faire un try..catch sur le echo ci-dessous
+        echo $twig->render($this->contentFile, $this->vars);
 
         return ob_get_clean();
     }

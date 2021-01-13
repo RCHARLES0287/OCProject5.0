@@ -27,7 +27,7 @@ class DimensionsManager extends Manager
             $dimensionsFeatures[] = new DimensionsEntity($dimensions);
         }
 
-        return $dimensionsFeatures
+        return $dimensionsFeatures;
     }
 
     public function saveDimensions(DimensionsEntity $newDimensionsEntity)
