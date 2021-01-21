@@ -12,7 +12,7 @@ class CommandeEntity extends Entity
     private string $numero_commande;
     private string $numero_facture;
     private float $montant_total;
-    private int $id_utilisateur;
+    private ?int $id_utilisateur;
     private string $nom_et_prenom_utilisateur;
     private string $adresse_utilisateur;
 
@@ -70,7 +70,7 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setId_utilisateur(int $id_utilisateur)
+    public function setId_utilisateur(?int $id_utilisateur)
     {
         if (Utilitaires::emptyMinusZero($id_utilisateur))
         {
@@ -82,7 +82,7 @@ class CommandeEntity extends Entity
         }
     }
 
-    public function id_utilisateur(): int
+    public function id_utilisateur():?int
     {
         return $this->id_utilisateur;
     }
@@ -110,7 +110,7 @@ class CommandeEntity extends Entity
     {
         if (Utilitaires::emptyMinusZero($adresse_utilisateur))
         {
-            throw new \Exception("L'adresse de l'utilisateur doit être renseignée")
+            throw new \Exception("L'adresse de l'utilisateur doit être renseignée");
         }
         else
         {

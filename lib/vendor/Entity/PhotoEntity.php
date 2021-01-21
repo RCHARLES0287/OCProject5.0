@@ -9,14 +9,14 @@ use RCFramework\Utilitaires;
 
 class PhotoEntity extends Entity
 {
-    private int $galerie_id;
+    private ?int $galerie_id;
     private string $serial_number;
-    private string $name;
-    private int $type_id;
-    private string $lieu;
-    private string $description;
+    private ?string $name;
+    private ?int $type_id;
+    private ?string $lieu;
+    private ?string $description;
 
-    public function setGalerie_id(int $galerie_id)
+    public function setGalerie_id(?int $galerie_id)
     {
         if (Utilitaires::emptyMinusZero($galerie_id))
         {
@@ -28,7 +28,7 @@ class PhotoEntity extends Entity
         }
     }
 
-    public function galerie_id():int
+    public function galerie_id():?int
     {
         return $this->galerie_id;
     }
@@ -52,7 +52,7 @@ class PhotoEntity extends Entity
     }
 
 
-    public function setName(string $name)
+    public function setName(?string $name)
     {
         if (Utilitaires::emptyMinusZero($name))
         {
@@ -64,13 +64,13 @@ class PhotoEntity extends Entity
         }
     }
 
-    public function name():string
+    public function name():?string
     {
         return $this->name;
     }
 
 
-    public function setType_id(int $type_id)
+    public function setType_id(?int $type_id)
     {
         if (Utilitaires::emptyMinusZero($type_id))
         {
@@ -82,13 +82,13 @@ class PhotoEntity extends Entity
         }
     }
 
-    public function type_id():int
+    public function type_id():?int
     {
         return $this->type_id;
     }
 
 
-    public function setLieu(string $lieu)
+    public function setLieu(?string $lieu)
     {
         if (Utilitaires::emptyMinusZero($lieu))
         {
@@ -100,13 +100,13 @@ class PhotoEntity extends Entity
         }
     }
 
-    public function lieu():string
+    public function lieu():?string
     {
         return $this->lieu;
     }
 
 
-    public function setDescription(string $description)
+    public function setDescription(?string $description)
     {
         if (Utilitaires::emptyMinusZero($description))
         {
@@ -118,7 +118,7 @@ class PhotoEntity extends Entity
         }
     }
 
-    public function description():string
+    public function description():?string
     {
         return $this->description;
     }

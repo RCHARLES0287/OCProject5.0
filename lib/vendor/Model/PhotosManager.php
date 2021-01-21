@@ -33,6 +33,6 @@ class PhotosManager extends Manager
 
     public function getOnePhoto()
     {
-        
+
     }
 }
