@@ -9,9 +9,9 @@ use RCFramework\Utilitaires;
 
 class DimensionsEntity extends Entity
 {
-    private $dimensions;
+    private string $dimensions;
 
-    public function setDimensions($dimensions)
+    public function setDimensions(string $dimensions)
     {
         if (Utilitaires::emptyMinusZero($dimensions))
         {
@@ -23,7 +23,7 @@ class DimensionsEntity extends Entity
         }
     }
 
-    public function dimensions()
+    public function dimensions():string
     {
         return $this->dimensions;
     }
