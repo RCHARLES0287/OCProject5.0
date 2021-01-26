@@ -15,6 +15,7 @@ class CommandeEntity extends Entity
     private ?int $id_utilisateur;
     private string $nom_et_prenom_utilisateur;
     private string $adresse_utilisateur;
+    private bool $validation_panier;
 
     public function setNumero_commande(string $numero_commande)
     {
@@ -121,6 +122,17 @@ class CommandeEntity extends Entity
     public function adresse_utilisateur():string
     {
         return $this->adresse_utilisateur;
+    }
+
+
+    public function setValidation_panier(bool $validation_panier)
+    {
+        $this->validation_panier = $validation_panier;
+    }
+
+    public function validation_panier():bool
+    {
+        return $this->validation_panier;
     }
 }
 
