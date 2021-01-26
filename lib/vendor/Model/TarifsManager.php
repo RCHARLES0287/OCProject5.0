@@ -48,8 +48,27 @@ class TarifsManager extends Manager
     }
 
 
-    public function deleteOneTarif($tarifId)
+    public function updateOneTarif(TarifEntity $tarifEntity)
     {
-        $req = $this->db->prepare('DELETE FROM rc_photographe_tarifs WHERE ');
+        $req = $this->db->prepare('UPDATE rc_photographe_tarifs
+                                            SET tarifs_prix=:newPrice
+                                            WHERE tarifs_photo_id=:photoId AND tarifs_dimensions_id=:dimensionsId');
+        $req->execute(array(
+            'newPrice' => $tarifEntity->prix(),
+            'photoId' => $tarifEntity->photo_id(),
+            'dimensionsId' => $tarifEntity->dimensions_id()
+        ));
     }
+
+
+    public function deleteOneTarif($photoId, $dimensionsId)
+    {
+        $req = $this->db->prepare('DELETE FROM rc_photographe_tarifs WHERE tarifs_photo_id=:photoId AND tarifs_dimensions_id=:dimensionsId');
+        $req->execute(array(
+            'photoId' => $photoId,
+            'dimensionsId' => $dimensionsId
+        ));
+    }
+
 }
+
