@@ -21,6 +21,6 @@ class PhotosController extends \RCFramework\BackController
 
     public function executeShowOnePhoto(HTTPRequest $request)
     {
-        
+
     }
 }
