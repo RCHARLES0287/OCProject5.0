@@ -9,10 +9,11 @@ use RCFramework\Utilitaires;
 
 class Photo_keywordsEntity extends Entity
 {
+    protected const CLASS_PREFIX = 'photos_keywords';
     private int $photo_id;
     private array $keywords_id;
 
-    public function setPhoto_id(int $photo_id)
+    public function setPhoto_id($photo_id)
     {
         if (Utilitaires::emptyMinusZero($photo_id))
         {
@@ -30,7 +31,7 @@ class Photo_keywordsEntity extends Entity
     }
 
 
-    public function setKeywords_id(array $keywords_id)
+    public function setKeywords_id($keywords_id)
     {
         if (Utilitaires::emptyMinusZero($keywords_id))
         {

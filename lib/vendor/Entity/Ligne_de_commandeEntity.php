@@ -9,6 +9,7 @@ use RCFramework\Utilitaires;
 
 class Ligne_de_commandeEntity extends Entity
 {
+    protected const CLASS_PREFIX = 'lignes_de_commandes';
     private int $commande_id;
     private string $nom_prenom_adresse;
     private string $photo_serial_number;
@@ -17,7 +18,7 @@ class Ligne_de_commandeEntity extends Entity
     private float $tarif;
     private int $nombre_exemplaires;
 
-    public function setCommande_id(int $commande_id)
+    public function setCommande_id($commande_id)
     {
         if (Utilitaires::emptyMinusZero($commande_id))
         {
@@ -35,7 +36,7 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setNom_prenom_adresse(string $nom_prenom_adresse)
+    public function setNom_prenom_adresse($nom_prenom_adresse)
     {
         if (Utilitaires::emptyMinusZero($nom_prenom_adresse))
         {
@@ -53,7 +54,7 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setPhoto_serial_number(string $photo_serial_number)
+    public function setPhoto_serial_number($photo_serial_number)
     {
         if (Utilitaires::emptyMinusZero($photo_serial_number))
         {
@@ -71,7 +72,7 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setPhoto_name(string $photo_name)
+    public function setPhoto_name($photo_name)
     {
         if (Utilitaires::emptyMinusZero($photo_serial_number))
         {
@@ -89,7 +90,7 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setDimensions(string $dimensions)
+    public function setDimensions($dimensions)
     {
         if (Utilitaires::emptyMinusZero($dimensions))
         {
@@ -107,7 +108,7 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setTarif(float $tarif)
+    public function setTarif($tarif)
     {
         if (Utilitaires::emptyMinusZero($tarif))
         {
@@ -125,7 +126,7 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setNombre_exemplaires(float $nombre_exemplaires)
+    public function setNombre_exemplaires($nombre_exemplaires)
     {
         if (Utilitaires::emptyMinusZero($nombre_exemplaires))
         {

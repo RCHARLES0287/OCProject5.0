@@ -9,11 +9,12 @@ use RCFramework\Utilitaires;
 
 class TarifEntity extends Entity
 {
+    protected const CLASS_PREFIX = 'tarifs';
     private int $photo_id;
     private int $dimensions_id;
     private float $prix;
 
-    public function setPhoto_id(int $photo_id)
+    public function setPhoto_id($photo_id)
     {
         if (Utilitaires::emptyMinusZero($photo_id))
         {
@@ -31,7 +32,7 @@ class TarifEntity extends Entity
     }
 
 
-    public function setDimensions_id(int $dimensions_id)
+    public function setDimensions_id($dimensions_id)
     {
         if (Utilitaires::emptyMinusZero($dimensions_id))
         {
@@ -45,7 +46,7 @@ class TarifEntity extends Entity
     }
 
 
-    public function setPrix(float $prix)
+    public function setPrix($prix)
     {
         if (Utilitaires::emptyMinusZero($prix))
         {

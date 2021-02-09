@@ -3,6 +3,13 @@
 {% block frontend_content %}
     <section>
         <p>Voici l'ensemble des photos</p>
-        {{ photos }}
+        {{ photos|map(p=>"#{p.lieu}")|join(', ') }}
+        <p>
+            {% for photo in photos %}
+            {{ photo.serial_number }} : {{ photo.lieu }} <br>
+            {% endfor %}
+        </p>
     </section>
 {% endblock %}
+
+

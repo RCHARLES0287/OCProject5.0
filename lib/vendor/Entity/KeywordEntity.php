@@ -9,9 +9,10 @@ use RCFramework\Utilitaires;
 
 class KeywordEntity extends Entity
 {
+    protected const CLASS_PREFIX = 'keywords';
     private string $keyword;
 
-    public function setKeyword(string $keyword)
+    public function setKeyword($keyword)
     {
         if (Utilitaires::emptyMinusZero($keyword))
         {

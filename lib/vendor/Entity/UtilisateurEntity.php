@@ -9,6 +9,7 @@ use RCFramework\Utilitaires;
 
 class UtilisateurEntity extends Entity
 {
+    protected const CLASS_PREFIX = 'utilisateurs';
     private string $email;
     private string $password;
     private ?string $birthdate;
@@ -22,7 +23,7 @@ class UtilisateurEntity extends Entity
     private ?string $pays;
     private ?string $telephone;
 
-    public function setEmail(string $email)
+    public function setEmail($email)
     {
         if (Utilitaires::emptyMinusZero($email))
         {
@@ -40,7 +41,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setPassword(string $password)
+    public function setPassword($password)
     {
         if (Utilitaires::emptyMinusZero($password))
         {
@@ -58,7 +59,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setBirthdate(?string $birthdate)
+    public function setBirthdate($birthdate)
     {
         if (Utilitaires::emptyMinusZero($birthdate))
         {
@@ -72,7 +73,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setPrenom(?string $prenom)
+    public function setPrenom($prenom)
     {
         if (Utilitaires::emptyMinusZero($prenom))
         {
@@ -86,7 +87,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setNom(?string $nom)
+    public function setNom($nom)
     {
         if (Utilitaires::emptyMinusZero($nom))
         {
@@ -100,7 +101,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setNumero_rue(?string $numero_rue)
+    public function setNumero_rue($numero_rue)
     {
         if (Utilitaires::emptyMinusZero($numero_rue))
         {
@@ -114,7 +115,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setNom_rue(?string $nom_rue)
+    public function setNom_rue($nom_rue)
     {
         if (Utilitaires::emptyMinusZero($nom_rue))
         {
@@ -128,7 +129,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setComplement_adresse(?string $complement_adresse)
+    public function setComplement_adresse($complement_adresse)
     {
         if (Utilitaires::emptyMinusZero($complement_adresse))
         {
@@ -142,7 +143,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setCode_postal(?string $code_postal)
+    public function setCode_postal($code_postal)
     {
         if (Utilitaires::emptyMinusZero($code_postal))
         {
@@ -156,7 +157,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setVille(?string $ville)
+    public function setVille($ville)
     {
         if (Utilitaires::emptyMinusZero($ville))
         {
@@ -170,7 +171,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setPays(?string $pays)
+    public function setPays($pays)
     {
         if (Utilitaires::emptyMinusZero($pays))
         {
@@ -184,7 +185,7 @@ class UtilisateurEntity extends Entity
     }
 
 
-    public function setTelephone(?string $telephone)
+    public function setTelephone($telephone)
     {
         if (Utilitaires::emptyMinusZero($telephone))
         {

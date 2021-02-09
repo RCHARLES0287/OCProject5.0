@@ -36,8 +36,7 @@ abstract class BackController extends ApplicationComponent
             $this->$method($this->app->httpRequest());
         } catch (\Throwable $e)
         {
-            $this->page->addVar('errorMessage', $e->getMessage());
-            $this->page->addVar('errorStack', $e->getTrace());
+            $this->page->addVar('exception', $e);
         }
     }
 

@@ -8,6 +8,9 @@ class Entity implements \ArrayAccess
 {
     protected $erreurs = [],
         $id;
+//    Le CLASS_PREFIX est alimenté dans les classes filles
+    protected const CLASS_PREFIX = '';
+
 
     public function __construct(array $donnees = [])
     {
@@ -41,7 +44,8 @@ class Entity implements \ArrayAccess
     {
         foreach ($donnees as $attribut => $valeur)
         {
-            $methode = 'set' . ucfirst($attribut);
+//            Ici on ôte le préfixe de chaque attribut (préfixe correspondant au nom de la table dans la BDD) afin d'hydrater les propriété de l'entité
+            $methode = 'set' . ucfirst(substr($attribut, strlen(static::CLASS_PREFIX) + 1));
 
             if (is_callable([$this, $methode]))
             {

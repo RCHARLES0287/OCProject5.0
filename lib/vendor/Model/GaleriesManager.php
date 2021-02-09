@@ -31,6 +31,23 @@ class GaleriesManager extends Manager
     }
 
 
+    public function getOneGalerie($galerieId)
+    {
+        $answerGalerieData = $this->db->prepare('SELECT * FROM rc_photographe_galeries WHERE galeries_id=:galerieId');
+        $answerGalerieData->execute(array(
+            'galerieId' => $galerieId
+        ));
+
+        $galerieFeatures = [];
+
+        $dbGalerie = $answerGalerieData->fetch();
+
+        $galerieFeatures = new GalerieEntity($dbGalerie);
+
+        return $galerieFeatures;
+    }
+
+
     public function saveGalerie(GalerieEntity $newGalerieEntity)
     {
         $req = $this->db->prepare('INSERT INTO rc_photographe_galeries(galeries_nom, galeries_ordre_affichage, galeries_chemin_miniature) VALUES (:galeries_nom, :galeries_ordre_affichage, :galeries_chemin_miniature)');

@@ -4,3 +4,5 @@ lib/vendor/*
 .DS_Store
 .idea
 cache
+
+Web/images/

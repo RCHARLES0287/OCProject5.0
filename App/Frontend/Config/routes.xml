@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <routes>
+    <route url="/" module="Accueil" action="executeAccueil"/>
+
     <route url="/showallphotos" module="Photos" action="showallphotos"/>
+    <route url="/showonegalerie" module="Photos" action="showonegalerie"/>
 </routes>
 
 

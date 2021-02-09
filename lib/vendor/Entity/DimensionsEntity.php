@@ -9,9 +9,10 @@ use RCFramework\Utilitaires;
 
 class DimensionsEntity extends Entity
 {
+    protected const CLASS_PREFIX = 'dimensions';
     private string $dimensions;
 
-    public function setDimensions(string $dimensions)
+    public function setDimensions($dimensions)
     {
         if (Utilitaires::emptyMinusZero($dimensions))
         {

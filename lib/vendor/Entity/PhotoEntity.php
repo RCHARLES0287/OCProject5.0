@@ -9,6 +9,8 @@ use RCFramework\Utilitaires;
 
 class PhotoEntity extends Entity
 {
+//    CLASS_PREFIX contient le préfixe de la table
+    protected const CLASS_PREFIX = 'photos';
     private ?int $galerie_id;
     private string $serial_number;
     private ?string $name;
@@ -16,7 +18,7 @@ class PhotoEntity extends Entity
     private ?string $lieu;
     private ?string $description;
 
-    public function setGalerie_id(?int $galerie_id)
+    public function setGalerie_id($galerie_id)
     {
         if (Utilitaires::emptyMinusZero($galerie_id))
         {
@@ -34,7 +36,7 @@ class PhotoEntity extends Entity
     }
 
 
-    public function setSerial_number(int $serial_number)
+    public function setSerial_number($serial_number)
     {
         if (Utilitaires::emptyMinusZero($serial_number))
         {
@@ -46,13 +48,13 @@ class PhotoEntity extends Entity
         }
     }
 
-    public function serial_number():int
+    public function serial_number():string
     {
         return $this->serial_number;
     }
 
 
-    public function setName(?string $name)
+    public function setName($name)
     {
         if (Utilitaires::emptyMinusZero($name))
         {
@@ -70,7 +72,7 @@ class PhotoEntity extends Entity
     }
 
 
-    public function setType_id(?int $type_id)
+    public function setType_id($type_id)
     {
         if (Utilitaires::emptyMinusZero($type_id))
         {
@@ -88,7 +90,7 @@ class PhotoEntity extends Entity
     }
 
 
-    public function setLieu(?string $lieu)
+    public function setLieu($lieu)
     {
         if (Utilitaires::emptyMinusZero($lieu))
         {
@@ -106,7 +108,7 @@ class PhotoEntity extends Entity
     }
 
 
-    public function setDescription(?string $description)
+    public function setDescription($description)
     {
         if (Utilitaires::emptyMinusZero($description))
         {

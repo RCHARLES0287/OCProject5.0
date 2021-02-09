@@ -9,6 +9,7 @@ use RCFramework\Utilitaires;
 
 class CommandeEntity extends Entity
 {
+    protected const CLASS_PREFIX = 'commandes';
     private string $numero_commande;
     private string $numero_facture;
     private float $montant_total;
@@ -17,7 +18,7 @@ class CommandeEntity extends Entity
     private string $adresse_utilisateur;
     private bool $validation_panier;
 
-    public function setNumero_commande(string $numero_commande)
+    public function setNumero_commande($numero_commande)
     {
         if (Utilitaires::emptyMinusZero($numero_commande))
         {
@@ -35,7 +36,7 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setNumero_facture(string $numero_facture)
+    public function setNumero_facture($numero_facture)
     {
         if (Utilitaires::emptyMinusZero($numero_facture))
         {
@@ -53,7 +54,7 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setMontant_total(float $montant_total)
+    public function setMontant_total($montant_total)
     {
         if (Utilitaires::emptyMinusZero($montant_total))
         {
@@ -71,7 +72,7 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setId_utilisateur(?int $id_utilisateur)
+    public function setId_utilisateur($id_utilisateur)
     {
         if (Utilitaires::emptyMinusZero($id_utilisateur))
         {
@@ -89,7 +90,7 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setNom_et_prenom_utilisateur(string $nom_et_prenom_utilisateur)
+    public function setNom_et_prenom_utilisateur($nom_et_prenom_utilisateur)
     {
         if (Utilitaires::emptyMinusZero($nom_et_prenom_utilisateur))
         {
@@ -107,7 +108,7 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setAdresse_utilisateur(string $adresse_utilisateur)
+    public function setAdresse_utilisateur($adresse_utilisateur)
     {
         if (Utilitaires::emptyMinusZero($adresse_utilisateur))
         {
@@ -125,7 +126,7 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setValidation_panier(bool $validation_panier)
+    public function setValidation_panier($validation_panier)
     {
         $this->validation_panier = $validation_panier;
     }

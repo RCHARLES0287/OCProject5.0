@@ -11,9 +11,13 @@
     <title>Romain CHARLES - Photographe</title>
 </head>
 <body>
+{% if exception is defined and exception %}
+    <h1>ERREUR : </h1>
+    <p>{{ exception.message }}</p>
+{% else %}
 <h1>Voici le template général</h1>
 
 {% block content %}{% endblock %}
-
+{% endif %}
 </body>
 </html>

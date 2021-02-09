@@ -9,10 +9,11 @@ use RCFramework\Utilitaires;
 
 class AdminEntity extends Entity
 {
+    protected const CLASS_PREFIX = 'admins';
     private string $login;
     private string $password;
 
-    public function setLogin(string $login)
+    public function setLogin($login)
     {
         if (Utilitaires::emptyMinusZero($login))
         {
@@ -30,7 +31,7 @@ class AdminEntity extends Entity
     }
 
 
-    public function setPassword(string $password)
+    public function setPassword($password)
     {
         if (Utilitaires::emptyMinusZero($password))
         {

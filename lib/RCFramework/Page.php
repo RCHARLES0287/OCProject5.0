@@ -27,11 +27,6 @@ class Page extends ApplicationComponent
 
     public function getGeneratedPage()    // Lire le contenu du fichier vue, le renvoyer sous la forme d'une chaîne de caractères. Applique en automatique le layout.
     {
-        if (!file_exists($this->contentFile))
-        {
-            throw new \RuntimeException('La vue ' . $this->contentFile . ' n\'existe pas');
-        }
-
 //        Charge la bibliothèque Twig
         $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../../App');
 //        Charge l'objet Twig
@@ -41,6 +36,7 @@ class Page extends ApplicationComponent
         ]);
 
         ob_start();
+
 
 ///TODO Penser à faire un try..catch sur le echo ci-dessous
         echo $twig->render($this->contentFile, $this->vars);

@@ -9,9 +9,10 @@ use RCFramework\Utilitaires;
 
 class Photo_typeEntity extends Entity
 {
+    protected const CLASS_PREFIX = 'photo_type';
     private string $type;
 
-    public function setType(string $type)
+    public function setType($type)
     {
         if (Utilitaires::emptyMinusZero($type))
         {
