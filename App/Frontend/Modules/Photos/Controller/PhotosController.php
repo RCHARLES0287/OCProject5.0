@@ -24,16 +24,20 @@ class PhotosController extends \RCFramework\BackController
 
     public function executeShowonegalerie(HTTPRequest $request)
     {
-        if (!Utilitaires::emptyMinusZero($request->getData('galerie_id')))
+        /*var_dump($request->postData('galerie_id'));
+        exit;*/
+        if (!Utilitaires::emptyMinusZero($request->postData('galerie_id')))
         {
+
             $photosManager = new PhotosManager();
             $galerieManager = new GaleriesManager();
 
-            $galeriePhotosData = $photosManager->getOneGaleriePhotos($request->getData('galerie_id'));
-            $galerieEntity = $galerieManager->getOneGalerie($request->getData('galerie_id'));
+            $galeriePhotosData = $photosManager->getOneGaleriePhotos($request->postData('galerie_id'));
+            $galerieEntity = $galerieManager->getOneGalerie($request->postData('galerie_id'));
 
             $this->page->addVar('photos', $galeriePhotosData);
             $this->page->addVar('galerie_entity', $galerieEntity);
+
         }
 
     }

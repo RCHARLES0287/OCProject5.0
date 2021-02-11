@@ -25,4 +25,11 @@ abstract class Utilitaires
             return false;
         }
     }
+
+    public static function var_dump($var)
+    {
+        echo '<pre>';
+        var_dump($var);
+        echo '</pre>';
+    }
 }

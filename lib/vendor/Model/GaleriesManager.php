@@ -5,6 +5,7 @@ namespace Model;
 
 use RCFramework\Manager;
 use Entity\GalerieEntity;
+use RCFramework\Utilitaires;
 
 class GaleriesManager extends Manager
 {
@@ -38,14 +39,13 @@ class GaleriesManager extends Manager
             'galerieId' => $galerieId
         ));
 
-        $galerieFeatures = [];
-
-        $dbGalerie = $answerGalerieData->fetch();
+        $dbGalerie = $answerGalerieData->fetch(\PDO::FETCH_ASSOC);
 
         $galerieFeatures = new GalerieEntity($dbGalerie);
 
         return $galerieFeatures;
     }
+
 
 
     public function saveGalerie(GalerieEntity $newGalerieEntity)
