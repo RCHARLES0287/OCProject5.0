@@ -16,7 +16,7 @@ class GaleriesManager extends Manager
 
     public function getAllGaleries()
     {
-        $answerGaleriesData = $this->db->prepare('SELECT galeries_id, galeries_nom, galeries_ordre_affichage, galeries_chemin_miniature FROM rc_photographe_galeries ORDER BY galeries_ordre_affichage');
+        $answerGaleriesData = $this->db->prepare('SELECT galeries_id, galeries_nom_galerie, galeries_ordre_affichage, galeries_chemin_miniature FROM rc_photographe_galeries ORDER BY galeries_ordre_affichage');
         $answerGaleriesData->execute();
 
         $galeriesFeatures = [];
@@ -25,7 +25,7 @@ class GaleriesManager extends Manager
 
         foreach ($dbGaleries as $galerie)
         {
-            $galeriesFeatures[] =new GalerieEntity($galerie);
+            $galeriesFeatures[] = new GalerieEntity($galerie);
         }
 
         return $galeriesFeatures;
