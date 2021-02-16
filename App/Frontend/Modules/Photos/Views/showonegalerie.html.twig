@@ -9,11 +9,12 @@
             {% for photo in photos %}
                 <div class="photo_dans_galerie">
                     {{ photo.serial_number }} : {{ photo.lieu }}
-{#                    <img alt="description" src="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}">#}
+                    <img alt="description" src="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}">
                 </div>
             {% endfor %}
         </div>
     </section>
 {% endblock %}
+
 
 
