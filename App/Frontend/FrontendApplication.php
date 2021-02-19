@@ -4,6 +4,8 @@
 namespace App\Frontend;
 
 
+use Model\GaleriesManager;
+
 class FrontendApplication extends \RCFramework\Application
 {
     public function __construct()
@@ -20,5 +22,14 @@ class FrontendApplication extends \RCFramework\Application
 
         $this->httpResponse->setPage($controller->page());
         $this->httpResponse->send();
+    }
+
+//    Pour fournir les données nécessaires à l'affichage du layout global
+    public function executeLayoutContent($page)
+    {
+        $galeriesManager = new GaleriesManager();
+        $allGaleries = $galeriesManager->getAllGaleries();
+
+        $page->addVar('allGaleries', $allGaleries);
     }
 }

@@ -11,9 +11,6 @@ class AccueilController extends \RCFramework\BackController
 {
     public function executeAccueil(HTTPRequest $request)
     {
-        $galeriesManager = new GaleriesManager();
-        $allGaleries = $galeriesManager->getAllGaleries();
 
-        $this->page->addVar('allGaleries', $allGaleries);
     }
 }
