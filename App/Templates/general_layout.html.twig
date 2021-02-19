@@ -11,10 +11,13 @@
             rel="stylesheet"
     /> #}
     <!-- Material Design for Bootstrap (MDB) -->
-    <link
+     <link
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.css"
             rel="stylesheet"
+            integrity="sha512-9PSp7LjOrKa8teKpNGcBfno5hk3BhDCDAs4CKjZ/aQpaVqQ/VmHV+WBjWUV2KjXySB5CbVt4/Qu8KeCVt+HvGg=="
+            crossorigin="anonymous"
     />
+
     <!--    Feuille de style-->
     <link rel="stylesheet" href="/css/style.css"/>
     <!--    Titre dans le navigateur-->
@@ -25,16 +28,17 @@
 <header>
     <nav class="navbar">
         <h1>Romain CHARLES<br>
-        PHOTOGRAPHE</h1>
+            PHOTOGRAPHE</h1>
         <div class="menu_general">
             <ul class="nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="menu_galerie" href="#" role="button"
+                       data-mdb-toggle="dropdown" aria-expanded="false">
                         Galeries
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu" aria-labelledby="menu_galerie">
                         {% for galerie in allGaleries %}
-                        <a class="dropdown-item" href="#">{{ galerie.nom_galerie }}</a>
+                            <a class="dropdown-item" href="#">{{ galerie.nom_galerie }}</a>
                         {% endfor %}
                     </div>
                 </li>
@@ -48,7 +52,8 @@
                     <a class="nav-link">Log in</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
                         Recherche
                     </a>
                     <form class="form-inline dropdown-menu" aria-labelledby="navbarDropdown">
@@ -61,6 +66,7 @@
         </div>
     </nav>
 </header>
+
 {% if exception is defined and exception %}
     <h1>ERREUR : </h1>
     <p>{{ exception.message }}</p>
@@ -69,5 +75,14 @@
 
     {% block content %}{% endblock %}
 {% endif %}
+
+<!-- MDB -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.js"
+        integrity="sha512-QK+7gw6IeW5F8H7H9oVBM8w4fdd6hsSfUxCGguaWDwZaZU3DH/NneMxqQyhYQPppAIAAew79G578jrUokfsFyw=="
+        crossorigin="anonymous">
+</script>
+
 </body>
 </html>
+
