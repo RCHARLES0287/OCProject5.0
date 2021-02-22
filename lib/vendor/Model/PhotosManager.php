@@ -78,7 +78,7 @@ class PhotosManager extends Manager
             $req = $this->db->prepare('INSERT INTO rc_photographe_photos(photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description) VALUES(:galerieId, :ordreCarousel, :photoSerialNumber, :photoName, :photoType, :lieu, :description)');
             $req->execute(array(
                 'galerieId' => $newPhotoEntity->galerie_id(),
-                'ordreCarousel' => $newPhotoEntity->,
+                'ordreCarousel' => $newPhotoEntity->ordre_carousel(),
                 'photoSerialNumber' => $newPhotoEntity->serial_number(),
                 'photoName' => $newPhotoEntity->name(),
                 'photoType' => $newPhotoEntity->type_id(),
@@ -95,11 +95,12 @@ class PhotosManager extends Manager
     public function updateOnePhoto(PhotoEntity $photoEntity, $photoId)
     {
         $req = $this->db->prepare('UPDATE rc_photographe_photos
-                                            SET photos_galerie_id=:galerieId, photos_serial_number=:serialNumber, photos_name=:photoName, photos_type_id=:typeId, photos_lieu=:lieu, photos_description=:description
+                                            SET photos_galerie_id=:galerieId, photos_ordre_carousel=:ordreCarousel, photos_serial_number=:serialNumber, photos_name=:photoName, photos_type_id=:typeId, photos_lieu=:lieu, photos_description=:description
                                             WHERE photos_id=:photoId');
         $req->execute(array(
             'photoId' => $photoId,
             'galerieId' => $photoEntity->galerie_id(),
+            'ordreCarousel' => $photoEntity->ordre_carousel(),
             'serialNumber' => $photoEntity->serial_number(),
             'photoName' => $photoEntity->name(),
             'typeId' => $photoEntity->type_id(),
