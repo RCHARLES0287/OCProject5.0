@@ -17,7 +17,7 @@ class PhotosManager extends Manager
 
     public function getAllPhotos()
     {
-        $answerPhotosData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos');
+        $answerPhotosData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos');
         $answerPhotosData->execute();
 
         $photosFeatures = [];
@@ -34,7 +34,7 @@ class PhotosManager extends Manager
 
     public function getOnePhoto($photoId)
     {
-        $answerPhotoData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos WHERE photos_id=:photoId');
+        $answerPhotoData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos WHERE photos_id=:photoId');
         $answerPhotoData->execute(array(
             'photoId' => $photoId
         ));
@@ -53,7 +53,7 @@ class PhotosManager extends Manager
 
     public function getOneGaleriePhotos($galerieId)
     {
-        $answerPhotosData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
+        $answerPhotosData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
         $answerPhotosData->execute(array(
             'galerieId' => $galerieId
         ));
@@ -75,9 +75,10 @@ class PhotosManager extends Manager
         $testPhotoExist = $this->checkPhotoSerialNumber($newPhotoEntity);
         if ($testPhotoExist === true)
         {
-            $req = $this->db->prepare('INSERT INTO rc_photographe_photos(photos_galerie_id, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description) VALUES(:galerieId, :photoSerialNumber, :photoName, :photoType, :lieu, :description)');
+            $req = $this->db->prepare('INSERT INTO rc_photographe_photos(photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description) VALUES(:galerieId, :ordreCarousel, :photoSerialNumber, :photoName, :photoType, :lieu, :description)');
             $req->execute(array(
                 'galerieId' => $newPhotoEntity->galerie_id(),
+                'ordreCarousel' => $newPhotoEntity->,
                 'photoSerialNumber' => $newPhotoEntity->serial_number(),
                 'photoName' => $newPhotoEntity->name(),
                 'photoType' => $newPhotoEntity->type_id(),

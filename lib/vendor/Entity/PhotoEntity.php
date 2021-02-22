@@ -12,6 +12,7 @@ class PhotoEntity extends Entity
 //    CLASS_PREFIX contient le préfixe de la table
     protected const CLASS_PREFIX = 'photos';
     private ?int $galerie_id;
+    private ?int $ordre_carousel;
     private string $serial_number;
     private ?string $name;
     private ?int $type_id;
@@ -33,6 +34,24 @@ class PhotoEntity extends Entity
     public function galerie_id():?int
     {
         return $this->galerie_id;
+    }
+
+
+    public function setOrdre_carousel($ordre_carousel)
+    {
+        if (Utilitaires::emptyMinusZero($ordre_carousel))
+        {
+            $this->ordre_carousel = null;
+        }
+        else
+        {
+            $this->ordre_carousel = $ordre_carousel;
+        }
+    }
+
+    public function ordre_carousel():?int
+    {
+        return $this->ordre_carousel;
     }
 
 
