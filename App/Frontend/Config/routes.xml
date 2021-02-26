@@ -5,6 +5,8 @@
 
     <route url="/showallphotos" module="Photos" action="showallphotos"/>
     <route url="/showonegalerie" module="Photos" action="showonegalerie"/>
+
+    <route url="/showallavailablephotos" module="Commande" action="showallavailablephotos"/>
 </routes>
 
 

@@ -70,6 +70,25 @@ class PhotosManager extends Manager
         return $photosFeatures;
     }
 
+    public function getAllAvailablePhotos()
+    {
+        $answerPhotosData = $this->db->prepare('SELECT *
+                                                        FROM rc_photographe_photos AS ph
+                                                        INNER JOIN rc_photographe_tarifs AS tar
+                                                        ON ph.photos_id = tar.tarifs_photo_id');
+        $answerPhotosData->execute();
+        $photosFeatures = [];
+
+        $dbPhotos = $answerPhotosData->fetchAll();
+
+        foreach ($dbPhotos as $photo)
+        {
+            $photosFeatures[] = new PhotoEntity($photo);
+        }
+
+        return $photosFeatures;
+    }
+
     public function saveOnePhoto(PhotoEntity $newPhotoEntity)
     {
         $testPhotoExist = $this->checkPhotoSerialNumber($newPhotoEntity);
