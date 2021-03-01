@@ -15,16 +15,21 @@ class CommandeController extends \RCFramework\BackController
     public function executeShowallavailablephotos(HTTPRequest $request)
     {
         $photosManager = new PhotosManager();
-        $availablePhotos = $photosManager->getAllAvailablePhotos();
-        $this->page->addVar('all_available_photos', $availablePhotos);
+        $this->page->addVar('all_available_photos', $photosManager->getAllAvailablePhotos());
 
         $galeriesManager = new GaleriesManager();
+        /* Version alternative
+
         $galeries = [];
         foreach ($availablePhotos as $photo)
         {
-            $galeries = [$photo->galerie_id(), $galeriesManager->getOneGalerie($photo->galerie_id())];
-        }
-        $this->page->addVar('galeries', $galeries);
+            if (!isset($galeries [$photo->galerie_id()]))
+            {
+                $galeries [$photo->galerie_id()] = $galeriesManager->getOneGalerie($photo->galerie_id());
+            }
+
+        }*/
+        $this->page->addVar('galeries', $galeriesManager->getAllGaleries());
     }
 
 

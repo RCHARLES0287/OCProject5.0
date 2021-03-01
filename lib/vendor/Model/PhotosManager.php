@@ -73,9 +73,12 @@ class PhotosManager extends Manager
     public function getAllAvailablePhotos()
     {
         $answerPhotosData = $this->db->prepare('SELECT *
-                                                        FROM rc_photographe_photos AS ph
-                                                        INNER JOIN rc_photographe_tarifs AS tar
-                                                        ON ph.photos_id = tar.tarifs_photo_id');
+                                                        FROM rc_photographe_photos
+                                                        WHERE EXISTS(
+                                                            SELECT *
+                                                            FROM rc_photographe_tarifs
+                                                            WHERE photos_id = tarifs_photo_id)'
+                                                        );
         $answerPhotosData->execute();
         $photosFeatures = [];
 
