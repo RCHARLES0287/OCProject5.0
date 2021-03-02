@@ -8,6 +8,7 @@ use Entity\GalerieEntity;
 use Model\DimensionsManager;
 use Model\GaleriesManager;
 use Model\PhotosManager;
+use Model\TarifsManager;
 use RCFramework\HTTPRequest;
 
 class CommandeController extends \RCFramework\BackController
@@ -35,11 +36,24 @@ class CommandeController extends \RCFramework\BackController
 
     public function executeShowonearticle(HTTPRequest $request)
     {
-        $photosManager = new PhotosManager();
-        $selectedPhoto = $photosManager->getOnePhoto($request->postData('photo_id'));
-        $this->page->addVar('selected_photo', $selectedPhoto);
+        if (isset($_GET['photo_id'] && $_GET['galerie_id']) && is_string($_GET['photo_id'] && $_GET['galerie_id']))
+        {
+            $photosManager = new PhotosManager();
+            $selectedPhoto = $photosManager->getOnePhoto($request->postData('photo_id'));
+            $this->page->addVar('selected_photo', $selectedPhoto);
 
-        $dimensionsManager = new DimensionsManager();
-//        $availableDimensions = $dimensionsManager->
+            $tarifsManager = new TarifsManager();
+            $photoTarifs = $tarifsManager->getOnePhotoTarifs($_GET['photo_id']);
+
+            $galerieManager = new GaleriesManager();
+            $galerieEntity = $galerieManager->getOneGalerie($_GET['galerie_id']);
+
+            $this->page->addVar('photoTarifs', $photoTarifs);
+            $this->page->addVar('nom_galerie', $galerieEntity->nom_galerie());
+        }
+        else
+        {
+            throw new \Exception('Accès à l\'article demandé refusé. Paramètre(s) fourni(s) erroné(s)');
+        }
     }
 }

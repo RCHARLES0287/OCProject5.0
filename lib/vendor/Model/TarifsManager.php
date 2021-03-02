@@ -36,6 +36,26 @@ class TarifsManager extends Manager
         return $tarifsFeatures;
     }
 
+    public function getOnePhotoTarifs($photoId)
+    {
+        $answerTarifsData = $this->db->prepare('SELECT *
+                                                        FROM rc_photographe_tarifs
+                                                        WHERE tarifs_photo_id=:photoId');
+        $answerTarifsData->execute(array(
+            'photoId' => $photoId
+        ));
+
+        $photoTarifsFeatures = [];
+
+        $dbTarifs = $answerTarifsData->fetchAll();
+
+        foreach ($dbTarifs as $tarif)
+        {
+            $photoTarifsFeatures = new TarifEntity($tarif);
+        }
+
+        return $photoTarifsFeatures;
+    }
 
     public function saveOneTarif(TarifEntity $newTarifEntity)
     {

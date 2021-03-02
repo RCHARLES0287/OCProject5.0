@@ -7,6 +7,7 @@
     <route url="/showonegalerie" module="Photos" action="showonegalerie"/>
 
     <route url="/showallavailablephotos" module="Commande" action="showallavailablephotos"/>
+    <route url="/showonearticle" module="Commande" action="showonearticle"/>
 </routes>
 
 
