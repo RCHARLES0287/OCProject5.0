@@ -2,17 +2,17 @@
 
 {% block frontend_content %}
     <section class="visionnage_article">
-        <img alt="photo article" src="/images/{{ nom_galerie ~ '/' ~ selected_photo.serial_number }}">
+        <img alt="photo article" src="/images/{{ galerieEntity.nom_galerie ~ '/' ~ selected_photo.serial_number }}">
     </section>
     <section class="infos_et_commande">
         <select class="form-select dimensions_article" aria-label="Default select example">
             <option selected>Dimensions</option>
             {% for photoTarif in photoTarifs %}
-            <option value="1">{{ photoTarif. }}</option>
+{#            <option value="1">{{ photoTarif. }}</option>#}
+            {% endfor %}
         </select>
         <div class="prix_article">
             Prix : {{ photoTarifs.prix }} €
-            {% endfor %}
         </div>
     </section>
 {% endblock %}

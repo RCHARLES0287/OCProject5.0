@@ -42,8 +42,14 @@ class GaleriesManager extends Manager
 
         $dbGalerie = $answerGalerieData->fetch(\PDO::FETCH_ASSOC);
 
-        $galerieFeatures = new GalerieEntity($dbGalerie);
-
+        if ($dbGalerie === false)
+        {
+            $galerieFeatures = new GalerieEntity();
+        }
+        else
+        {
+            $galerieFeatures = new GalerieEntity($dbGalerie);
+        }
         return $galerieFeatures;
     }
 

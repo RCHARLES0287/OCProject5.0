@@ -28,7 +28,7 @@ class Route
     public function match($url)
     {
 //      La regex ci-dessous permet de gérer les cas où l'URL dispose de paramètres ($_GET) (même si aucun paramètre)
-        if (preg_match('`^' . $this->url . '(\?(?:[^=]+(?:=(?:[^&]+(?!amp;)))?)(?:&(?:[^=]+(?:=(?:[^&]+(?!amp;)))?)?)*)?$`', $url, $matches))
+        if (preg_match('`^' . $this->url . '(?:\?(?:[^=]+(?:=(?:[^&]+(?!amp;)))?)(?:&(?:[^=]+(?:=(?:[^&]+(?!amp;)))?)?)*)?$`', $url, $matches))
         {
             return $matches;
         }

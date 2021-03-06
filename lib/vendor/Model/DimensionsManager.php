@@ -16,7 +16,7 @@ class DimensionsManager extends Manager
 
     public function getAllDimensions()
     {
-        $answerDimensionsData = $this->db->prepare('SELECT dimensions_id, dimensions_dimensions FROM rc_photographe_dimensions');
+        $answerDimensionsData = $this->db->prepare('SELECT * FROM rc_photographe_dimensions');
         $answerDimensionsData->execute();
 
         $dimensionsFeatures = [];
@@ -27,6 +27,24 @@ class DimensionsManager extends Manager
             $dimensionsFeatures[] = new DimensionsEntity($dimensions);
         }
 
+        return $dimensionsFeatures;
+    }
+
+    public function getOneEntryOfDimensions($dimensionsId)
+    {
+        $answerDimensionsData = $this->db->prepare('SELECT * FROM rc_photographe_dimensions WHERE dimensions_id=:dimensionsId');
+        $answerDimensionsData->execute(array(
+            'dimensionsId' => $dimensionsId
+        ));
+        $dbDimensions = $answerDimensionsData->fetch();
+        if ($dbDimensions === false)
+        {
+            $dimensionsFeatures = new DimensionsEntity();
+        }
+        else
+        {
+            $dimensionsFeatures = new DimensionsEntity($dbDimensions);
+        }
         return $dimensionsFeatures;
     }
 

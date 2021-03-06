@@ -6,7 +6,7 @@ namespace RCFramework;
 
 class Entity implements \ArrayAccess
 {
-    protected $erreurs = [],
+    protected $isEmpty,
         $id;
 //    Le CLASS_PREFIX est alimenté dans les classes filles
     protected const CLASS_PREFIX = '';
@@ -14,9 +14,14 @@ class Entity implements \ArrayAccess
 
     public function __construct(array $donnees = [])
     {
-        if (!Utilitaires::emptyMinusZero($donnees))
+        $this->hydrate($donnees);
+        if (count($donnees) === 0)
         {
-            $this->hydrate($donnees);
+            $this->isEmpty = true;
+        }
+        else
+        {
+            $this->isEmpty = false;
         }
     }
 
@@ -25,9 +30,9 @@ class Entity implements \ArrayAccess
         return Utilitaires::emptyMinusZero($this->id);
     }
 
-    public function erreurs()
+    public function testEntityExists()
     {
-        return $this->erreurs;
+        return $this->isEmpty;
     }
 
     public function id()

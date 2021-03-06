@@ -35,7 +35,7 @@ abstract class Application
             // On regarde si des variables sont présentes dans l'URL.
             if ($route->hasAttribute('vars'))
             {
-                $vars = explode(',', $route->getAttribute('vars'));
+                $vars = explode(', ', $route->getAttribute('vars'));
             }
 
             // On ajoute la route au routeur.

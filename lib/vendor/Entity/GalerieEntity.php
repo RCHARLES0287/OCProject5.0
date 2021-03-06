@@ -9,9 +9,9 @@ use RCFramework\Utilitaires;
 class GalerieEntity extends Entity
 {
     protected const CLASS_PREFIX = 'galeries';
-    private string $nom_galerie;
-    private int $ordre_affichage;
-    private string $chemin_miniature;
+    private ?string $nom_galerie = null;
+    private ?int $ordre_affichage = null;
+    private ?string $chemin_miniature = null;
 
 
     public function setNom_galerie($nom_galerie)
@@ -26,7 +26,7 @@ class GalerieEntity extends Entity
         }
     }
 
-    public function nom_galerie(): string
+    public function nom_galerie(): ?string
     {
         return $this->nom_galerie;
     }
@@ -50,7 +50,7 @@ class GalerieEntity extends Entity
     /**
      * @return mixed
      */
-    public function ordre_affichage():int
+    public function ordre_affichage():?int
     {
         return $this->ordre_affichage;
     }
@@ -61,7 +61,7 @@ class GalerieEntity extends Entity
         $this->chemin_miniature = $chemin_miniature;
     }
 
-    public function chemin_miniature():string
+    public function chemin_miniature():?string
     {
         return $this->chemin_miniature;
     }
