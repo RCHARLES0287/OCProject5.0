@@ -10,9 +10,9 @@ use RCFramework\Utilitaires;
 class TarifEntity extends Entity
 {
     protected const CLASS_PREFIX = 'tarifs';
-    private int $photo_id;
-    private int $dimensions_id;
-    private float $prix;
+    private ?int $photo_id;
+    private ?int $dimensions_id;
+    private ?float $prix;
 
     public function setPhoto_id($photo_id)
     {
@@ -26,7 +26,7 @@ class TarifEntity extends Entity
         }
     }
 
-    public function photo_id():int
+    public function photo_id():?int
     {
         return $this->photo_id;
     }
@@ -40,7 +40,7 @@ class TarifEntity extends Entity
         }
     }
 
-    public function dimensions_id():int
+    public function dimensions_id():?int
     {
         return $this->dimensions_id;
     }
@@ -58,7 +58,7 @@ class TarifEntity extends Entity
         }
     }
 
-    public function prix():float
+    public function prix():?float
     {
         return $this->prix;
     }

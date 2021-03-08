@@ -49,12 +49,15 @@ class TarifsManager extends Manager
 
         $dbTarifs = $answerTarifsData->fetchAll();
 
+        /*var_dump($dbTarifs);
+        exit();*/
+
         foreach ($dbTarifs as $tarif)
         {
             $photoTarifsFeatures [] = new TarifEntity($tarif);
         }
-        var_dump($photoTarifsFeatures);
-        exit();
+        /*var_dump($photoTarifsFeatures);
+        exit();*/
 
 
         return $photoTarifsFeatures;

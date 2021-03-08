@@ -10,7 +10,7 @@ use RCFramework\Utilitaires;
 class DimensionsEntity extends Entity
 {
     protected const CLASS_PREFIX = 'dimensions';
-    private string $dimensions;
+    private ?string $dimensions;
 
     public function setDimensions($dimensions)
     {
@@ -24,7 +24,7 @@ class DimensionsEntity extends Entity
         }
     }
 
-    public function dimensions():string
+    public function dimensions():?string
     {
         return $this->dimensions;
     }
