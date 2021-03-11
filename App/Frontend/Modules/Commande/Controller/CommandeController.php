@@ -45,19 +45,14 @@ class CommandeController extends \RCFramework\BackController
 
 //            Pour obtenir tous les tarifs existants pour la photo
             $tarifsManager = new TarifsManager();
-            $photoTarifsRaw = $tarifsManager->getOnePhotoTarifs($request->getData('photo_id'));
+            $photoTarifs = $tarifsManager->getOnePhotoTarifs($request->getData('photo_id'));
 
-            var_dump($photoTarifsRaw);
-            exit();
-            $photoTarifs = [];
+            /*var_dump($photoTarifsRaw);
+            exit();*/
+
             $dimensionsManager = new DimensionsManager();
             $allDimensions = $dimensionsManager->getAllDimensions();
-            foreach ($photoTarifsRaw as $photoTarif)
-            {
-                $oneEntryOfDimensions = $dimensionsManager->getOneEntryOfDimensions($photoTarif [1]);
-                $photoTarif [1] = $oneEntryOfDimensions->dimensions();
-                $photoTarifs [] = $photoTarif;
-            }
+            $this->page->addVar('allDimensions', $allDimensions);
 
 //            Pour obtenir les infos de la galerie à laquelle est associée la photo
             $galerieManager = new GaleriesManager();

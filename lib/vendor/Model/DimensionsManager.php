@@ -14,6 +14,9 @@ class DimensionsManager extends Manager
         parent::__construct();
     }
 
+    /**
+     * @return DimensionsEntity[] Renvoie un tableau d'entités dimensions
+     */
     public function getAllDimensions()
     {
         $answerDimensionsData = $this->db->prepare('SELECT * FROM rc_photographe_dimensions');
@@ -24,7 +27,8 @@ class DimensionsManager extends Manager
         $dbDimensions = $answerDimensionsData->fetchAll();
         foreach ($dbDimensions as $dimensions)
         {
-            $dimensionsFeatures[] = new DimensionsEntity($dimensions);
+            $dimensionsEntity = new DimensionsEntity($dimensions);
+            $dimensionsFeatures[$dimensionsEntity->id()] = $dimensionsEntity;
         }
 
         return $dimensionsFeatures;

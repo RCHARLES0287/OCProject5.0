@@ -38,6 +38,10 @@ class TarifEntity extends Entity
         {
             throw new \Exception("Les dimensions de la photo doivent être définies");
         }
+        else
+        {
+            $this->dimensions_id = $dimensions_id;
+        }
     }
 
     public function dimensions_id():?int

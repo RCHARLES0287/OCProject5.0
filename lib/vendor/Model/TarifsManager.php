@@ -36,6 +36,10 @@ class TarifsManager extends Manager
         return $tarifsFeatures;
     }
 
+    /**
+     * @param int $photoId
+     * @return TarifEntity[] Renvoie un tableau d'entités tarifs
+     */
     public function getOnePhotoTarifs($photoId)
     {
         $answerTarifsData = $this->db->prepare('SELECT *
