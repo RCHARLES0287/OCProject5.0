@@ -5,14 +5,19 @@
         <img alt="photo article" src="/images/{{ galerieEntity.nom_galerie ~ '/' ~ selected_photo.serial_number }}">
     </section>
     <section class="infos_et_commande">
-        <select class="form-select dimensions_article" aria-label="Default select example">
+        <select id="dimensions_deroulant" class="form-select dimensions_article" aria-label="Default select example">
             <option selected>Dimensions</option>
             {% for photoTarif in photoTarifs %}
-            <option value="1">{{ allDimensions[photoTarif.dimensions_id].dimensions }}</option>
+            <option class="menu_deroulant_dimensions" value="{{ photoTarif.dimensions_id }}">{{ allDimensions[photoTarif.dimensions_id].dimensions }}</option>
             {% endfor %}
         </select>
         <div class="prix_article">
             Prix : {{ photoTarifs.prix }} €
         </div>
     </section>
+
+    <script src="../../../../../Web/js/Frontend.js"></script>
 {% endblock %}
+
+
+

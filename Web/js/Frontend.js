@@ -1,0 +1,1 @@
+$('#dimensions_deroulant').change(new MenuDeroulantSelection(value));
