@@ -1,8 +1,8 @@
 class MenuDeroulantSelection {
     constructor(value) {
+        // const menuValue = value;
+        console.log(value);
     }
-    const menuValue = this.value;
-    console.log(menuValue);
 }
 
 /*

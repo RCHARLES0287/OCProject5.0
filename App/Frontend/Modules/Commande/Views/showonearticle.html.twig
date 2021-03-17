@@ -6,18 +6,21 @@
     </section>
     <section class="infos_et_commande">
         <select id="dimensions_deroulant" class="form-select dimensions_article" aria-label="Default select example">
-            <option selected>Dimensions</option>
+            <option value="" selected disabled hidden>Dimensions</option>
             {% for photoTarif in photoTarifs %}
-            <option class="menu_deroulant_dimensions" value="{{ photoTarif.dimensions_id }}">{{ allDimensions[photoTarif.dimensions_id].dimensions }}</option>
+            <option class="menu_deroulant_dimensions" data-prix="{{ photoTarif.prix }}" value="{{ photoTarif.dimensions_id }}">{{ allDimensions[photoTarif.dimensions_id].dimensions }}</option>
             {% endfor %}
         </select>
         <div class="prix_article">
-            Prix : {{ photoTarifs.prix }} €
+            Prix :  €
         </div>
     </section>
 
-    <script src="../../../../../Web/js/Frontend.js"></script>
-{% endblock %}
 
+{% endblock %}
+{% block javascript %}
+<script type="application/javascript" src="/js/MenuDeroulantSelection.js"></script>
+<script type="application/javascript" src="/js/ShowOneArticle.js"></script>
+{% endblock %}
 
 
