@@ -8,6 +8,7 @@
 
     <route url="/showallavailablephotos" module="Commande" action="showallavailablephotos"/>
     <route url="/showonearticle" module="Commande" action="showonearticle"/>
+    <route url="/validateOneArticle" module="Commande" action="validateOneArticle"/>
 </routes>
 
 

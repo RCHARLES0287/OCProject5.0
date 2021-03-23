@@ -8,18 +8,39 @@
         <select id="dimensions_deroulant" class="form-select dimensions_article" aria-label="Default select example">
             <option value="" selected disabled hidden>Dimensions</option>
             {% for photoTarif in photoTarifs %}
-            <option class="menu_deroulant_dimensions" data-prix="{{ photoTarif.prix }}" value="{{ photoTarif.dimensions_id }}">{{ allDimensions[photoTarif.dimensions_id].dimensions }}</option>
+            <option class="menu_deroulant_dimensions"
+                    data-prix="{{ photoTarif.prix }}"
+                    value="{{ photoTarif.dimensions_id }}">{{ allDimensions[photoTarif.dimensions_id].dimensions }}
+            </option>
             {% endfor %}
         </select>
         <div class="prix_article">
-            Prix :  €
+            prix :
+            <span class="prix_article"></span>
+            €
         </div>
+        <form class="formulaire_un_article" action="/validateOneArticle" method="get" novalidate>
+            <div>
+                <span>Quantité : </span>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>-</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="2">4</option>
+                    <option value="3">5</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit">Ajouter au panier</button>
+
+        </form>
+
     </section>
 
 
 {% endblock %}
 {% block javascript %}
-<script type="application/javascript" src="/js/MenuDeroulantSelection.js"></script>
+<script type="application/javascript" src="/js/PlacingAssociatedValue.js"></script>
 <script type="application/javascript" src="/js/ShowOneArticle.js"></script>
 {% endblock %}
 

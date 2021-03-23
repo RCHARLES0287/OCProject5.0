@@ -69,4 +69,10 @@ class CommandeController extends \RCFramework\BackController
             throw new \Exception('Accès à l\'article demandé refusé. Paramètre(s) fourni(s) erroné(s)');
         }
     }
+
+
+    public function executeValidateonearticle (HTTPRequest $request)
+    {
+
+    }
 }
