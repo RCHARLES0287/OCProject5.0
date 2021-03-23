@@ -1,9 +1,21 @@
-class MenuDeroulantSelection {
-    constructor(value) {
+class PlacingAssociatedValue {
+    constructor(value, associatedValue, newLocation) {
         // const menuValue = value;
-        console.log(value);
+        let initialValue = value;
+        let joinedValue = associatedValue;
+        let place = newLocation;
+        console.log(initialValue, joinedValue, place);
+        this.placeAssociatedValue();
+    }
+
+    placeAssociatedValue () {
+        console.log('La fonction placeAssociatedValue se lance correctemennt');
+        console.log(this.place);
+        $('.place').text($(this).joinedValue);
     }
 }
+
+
 
 /*
 
