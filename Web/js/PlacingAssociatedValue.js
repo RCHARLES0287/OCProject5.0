@@ -1,4 +1,31 @@
 class PlacingAssociatedValue {
+    newPlace;
+    joinedValue;
+    constructor(objetSelect, associatedValue, newLocation) {
+
+        this.joinedValue = $('option[value="'+$(objetSelect).val()+'"]', $(objetSelect)).data(associatedValue);
+        this.newPlace = newLocation;
+        console.log(this.joinedValue, this.newPlace);
+
+        this.placeAssociatedValue();
+    }
+
+    placeAssociatedValue () {
+        console.log('La fonction placeAssociatedValue se lance correctemennt');
+        console.log(this.newPlace);
+        console.log(this.joinedValue);
+        document.getElementById(this.newPlace).innerText = this.joinedValue;
+        // console.log($('+ this.newPlace +'));
+        // $('+ this.newPlace +').text($(this).joinedValue);
+    }
+}
+
+
+
+
+/*
+
+class PlacingAssociatedValue {
     constructor(value, associatedValue, newLocation) {
         // const menuValue = value;
         let initialValue = value;
@@ -15,6 +42,7 @@ class PlacingAssociatedValue {
     }
 }
 
+*/
 
 
 /*

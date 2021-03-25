@@ -5,33 +5,34 @@
         <img alt="photo article" src="/images/{{ galerieEntity.nom_galerie ~ '/' ~ selected_photo.serial_number }}">
     </section>
     <section class="infos_et_commande">
-        <select id="dimensions_deroulant" class="form-select dimensions_article" aria-label="Default select example">
-            <option value="" selected disabled hidden>Dimensions</option>
-            {% for photoTarif in photoTarifs %}
-            <option class="menu_deroulant_dimensions"
-                    data-prix="{{ photoTarif.prix }}"
-                    value="{{ photoTarif.dimensions_id }}">{{ allDimensions[photoTarif.dimensions_id].dimensions }}
-            </option>
-            {% endfor %}
-        </select>
-        <div class="prix_article">
-            prix :
-            <span class="prix_article"></span>
-            €
-        </div>
         <form class="formulaire_un_article" action="/validateOneArticle" method="get" novalidate>
+            <select id="dimensions_deroulant" class="form-select dimensions_article" name="dimensions_deroulant" aria-label="Default select example">
+                <option value="" selected disabled hidden>Dimensions</option>
+                {% for photoTarif in photoTarifs %}
+                <option class="menu_deroulant_dimensions"
+                        data-prix="{{ photoTarif.prix }}"
+                        value="{{ photoTarif.dimensions_id }}">{{ allDimensions[photoTarif.dimensions_id].dimensions }}
+                </option>
+                {% endfor %}
+            </select>
+            <div class="zone_prix">
+                prix :
+                <span id="prix_article"></span>
+                €
+            </div>
+
             <div>
                 <span>Quantité : </span>
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" name="nombre_articles" aria-label="Default select example">
                     <option selected>-</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="2">4</option>
-                    <option value="3">5</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
             </div>
-            <button class="btn btn-primary" type="submit">Ajouter au panier</button>
+            <button class="btn btn-primary" name="bouton_validation_article" type="submit">Ajouter au panier</button>
 
         </form>
 
@@ -41,7 +42,7 @@
 {% endblock %}
 {% block javascript %}
 <script type="application/javascript" src="/js/PlacingAssociatedValue.js"></script>
-<script type="application/javascript" src="/js/ShowOneArticle.js"></script>
+<script type="application/javascript" src="/js/showOneArticle.js"></script>
 {% endblock %}
 
 
