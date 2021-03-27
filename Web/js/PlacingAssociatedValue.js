@@ -1,9 +1,22 @@
-class PlacingAssociatedValue {
-    newPlace;
-    joinedValue;
-    constructor(objetSelect, associatedValue, newLocation) {
+/*
 
-        this.joinedValue = $('option[value="'+$(objetSelect).val()+'"]', $(objetSelect)).data(associatedValue);
+$('#dimensions_deroulant').change(function (event){
+    new PlacingAssociatedValue('#dimensions_deroulant', 'prix', 'prix_article');
+});
+*/
+
+
+class PlacingAssociatedValue {
+    /*newPlace;
+    joinedValue;*/
+    constructor(objetSelect, associatedValue, newLocation) {
+        let joinedValue;
+
+        $(objetSelect).change(function (event){
+            joinedValue = $('option[value="'+$(objetSelect).val()+'"]', $(objetSelect)).data(associatedValue);
+        });
+
+        // this.joinedValue = $('option[value="'+$(objetSelect).val()+'"]', $(objetSelect)).data(associatedValue);
         this.newPlace = newLocation;
         console.log(this.joinedValue, this.newPlace);
 
@@ -14,7 +27,9 @@ class PlacingAssociatedValue {
         console.log('La fonction placeAssociatedValue se lance correctemennt');
         console.log(this.newPlace);
         console.log(this.joinedValue);
-        document.getElementById(this.newPlace).innerText = this.joinedValue;
+        $('#' + this.newPlace).html(joinedValue);
+
+        // document.getElementById(this.newPlace).innerText = this.joinedValue;
         // console.log($('+ this.newPlace +'));
         // $('+ this.newPlace +').text($(this).joinedValue);
     }

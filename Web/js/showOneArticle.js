@@ -24,10 +24,15 @@ new Nouvelleclasse ('#toto', 'tata', '#tutu');
 
 new NouvelleClasse ('#dimensions_deroulant', 'prix', '#prix_article');
 */
+/*
 
 $('#dimensions_deroulant').change(function (event){
    new PlacingAssociatedValue('#dimensions_deroulant', 'prix', 'prix_article');
 });
+*/
+
+new PlacingAssociatedValue('#dimensions_deroulant', 'prix', 'prix_article');
+
 /*
 
 class NouvelleClasse {
