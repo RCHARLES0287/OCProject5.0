@@ -7,13 +7,18 @@ $('#dimensions_deroulant').change(function (event){
 
 
 class PlacingAssociatedValue {
-    /*newPlace;
-    joinedValue;*/
     constructor(objetSelect, associatedValue, newLocation) {
-        let joinedValue;
+        this.joinedValue = associatedValue;
+        this.selectedObject = objetSelect;
+        this.self = this;
 
         $(objetSelect).change(function (event){
-            joinedValue = $('option[value="'+$(objetSelect).val()+'"]', $(objetSelect)).data(associatedValue);
+            console.log('On est entré dans l\'event change');
+            console.log(objetSelect);
+            console.log(associatedValue);
+            console.log(self.joinedValue);
+            this.joinedValue = $('option[value="'+$(objetSelect).val()+'"]', $(objetSelect)).data(associatedValue);
+            console.log(this.joinedValue);
         });
 
         // this.joinedValue = $('option[value="'+$(objetSelect).val()+'"]', $(objetSelect)).data(associatedValue);
@@ -27,13 +32,15 @@ class PlacingAssociatedValue {
         console.log('La fonction placeAssociatedValue se lance correctemennt');
         console.log(this.newPlace);
         console.log(this.joinedValue);
-        $('#' + this.newPlace).html(joinedValue);
+        
+        $('#' + this.newPlace).html(this.joinedValue);
 
         // document.getElementById(this.newPlace).innerText = this.joinedValue;
         // console.log($('+ this.newPlace +'));
         // $('+ this.newPlace +').text($(this).joinedValue);
     }
 }
+
 
 
 
