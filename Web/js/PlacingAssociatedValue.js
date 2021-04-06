@@ -7,33 +7,42 @@ $('#dimensions_deroulant').change(function (event){
 
 
 class PlacingAssociatedValue {
-    constructor(objetSelect, associatedValue, newLocation) {
-        this.joinedValue = associatedValue;
-        this.selectedObject = objetSelect;
-        this.self = this;
+    /**
+     *
+     * @param objetSelect la balise (le selecteur) sur laquelle porte le changement
+     * @param dataName nom de l'attribut data recherché
+     * @param newLocation l'emplacement cible (sélecteur)
+     */
+    constructor(objetSelect, dataName, newLocation) {
+        /// la balise (le selecteur) sur laquelle porte le changement
+        this.objetSelect = objetSelect;
+        /// nom de l'attribut data recherché
+        this.dataName = dataName;
+        /// l'emplacement cible (sélecteur)
+        this.newLocation = newLocation;
 
-        $(objetSelect).change(function (event){
-            console.log('On est entré dans l\'event change');
-            console.log(objetSelect);
-            console.log(associatedValue);
-            console.log(self.joinedValue);
-            this.joinedValue = $('option[value="'+$(objetSelect).val()+'"]', $(objetSelect)).data(associatedValue);
-            console.log(this.joinedValue);
-        });
 
         // this.joinedValue = $('option[value="'+$(objetSelect).val()+'"]', $(objetSelect)).data(associatedValue);
-        this.newPlace = newLocation;
-        console.log(this.joinedValue, this.newPlace);
+
+        console.log(this.dataName, this.newLocation);
 
         this.placeAssociatedValue();
     }
 
     placeAssociatedValue () {
         console.log('La fonction placeAssociatedValue se lance correctemennt');
-        console.log(this.newPlace);
-        console.log(this.joinedValue);
-        
-        $('#' + this.newPlace).html(this.joinedValue);
+        console.log(this.newLocation);
+        console.log(this.dataName);
+
+        $(this.objetSelect).change(function (event){
+            console.log('On est entré dans l\'event change');
+            /// valeur associée au dataName
+            let dataValue = $('option[value="'+$(this.objetSelect).val()+'"]', $(this.objetSelect)).data(this.dataName);
+            console.log(dataValue);
+            $(this.newLocation).html(dataValue);
+        }.bind(this));
+
+
 
         // document.getElementById(this.newPlace).innerText = this.joinedValue;
         // console.log($('+ this.newPlace +'));

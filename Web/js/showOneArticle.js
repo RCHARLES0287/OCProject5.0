@@ -31,7 +31,7 @@ $('#dimensions_deroulant').change(function (event){
 });
 */
 
-new PlacingAssociatedValue('#dimensions_deroulant', 'prix', 'prix_article');
+new PlacingAssociatedValue('#dimensions_deroulant', 'prix', '#prix_article');
 
 /*
 
