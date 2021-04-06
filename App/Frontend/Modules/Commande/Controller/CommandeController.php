@@ -73,6 +73,14 @@ class CommandeController extends \RCFramework\BackController
 
     public function executeValidateonearticle (HTTPRequest $request)
     {
+        session_start();
+        var_dump('on a bien validé l\'article');
+        exit;
+        $articleId = $_GET[''];
+        $dimensionsId = $_GET[''];
+        $tarifId = $_GET[''];
 
+        $_SESSION['panier'] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'tarifId' => $tarifId];
+        
     }
 }

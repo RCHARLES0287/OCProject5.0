@@ -6,9 +6,9 @@
     <route url="/showallphotos" module="Photos" action="showallphotos"/>
     <route url="/showonegalerie" module="Photos" action="showonegalerie"/>
 
-    <route url="/showallavailablephotos" module="Commande" action="showallavailablephotos"/>
+    <route url="/" module="Commande" action="showallavailablephotos"/>
     <route url="/showonearticle" module="Commande" action="showonearticle"/>
-    <route url="/validateOneArticle" module="Commande" action="validateOneArticle"/>
+    <route url="/validateonearticle" module="Commande" action="validateonearticle"/>
 </routes>
 
 
