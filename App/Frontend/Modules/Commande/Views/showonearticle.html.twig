@@ -5,8 +5,9 @@
         <img alt="photo article" src="/images/{{ galerieEntity.nom_galerie ~ '/' ~ selected_photo.serial_number }}">
     </section>
     <section class="infos_et_commande">
-        <form class="formulaire_un_article" action="/validateOneArticle" method="get" novalidate>
-            <select id="dimensions_deroulant" class="form-select dimensions_article" name="dimensions_deroulant" aria-label="Default select example">
+        <form class="formulaire_un_article" action="/validateonearticle" method="post" novalidate>
+            <input name="id_photo" type="hidden" value="{{ selected_photo.id }}">
+            <select id="dimensions_deroulant" class="form-select dimensions_article" name="id_dimensions">
                 <option value="" selected disabled hidden>Dimensions</option>
                 {% for photoTarif in photoTarifs %}
                 <option class="menu_deroulant_dimensions"
@@ -17,14 +18,14 @@
             </select>
             <div class="zone_prix">
                 prix :
-                <span id="prix_article" name="prix_article"></span>
+                <span id="prix_article"></span>
                 €
             </div>
 
             <div>
                 <span>Quantité : </span>
-                <select class="form-select" name="nombre_articles" aria-label="Default select example">
-                    <option selected>-</option>
+                <select class="form-select" name="nombre_articles">
+                    <option value="" selected disabled hidden>-</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
