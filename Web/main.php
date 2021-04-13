@@ -1,4 +1,6 @@
 <?php
+//Le session_start() est placé ici car on va utiliser la session dans de nombreuses pages
+session_start();
 
 const DEFAULT_APP = 'Frontend';
 
