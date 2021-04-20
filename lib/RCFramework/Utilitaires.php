@@ -32,4 +32,10 @@ abstract class Utilitaires
         var_dump($var);
         echo '</pre>';
     }
+
+    public static function logException ($exception)
+    {
+        $message = 'EXCEPTION ['.get_class($exception).'] : '.$exception->getMessage().' ('.$exception->getFile().':'.$exception->getLine().')';
+        file_put_contents(__DIR__.'/../../cache/erreur_'.date('Y-m-d').'.log', '['.date('H:i:s').'] '.$message.PHP_EOL, FILE_APPEND);
+    }
 }

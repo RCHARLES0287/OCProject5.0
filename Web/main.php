@@ -1,5 +1,7 @@
 <?php
 //Le session_start() est placé ici car on va utiliser la session dans de nombreuses pages
+use RCFramework\Utilitaires;
+
 session_start();
 
 const DEFAULT_APP = 'Frontend';
@@ -35,7 +37,6 @@ try
 catch (Throwable $exception)
 {
     echo 'ERREUR : Merci de contacter le responsable du site';
-    $message = 'EXCEPTION ['.get_class($exception).'] : '.$exception->getMessage().' ('.$exception->getFile().':'.$exception->getLine().')';
-    file_put_contents(__DIR__.'/../cache/erreur_'.date('Y-m-d').'.log', '['.date('H:i:s').'] '.$message.PHP_EOL, FILE_APPEND);
+    Utilitaires::logException($exception);
 }
 
