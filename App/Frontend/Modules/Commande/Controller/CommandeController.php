@@ -5,11 +5,14 @@ namespace App\Frontend\Modules\Commande\Controller;
 
 
 use Entity\GalerieEntity;
+use Entity\Ligne_de_commandeEntity;
 use Model\DimensionsManager;
 use Model\GaleriesManager;
+use Model\LignesDeCommandesManager;
 use Model\PhotosManager;
 use Model\TarifsManager;
 use RCFramework\HTTPRequest;
+use RCFramework\Utilitaires;
 
 class CommandeController extends \RCFramework\BackController
 {
@@ -73,20 +76,43 @@ class CommandeController extends \RCFramework\BackController
 
     public function executeValidateonearticle (HTTPRequest $request)
     {
+        if (isset($_POST['id_photo']) && isset($_POST['id_dimensions']) && isset($_POST['nombre_articles'])) {
+            try
+            {
+                $articleId = $_POST['id_photo'];
+                $dimensionsId = $_POST['id_dimensions'];
+                $nombreArticles = $_POST['nombre_articles'];
 
-        $articleId = $_POST['id_photo'];
-        $dimensionsId = $_POST['id_dimensions'];
-        $nombreArticles = $_POST['nombre_articles'];
+
+                if (!isset($_SESSION['panier']))
+                {
+                    $_SESSION['panier'] = [];
+                }
+
+                $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles];
+
+//        var_dump($_SESSION['panier']);
+
+//                echo json_encode(['status'=>'Succès']);
+                $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
+                $newLigneDeCommande = new LignesDeCommandesManager();
+                $newLigneDeCommande->saveOneLigneDeCommande();
+
+            }
+            catch (\Throwable $exception) {
+                Utilitaires::logException($exception);
+                echo json_encode(['status'=>'Erreur']);
+            }
+
+            header('Content-Type: application/json');
 
 
-        if (!isset($_SESSION['panier']))
+            exit;
+        }
+        else
         {
-            $_SESSION['panier'] = [];
+            var_dump('Erreur dans les données du $_POST');
         }
 
-        $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles];
-
-        var_dump($_SESSION['panier']);
-        exit;
     }
 }

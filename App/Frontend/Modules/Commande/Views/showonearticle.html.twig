@@ -5,7 +5,7 @@
         <img alt="photo article" src="/images/{{ galerieEntity.nom_galerie ~ '/' ~ selected_photo.serial_number }}">
     </section>
     <section class="infos_et_commande">
-        <form class="formulaire_un_article" action="/validateonearticle" method="post" novalidate>
+        <form id="formulaire_panier" class="formulaire_un_article" action="/validateonearticle" method="post" novalidate>
             <input name="id_photo" type="hidden" value="{{ selected_photo.id }}">
             <select id="dimensions_deroulant" class="form-select dimensions_article" name="id_dimensions">
                 <option value="" selected disabled hidden>Dimensions</option>
