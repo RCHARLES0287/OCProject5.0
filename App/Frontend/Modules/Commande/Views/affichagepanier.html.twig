@@ -1,0 +1,20 @@
+{% extends 'Frontend/Templates/frontend_layout.html.twig' %}
+
+{% block frontend_content %}
+    <section class="visualisation_panier">
+
+        {% for unArticle in orderedArticles %}
+
+            <div class="un_article_panier">
+                <div class="photo_serial_number_panier">{{ unArticle.orderedArticle.serial_number }}</div>
+                <div class="number_of_articles_panier">{{ unArticle.numberOfArticles }}</div>
+                <div class="prix_article_panier">{{ unArticle.photoTarifs }}</div>
+                <div class="prix_total_article">{{ unArticle.numberOfArticles * unArticle.photoTarifs }} €</div>
+            </div>
+
+        {% endfor %}
+
+    </section>
+
+{% endblock %}
+

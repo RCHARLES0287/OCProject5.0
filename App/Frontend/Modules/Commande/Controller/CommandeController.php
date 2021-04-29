@@ -76,12 +76,12 @@ class CommandeController extends \RCFramework\BackController
 
     public function executeValidateonearticle (HTTPRequest $request)
     {
-        if (isset($_POST['id_photo']) && isset($_POST['id_dimensions']) && isset($_POST['nombre_articles'])) {
+        if (isset($_POST['idPhoto']) && isset($_POST['idDimensions']) && isset($_POST['nombreArticles'])) {
             try
             {
-                $articleId = $_POST['id_photo'];
-                $dimensionsId = $_POST['id_dimensions'];
-                $nombreArticles = $_POST['nombre_articles'];
+                $articleId = $_POST['idPhoto'];
+                $dimensionsId = $_POST['idDimensions'];
+                $nombreArticles = $_POST['nombreArticles'];
 
 
                 if (!isset($_SESSION['panier']))
@@ -93,26 +93,85 @@ class CommandeController extends \RCFramework\BackController
 
 //        var_dump($_SESSION['panier']);
 
-//                echo json_encode(['status'=>'Succès']);
+                /*
                 $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
                 $newLigneDeCommande = new LignesDeCommandesManager();
                 $newLigneDeCommande->saveOneLigneDeCommande();
-
+                */
+                echo json_encode(['status'=>'Succès']);
             }
             catch (\Throwable $exception) {
                 Utilitaires::logException($exception);
                 echo json_encode(['status'=>'Erreur']);
             }
 
-            header('Content-Type: application/json');
-
-
-            exit;
         }
         else
         {
-            var_dump('Erreur dans les données du $_POST');
+            echo json_encode(['status'=>'Erreur']);
         }
 
+        header('Content-Type: application/json');
+        exit;
+    }
+
+
+    public function executeAffichagepanier (HTTPRequest $request)
+    {
+        /*
+        var_dump('On est entré dans le panier');
+        var_dump($_SESSION['panier']);
+        exit;
+        */
+        $orderedArticles = [];
+
+        foreach ($_SESSION['panier'] as $oneArticle)
+        {
+            /*
+            var_dump($oneArticle);
+            exit;
+            */
+
+            $newPhotoManager = new PhotosManager();
+            $orderedArticle = $newPhotoManager->getOnePhoto(["articleId"]);
+
+            $newDimensionsManager = new DimensionsManager();
+            $selectedDimensions = $newDimensionsManager->getOneEntryOfDimensions(["dimensionsId"]);
+
+            $numberOfArticles = ["nombreArticles"];
+
+            $newTarifsManager = new TarifsManager();
+            $photoTarifs = $newTarifsManager->getOnePhotoTarifs(["articleId"]);
+
+            $orderedArticles [] = [
+                'orderedArticle' => $orderedArticle,
+                'selectedDimensions' => $selectedDimensions,
+                'numberOfArticles' => $numberOfArticles,
+                'photoTarifs' => $photoTarifs
+                ];
+
+        }
+
+        $this->page->addVar('orderedArticles', $orderedArticles);
     }
 }
+/*
+$articleId = $_POST['idPhoto'];
+$dimensionsId = $_POST['idDimensions'];
+$nombreArticles = $_POST['nombreArticles'];
+
+$_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles];
+*/
+
+/*
+array(3) {
+    [0]=> array(3) {
+        ["articleId"]=> string(1) "5" ["dimensionsId"]=> string(1) "1" ["nombreArticles"]=> string(1) "2"
+    }
+    [1]=> array(3) {
+        ["articleId"]=> string(1) "5" ["dimensionsId"]=> string(1) "2" ["nombreArticles"]=> string(1) "5"
+    }
+    [2]=> array(3) {
+        ["articleId"]=> string(1) "5" ["dimensionsId"]=> string(1) "2" ["nombreArticles"]=> string(1) "3"
+    }
+}*/
