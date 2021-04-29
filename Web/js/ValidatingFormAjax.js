@@ -16,18 +16,23 @@ class ValidatingFormAjax {
 
     validateFormAjax () {
         if (typeof this.objetSelect === "string" && typeof this.urlTarget === "string" && typeof this.inputsData !== "undefined") {
-            let dataParam = [];
-            $.each(this.inputsData, function (key, value) {
-                dataParam.push(key + ' : $(' + value + ', $(this)).val()');
-            })
+            let dataParam = {};
+            console.log(this.inputsData);
+
             $(this.objetSelect).submit(function (e){
                 e.preventDefault();
+
+                $.each(this.inputsData, function (cleDuPost, selecteurBalise) {
+                    dataParam[cleDuPost] = $(selecteurBalise, $(this.objetSelect)).val();
+                    console.log(dataParam);
+                }.bind(this));
 
                 $.ajax({
                     url: this.urlTarget,
                     type: 'POST',
                     data: dataParam,
                     success : function (data) {
+                        console.log(data);
                         console.log(data.status);
                     },
                     error : function (jqXHR, status, errorMessage) {
@@ -39,4 +44,5 @@ class ValidatingFormAjax {
         }
     }
 }
+
 
