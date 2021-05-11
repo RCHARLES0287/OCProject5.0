@@ -133,26 +133,33 @@ class CommandeController extends \RCFramework\BackController
             */
 
             $newPhotoManager = new PhotosManager();
-            $orderedArticle = $newPhotoManager->getOnePhoto(["articleId"]);
+            $orderedArticle = $newPhotoManager->getOnePhoto($oneArticle["articleId"]);
 
             $newDimensionsManager = new DimensionsManager();
-            $selectedDimensions = $newDimensionsManager->getOneEntryOfDimensions(["dimensionsId"]);
+            $selectedDimensions = $newDimensionsManager->getOneEntryOfDimensions($oneArticle["dimensionsId"]);
 
-            $numberOfArticles = ["nombreArticles"];
+            $numberOfArticles = $oneArticle["nombreArticles"];
 
             $newTarifsManager = new TarifsManager();
-            $photoTarifs = $newTarifsManager->getOnePhotoTarifs(["articleId"]);
+            $tarifsEntity = $newTarifsManager->getOnePhotoAndDimensionsTarif($oneArticle["articleId"], $oneArticle["dimensionsId"]);
+            $photoTarif = $tarifsEntity->prix();
+
 
             $orderedArticles [] = [
                 'orderedArticle' => $orderedArticle,
                 'selectedDimensions' => $selectedDimensions,
                 'numberOfArticles' => $numberOfArticles,
-                'photoTarifs' => $photoTarifs
-                ];
-
+                'photoTarif' => $photoTarif
+            ];
         }
 
         $this->page->addVar('orderedArticles', $orderedArticles);
+
+        /*
+        var_dump($orderedArticles);
+        exit;
+        */
+
     }
 }
 /*
