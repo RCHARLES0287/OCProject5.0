@@ -67,6 +67,35 @@ class TarifsManager extends Manager
         return $photoTarifsFeatures;
     }
 
+
+    /**
+     * @param int $photoId
+     * @param int $dimensionsId
+     * @return TarifEntity renvoie l'entité tarif associée à l'Id de la photo et à l'Id des dimensions
+     * @throws \Exception si aucun tarif n'est trouvé avec ces paramètres
+     */
+    public function getOnePhotoAndDimensionsTarif($photoId, $dimensionsId)
+    {
+        $answerTarifData = $this->db->prepare('SELECT *
+                                                        FROM rc_photographe_tarifs
+                                                        WHERE tarifs_photo_id=:photoId AND tarifs_dimensions_id=:dimensionsId');
+        $answerTarifData->execute(array(
+            'photoId' => $photoId,
+            'dimensionsId' => $dimensionsId
+        ));
+
+        $dbTarif = $answerTarifData->fetch();
+
+        if ($dbTarif === false)
+        {
+            throw new \Exception("Aucun tarif n'est défini pour la photo portant l'Id " . $photoId . " avec les dimensions portant l'Id " . $dimensionsId );
+        }
+        else
+        {
+            return new TarifEntity($dbTarif);
+        }
+    }
+
     public function saveOneTarif(TarifEntity $newTarifEntity)
     {
         $req = $this->db->prepare('INSERT INTO rc_photographe_tarifs(tarifs_photo_id, tarifs_dimensions_id, tarifs_prix) VALUES (:tarifs_photo_id, :tarifs_dimensions_id, :tarifs_prix)');
