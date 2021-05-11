@@ -1,2 +1,12 @@
 /*Feuille de style du projet*/
 
+.un_article_panier
+{
+    border: solid black 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
