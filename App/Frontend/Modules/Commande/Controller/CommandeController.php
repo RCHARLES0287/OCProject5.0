@@ -89,7 +89,23 @@ class CommandeController extends \RCFramework\BackController
                     $_SESSION['panier'] = [];
                 }
 
-                $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles];
+                $isFound = false;
+//                Le "&" devant la variable $lignePanier indique qu'on veut la référence de l'objet (autrement dit son adresse). Ainsi On peut mettre à jour le tableau en manipulant directement la variable du foreach.
+                foreach ($_SESSION['panier'] as &$lignePanier)
+                {
+                    if ($lignePanier['articleId'] == $articleId && $lignePanier['dimensionsId'] == $dimensionsId)
+                    {
+                        $lignePanier['nombreArticles'] += $nombreArticles;
+                        $isFound = true;
+//                        Dans la mesure où on ne peut trouver l'élément qu'une seule fois dans le tableau, on stoppe la boucle immédiatement avec le "break"
+                        break;
+                    }
+                }
+                if ($isFound === false)
+                {
+                    $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles];
+                }
+
 
 //        var_dump($_SESSION['panier']);
 
@@ -114,6 +130,99 @@ class CommandeController extends \RCFramework\BackController
         header('Content-Type: application/json');
         exit;
     }
+
+
+    public function executeAddonetoquantity (HTTPRequest $request)
+    {
+        if (isset($_POST['idPhoto']) && isset($_POST['idDimensions']) && isset($_POST['nombreArticles']))
+        {
+            try
+            {
+                $articleId = $_POST['idPhoto'];
+                $dimensionsId = $_POST['idDimensions'];
+                $nombreArticles = $_POST['nombreArticles'];
+
+                if (!isset($_SESSION['panier']))
+                {
+                    $_SESSION['panier'] = [];
+                }
+
+                $isFound = false;
+                //                Le "&" devant la variable $lignePanier indique qu'on veut la référence de l'objet (autrement dit son adresse). Ainsi On peut mettre à jour le tableau en manipulant directement la variable du foreach.
+                foreach ($_SESSION['panier'] as &$lignePanier)
+                {
+                    if ($lignePanier['articleId'] == $articleId && $lignePanier['dimensionsId'] == $dimensionsId)
+                    {
+                        $lignePanier['nombreArticles'] += 1;
+                        $isFound = true;
+//                        Dans la mesure où on ne peut trouver l'élément qu'une seule fois dans le tableau, on stoppe la boucle immédiatement avec le "break"
+                        break;
+                    }
+                }
+                if ($isFound === false)
+                {
+                    $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles + 1];
+                }
+                echo json_encode(['status'=>'Succès']);
+            }
+            catch (\Throwable $exception) {
+                Utilitaires::logException($exception);
+                echo json_encode(['status'=>'Erreur']);
+            }
+        }
+        else
+        {
+            echo json_encode(['status'=>'Erreur']);
+        }
+
+        header('Content-Type: application/json');
+        exit;
+    }
+
+
+    public function executeRemoveonetoquantity (HTTPRequest $request)
+    {
+        if (isset($_POST['idPhoto']) && isset($_POST['idDimensions']) && isset($_POST['nombreArticles']))
+        {
+            try
+            {
+                $articleId = $_POST['idPhoto'];
+                $dimensionsId = $_POST['idDimensions'];
+                $nombreArticles = $_POST['nombreArticles'];
+
+                if (!isset($_SESSION['panier']))
+                {
+                    $_SESSION['panier'] = [];
+                }
+
+                //                Le "&" devant la variable $lignePanier indique qu'on veut la référence de l'objet (autrement dit son adresse). Ainsi On peut mettre à jour le tableau en manipulant directement la variable du foreach.
+                foreach ($_SESSION['panier'] as &$lignePanier)
+                {
+                    if ($lignePanier['articleId'] == $articleId && $lignePanier['dimensionsId'] == $dimensionsId && $lignePanier['nombreArticles'] > 0)
+                    {
+                        $lignePanier['nombreArticles'] -= 1;
+//                        Dans la mesure où on ne peut trouver l'élément qu'une seule fois dans le tableau, on stoppe la boucle immédiatement avec le "break"
+                        break;
+                    }
+                }
+
+                echo json_encode(['status'=>'Succès']);
+            }
+            catch (\Throwable $exception) {
+                Utilitaires::logException($exception);
+                echo json_encode(['status'=>'Erreur']);
+            }
+        }
+        else
+        {
+            echo json_encode(['status'=>'Erreur']);
+        }
+
+        header('Content-Type: application/json');
+        exit;
+    }
+
+
 
 
     public function executeAffichagepanier (HTTPRequest $request)
