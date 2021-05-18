@@ -11,15 +11,15 @@
             <div class="un_article_panier">
                 <input name="id_photo" type="hidden" value="{{ unArticle.orderedArticle.id }}">
                 <input name="id_dimensions" type="hidden" value="{{ unArticle.selectedDimensions.dimensions }}">
-                <input name="nombre_articles" type="hidden" value="{{ unArticle.numberOfArticles }}">
+                <input name="nombre_articles" type="hidden" data-articleqty="{{ unArticle.numberOfArticles }}" value="{{ unArticle.numberOfArticles }}">
 
 
                 <div class="photo_serial_number_panier">Code article : {{ unArticle.orderedArticle.serial_number }}</div>
                 <div class="photo_dimensions_panier">Dimensions : {{ unArticle.selectedDimensions.dimensions }}</div>
                 <div class="number_of_articles_panier">Quantité :
-                    <button type="button" class="btn btn-primary qte_moins_button" id="qte_moins_button_{{ unArticle.orderedArticle.id }}">-</button>
+                    <button type="button" class="btn btn-primary qte_moins_button">-</button>
                     <span class="number_of_articles_panier_span" id="number_of_articles_panier_span_{{ unArticle.orderedArticle.id }}"> {{ unArticle.numberOfArticles }} </span>
-                    <button type="button" class="btn btn-primary qte_plus_button" id="qte_plus_button_{{ unArticle.orderedArticle.id }}">+</button>
+                    <button type="button" class="btn btn-primary qte_plus_button">+</button>
                 </div>
                 <div class="prix_article_panier">Prix unitaire : {{ unArticle.photoTarif }} €</div>
                 <div class="prix_total_article">Prix total par article : {{ unArticle.numberOfArticles * unArticle.photoTarif }} €</div>

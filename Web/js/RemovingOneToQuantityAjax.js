@@ -18,11 +18,13 @@ class RemovingOneToQuantityAjax {
 
     removeOneToQuantity () {
         if (typeof this.objetSelect === "string" && typeof this.urlTarget === "string" && typeof this.inputsData !== "undefined") {
-            let dataParam = {};
+
             console.log(this.inputsData);
 
             $(this.objetSelect).click(function (e){
                 e.preventDefault();
+
+                let dataParam = {};
 
                 $.each(this.inputsData, function (cleDuPost, selecteurBalise) {
                     dataParam[cleDuPost] = $(selecteurBalise, $(this.objetSelect)).val();
