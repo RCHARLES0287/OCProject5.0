@@ -134,7 +134,7 @@ class CommandeController extends \RCFramework\BackController
 
     public function executeAddorremoveonetoquantity (HTTPRequest $request)
     {
-        if (isset($_POST['idPhoto']) && isset($_POST['idDimensions']) && isset($_POST['nombreArticles']))
+        if (isset($_POST['modifType']) && isset($_POST['idPhoto']) && isset($_POST['idDimensions']) && isset($_POST['nombreArticles']))
         {
             try
             {
@@ -149,6 +149,7 @@ class CommandeController extends \RCFramework\BackController
                 }
 
                 $isFound = false;
+                $newQuantity = 0;
                 //                Le "&" devant la variable $lignePanier indique qu'on veut la référence de l'objet (autrement dit son adresse). Ainsi on peut mettre à jour le tableau en manipulant directement la variable du foreach.
                 foreach ($_SESSION['panier'] as &$lignePanier)
                 {
@@ -157,17 +158,15 @@ class CommandeController extends \RCFramework\BackController
                         if ($modifType === 'add')
                         {
                             $lignePanier['nombreArticles'] += 1;
-                            $isFound = true;
-//                        Dans la mesure où on ne peut trouver l'élément qu'une seule fois dans le tableau, on stoppe la boucle immédiatement avec le "break"
-                            break;
                         }
                         elseif ($modifType === 'remove' && $lignePanier['nombreArticles'] > 0)
                         {
                             $lignePanier['nombreArticles'] -= 1;
-                            $isFound = true;
-//                        Dans la mesure où on ne peut trouver l'élément qu'une seule fois dans le tableau, on stoppe la boucle immédiatement avec le "break"
-                            break;
                         }
+                        $newQuantity = $lignePanier['nombreArticles'];
+                        $isFound = true;
+//                        Dans la mesure où on ne peut trouver l'élément qu'une seule fois dans le tableau, on stoppe la boucle immédiatement avec le "break"
+                        break;
                     }
                 }
 //                Le cas où le panier ne contenait pas cet article dans ces dimensions
@@ -176,14 +175,11 @@ class CommandeController extends \RCFramework\BackController
                     if ($modifType === 'add')
                     {
                         $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles + 1];
+                        $newQuantity = $nombreArticles +1;
                     }
-                    elseif ($modifType === 'remove' && $lignePanier['nombreArticles'] > 0)
-                    {
-                        $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles - 1];
-                    }
+//                    Pas de else car on est dans le cas où la ligne photo-dimensions n'existe pas dans le panier (donc impossible de soustraire)
                 }
-                echo json_encode(['status'=>'Succès']);
-//                echo json_encode(['status'=>'Succès', 'newQuantity'=>la variable qui contient la quantité]);
+                echo json_encode(['status'=>'Succès', 'newQuantity'=>$newQuantity]);
             }
             catch (\Throwable $exception) {
                 Utilitaires::logException($exception);

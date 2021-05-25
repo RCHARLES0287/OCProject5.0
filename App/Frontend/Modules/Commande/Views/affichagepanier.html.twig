@@ -18,14 +18,14 @@
                      data-iddimensions="{{ unArticle.selectedDimensions.id }}"
                      data-articleqty="{{ unArticle.numberOfArticles }}">Quantité :
 
-                    <button type="button" data-modiftype="remove" class="btn btn-primary qte_moins_button">-
+                    <button type="button" data-modiftype="remove" class="btn btn-primary qte_button">-
                     </button>
 
                     <span class="number_of_articles_panier_span"
                           id="number_of_articles_panier_span_{{ unArticle.orderedArticle.id }}"> {{ unArticle.numberOfArticles }}
                     </span>
 
-                    <button type="button" data-modiftype="add" class="btn btn-primary qte_plus_button">+
+                    <button type="button" data-modiftype="add" class="btn btn-primary qte_button">+
                     </button>
                 </div>
                 <div class="prix_article_panier">Prix unitaire : {{ unArticle.photoTarif }} €</div>

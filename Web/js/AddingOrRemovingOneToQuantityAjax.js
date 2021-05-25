@@ -44,10 +44,13 @@ class AddingOrRemovingOneToQuantityAjax {
                         console.log(data);
                         console.log(data.status);
 
-                        $(this.newValueLocation).html(dataValue);
-                    },
+                        if (data.status === 'Succès') {
+                            clickedButton.siblings(this.newValueLocation).html(data.newQuantity);
+                        }
+                    }.bind(this),
                     error: function (jqXHR, status, errorMessage) {
                         console.log(status + ':' + errorMessage);
+                        alert('Echec lors de la mise à jour du panier');
                     }
                 });
                 return false;

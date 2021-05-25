@@ -11,18 +11,12 @@ $(function () {
     // new AddingOneToQuantityAjax('id_photo', 'id_dimensions', 'nombre_articles', '#qte_plus_button');
 
     new AddingOrRemovingOneToQuantityAjax(
-        '.qte_plus_button',
+        '.qte_button',
         {'idPhoto': 'idphoto', 'idDimensions': 'iddimensions', 'nombreArticles': 'articleqty'},
         '/addorremoveonetoquantity',
-
+        '.number_of_articles_panier_span'
     );
 
-    new AddingOrRemovingOneToQuantityAjax(
-        '.qte_moins_button',
-        {'idPhoto': 'idphoto', 'idDimensions': 'iddimensions', 'nombreArticles': 'articleqty'},
-        '/addorremoveonetoquantity',
-
-    );
 
     /*
     $('.qte_plus_button').click(function (e) {
