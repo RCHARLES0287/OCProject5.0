@@ -8,9 +8,27 @@ $(function () {
 
     */
 
-    new AddingOneToQuantityAjax('id_photo', 'id_dimensions', 'nombre_articles', '#qte_plus_button');
+    // new AddingOneToQuantityAjax('id_photo', 'id_dimensions', 'nombre_articles', '#qte_plus_button');
 
+    new AddingOneToQuantityAjax(
+        '.qte_plus_button',
+        {'idPhoto': 'idphoto', 'idDimensions': 'iddimensions', 'nombreArticles': 'articleqty'},
+        '/addonetoquantity'
+    );
 
+    /*
+    $('.qte_plus_button').click(function (e) {
+        e.preventDefault();
+
+        // let clickedButton = $(this); Est équivalent à la ligne ci-dessous
+        let clickedButton = $(e.target);
+        let idPhoto = clickedButton.parent().data('idphoto');
+        // let idPhoto = clickedButton.data('idphoto', nouvelle quantité);
+        console.log(idPhoto);
+
+        return false;
+    });
+    */
 
     /*
     new RemovingOneToQuantityAjax('#qte_moins_button_{{ unArticle.orderedArticle.id }}',

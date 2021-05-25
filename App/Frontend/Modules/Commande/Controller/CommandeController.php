@@ -148,7 +148,7 @@ class CommandeController extends \RCFramework\BackController
                 }
 
                 $isFound = false;
-                //                Le "&" devant la variable $lignePanier indique qu'on veut la référence de l'objet (autrement dit son adresse). Ainsi On peut mettre à jour le tableau en manipulant directement la variable du foreach.
+                //                Le "&" devant la variable $lignePanier indique qu'on veut la référence de l'objet (autrement dit son adresse). Ainsi on peut mettre à jour le tableau en manipulant directement la variable du foreach.
                 foreach ($_SESSION['panier'] as &$lignePanier)
                 {
                     if ($lignePanier['articleId'] == $articleId && $lignePanier['dimensionsId'] == $dimensionsId)
@@ -164,6 +164,7 @@ class CommandeController extends \RCFramework\BackController
                     $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles + 1];
                 }
                 echo json_encode(['status'=>'Succès']);
+//                echo json_encode(['status'=>'Succès', 'newQuantity'=>la variable qui contient la quantité]);
             }
             catch (\Throwable $exception) {
                 Utilitaires::logException($exception);
