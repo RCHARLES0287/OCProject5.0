@@ -9,8 +9,7 @@
     <route url="/showallavailablephotos" module="Commande" action="showallavailablephotos"/>
     <route url="/showonearticle" module="Commande" action="showonearticle"/>
     <route url="/validateonearticle" module="Commande" action="validateonearticle"/>
-    <route url="/addonetoquantity" module="Commande" action="addonetoquantity"/>
-    <route url="/removeonetoquantity" module="Commande" action="removeonetoquantity"/>
+    <route url="/addorremoveonetoquantity" module="Commande" action="addorremoveonetoquantity"/>
     <route url="/affichagepanier" module="Commande" action="affichagepanier"/>
 
 </routes>

@@ -132,7 +132,7 @@ class CommandeController extends \RCFramework\BackController
     }
 
 
-    public function executeAddonetoquantity (HTTPRequest $request)
+    public function executeAddorremoveonetoquantity (HTTPRequest $request)
     {
         if (isset($_POST['idPhoto']) && isset($_POST['idDimensions']) && isset($_POST['nombreArticles']))
         {
@@ -141,6 +141,7 @@ class CommandeController extends \RCFramework\BackController
                 $articleId = $_POST['idPhoto'];
                 $dimensionsId = $_POST['idDimensions'];
                 $nombreArticles = $_POST['nombreArticles'];
+                $modifType = $_POST['modifType'];
 
                 if (!isset($_SESSION['panier']))
                 {
@@ -153,15 +154,33 @@ class CommandeController extends \RCFramework\BackController
                 {
                     if ($lignePanier['articleId'] == $articleId && $lignePanier['dimensionsId'] == $dimensionsId)
                     {
-                        $lignePanier['nombreArticles'] += 1;
-                        $isFound = true;
+                        if ($modifType === 'add')
+                        {
+                            $lignePanier['nombreArticles'] += 1;
+                            $isFound = true;
 //                        Dans la mesure où on ne peut trouver l'élément qu'une seule fois dans le tableau, on stoppe la boucle immédiatement avec le "break"
-                        break;
+                            break;
+                        }
+                        elseif ($modifType === 'remove' && $lignePanier['nombreArticles'] > 0)
+                        {
+                            $lignePanier['nombreArticles'] -= 1;
+                            $isFound = true;
+//                        Dans la mesure où on ne peut trouver l'élément qu'une seule fois dans le tableau, on stoppe la boucle immédiatement avec le "break"
+                            break;
+                        }
                     }
                 }
+//                Le cas où le panier ne contenait pas cet article dans ces dimensions
                 if ($isFound === false)
                 {
-                    $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles + 1];
+                    if ($modifType === 'add')
+                    {
+                        $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles + 1];
+                    }
+                    elseif ($modifType === 'remove' && $lignePanier['nombreArticles'] > 0)
+                    {
+                        $_SESSION['panier'][] = ['articleId' => $articleId, 'dimensionsId' => $dimensionsId, 'nombreArticles' => $nombreArticles - 1];
+                    }
                 }
                 echo json_encode(['status'=>'Succès']);
 //                echo json_encode(['status'=>'Succès', 'newQuantity'=>la variable qui contient la quantité]);
@@ -181,7 +200,7 @@ class CommandeController extends \RCFramework\BackController
     }
 
 
-    public function executeRemoveonetoquantity (HTTPRequest $request)
+    /*public function executeRemoveonetoquantity (HTTPRequest $request)
     {
         if (isset($_POST['idPhoto']) && isset($_POST['idDimensions']) && isset($_POST['nombreArticles']))
         {
@@ -221,7 +240,7 @@ class CommandeController extends \RCFramework\BackController
 
         header('Content-Type: application/json');
         exit;
-    }
+    }*/
 
 
 

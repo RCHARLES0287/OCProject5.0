@@ -10,10 +10,18 @@ $(function () {
 
     // new AddingOneToQuantityAjax('id_photo', 'id_dimensions', 'nombre_articles', '#qte_plus_button');
 
-    new AddingOneToQuantityAjax(
+    new AddingOrRemovingOneToQuantityAjax(
         '.qte_plus_button',
         {'idPhoto': 'idphoto', 'idDimensions': 'iddimensions', 'nombreArticles': 'articleqty'},
-        '/addonetoquantity'
+        '/addorremoveonetoquantity',
+
+    );
+
+    new AddingOrRemovingOneToQuantityAjax(
+        '.qte_moins_button',
+        {'idPhoto': 'idphoto', 'idDimensions': 'iddimensions', 'nombreArticles': 'articleqty'},
+        '/addorremoveonetoquantity',
+
     );
 
     /*

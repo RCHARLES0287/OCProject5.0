@@ -1,35 +1,38 @@
 
-class AddingOneToQuantityAjax {
+class AddingOrRemovingOneToQuantityAjax {
     /**
      *
      * @param objetSelect la balise (le sélecteur) sur laquelle porte l'action du button
      * @param inputsData le tableau de clés et valeurs pour alimenter le paramètre data de la requête Ajax. Clés = les clés qui alimenteront $_POST. Valeurs = le sélecteur de l'attribut name de la balise voulue
      * @param urlTarget l'URL qui pointera vers la méthode de traitement du formulaire
+     * @param newValueLocation la balise qui recevra la nouvelle quantité
      */
-    constructor(objetSelect, inputsData, urlTarget) {
+    constructor(objetSelect, inputsData, urlTarget, newValueLocation) {
         this.objetSelect = objetSelect;
         this.inputsData = inputsData;
         this.urlTarget = urlTarget;
+        this.newValueLocation = newValueLocation;
 
-        this.addOneToQuantityAjax();
+        this.addOrRemoveOneToQuantityAjax();
     }
 
-    addOneToQuantityAjax () {
-
+    addOrRemoveOneToQuantityAjax() {
 
 
         if (typeof this.objetSelect === "string" && typeof this.urlTarget === "string" && typeof this.inputsData !== "undefined") {
             $(this.objetSelect).click(function (e) {
-               e.preventDefault();
+                e.preventDefault();
 
                 // let clickedButton = $(this); Est équivalent à la ligne ci-dessous
-               let clickedButton = $(e.target);
-               let dataParam = {};
-               console.log(this.inputsData);
+                let clickedButton = $(e.target);
+                let dataParam = {};
+                console.log(this.inputsData);
 
-               $.each(this.inputsData, function (cleDuPost, selecteurDuData) {
-                   dataParam[cleDuPost] = clickedButton.parent().data(selecteurDuData);
-               });
+                $.each(this.inputsData, function (cleDuPost, selecteurDuData) {
+                    dataParam[cleDuPost] = clickedButton.parent().data(selecteurDuData);
+                });
+
+                dataParam['modifType'] = clickedButton.data('modiftype');
 
                 console.log(dataParam);
 
@@ -37,11 +40,13 @@ class AddingOneToQuantityAjax {
                     url: this.urlTarget,
                     type: 'POST',
                     data: dataParam,
-                    success : function (data) {
+                    success: function (data) {
                         console.log(data);
                         console.log(data.status);
+
+                        $(this.newValueLocation).html(dataValue);
                     },
-                    error : function (jqXHR, status, errorMessage) {
+                    error: function (jqXHR, status, errorMessage) {
                         console.log(status + ':' + errorMessage);
                     }
                 });
@@ -49,6 +54,7 @@ class AddingOneToQuantityAjax {
             }.bind(this));
 
         }
+
 
 
         /*
