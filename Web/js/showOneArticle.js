@@ -3,8 +3,7 @@ $(function () {
 
     new ValidatingFormAjax('#formulaire_panier',
         '/validateonearticle',
-        {'idPhoto': 'input[name=id_photo]', 'idDimensions': 'select[name=id_dimensions]', 'nombreArticles': 'select[name=nombre_articles]'},
-        'Article ajouté au panier'
+        {'idPhoto': 'input[name=id_photo]', 'idDimensions': 'select[name=id_dimensions]', 'nombreArticles': 'select[name=nombre_articles]'}
     );
 });
 

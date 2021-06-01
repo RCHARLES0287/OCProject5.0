@@ -36,6 +36,11 @@ abstract class Utilitaires
     public static function logException ($exception)
     {
         $message = 'EXCEPTION ['.get_class($exception).'] : '.$exception->getMessage().' ('.$exception->getFile().':'.$exception->getLine().')';
+        static::logMessage($message);
+    }
+
+    public static function logMessage ($message)
+    {
         file_put_contents(__DIR__.'/../../cache/erreur_'.date('Y-m-d').'.log', '['.date('H:i:s').'] '.$message.PHP_EOL, FILE_APPEND);
     }
 }

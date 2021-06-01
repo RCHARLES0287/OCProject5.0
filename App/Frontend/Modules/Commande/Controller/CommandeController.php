@@ -114,17 +114,17 @@ class CommandeController extends \RCFramework\BackController
                 $newLigneDeCommande = new LignesDeCommandesManager();
                 $newLigneDeCommande->saveOneLigneDeCommande();
                 */
-                echo json_encode(['status'=>'Succès']);
+                echo json_encode(['status'=>'Succès', 'message'=>'Article ajouté au panier']);
             }
             catch (\Throwable $exception) {
                 Utilitaires::logException($exception);
-                echo json_encode(['status'=>'Erreur']);
+                echo json_encode(['status'=>'Erreur', 'message'=>'Echec de l\'ajout au panier']);
             }
-
         }
         else
         {
-            echo json_encode(['status'=>'Erreur']);
+            Utilitaires::logMessage('Echec de l\'ajout au panier : paramètres incorrects');
+            echo json_encode(['status'=>'Erreur', 'message'=>'Echec de l\'ajout au panier']);
         }
 
         header('Content-Type: application/json');
