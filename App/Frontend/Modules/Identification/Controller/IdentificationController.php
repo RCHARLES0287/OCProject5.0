@@ -19,7 +19,7 @@ class IdentificationController extends \RCFramework\BackController
         $UtilisateurManager = new UtilisateursManager();
         $utilisateurEntity = $UtilisateurManager->compareVisitorWithDb($request->postData('email_adress'), $request->postData('password'));
 
-        if ($utilisateurEntity !== false)
+        if ($utilisateurEntity !== null)
         {
             $_SESSION['connexion_status'] = 'connected';
             $_SESSION['login'] = $utilisateurEntity->email();

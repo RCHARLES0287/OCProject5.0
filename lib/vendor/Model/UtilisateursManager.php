@@ -95,7 +95,7 @@ class UtilisateursManager extends Manager
 
             if ($dbUtilisateur === false)
             {
-                return false;
+                return null;
             }
 
             $utilisateurFeatures = new UtilisateurEntity($dbUtilisateur);
@@ -106,11 +106,11 @@ class UtilisateursManager extends Manager
             }
             else
             {
-                return false;
+                return null;
             }
 
         }
-        return false;
+        return null;
     }
 }
 
