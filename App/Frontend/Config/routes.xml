@@ -12,6 +12,9 @@
     <route url="/addorremoveonetoquantity" module="Commande" action="addorremoveonetoquantity"/>
     <route url="/affichagepanier" module="Commande" action="affichagepanier"/>
 
+    <route url="/logginginform" module="Identification" action="logginginform"/>
+    <route url="/loggingin" module="Identification" action="loggingin"/>
+
 </routes>
 
 
