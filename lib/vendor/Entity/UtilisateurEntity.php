@@ -12,16 +12,16 @@ class UtilisateurEntity extends Entity
     protected const CLASS_PREFIX = 'utilisateurs';
     private string $email;
     private string $password;
-    private ?string $birthdate;
-    private ?string $prenom;
-    private ?string $nom;
-    private ?string $numero_rue;
-    private ?string $nom_rue;
-    private ?string $complement_adresse;
-    private ?string $code_postal;
-    private ?string $ville;
-    private ?string $pays;
-    private ?string $telephone;
+    private ?string $birthdate = null;
+    private ?string $prenom = null;
+    private ?string $nom = null;
+    private ?string $numero_rue = null;
+    private ?string $nom_rue = null;
+    private ?string $complement_adresse = null;
+    private ?string $code_postal = null;
+    private ?string $ville = null;
+    private ?string $pays = null;
+    private ?string $telephone = null;
 
     public function setEmail($email)
     {
@@ -65,6 +65,10 @@ class UtilisateurEntity extends Entity
         {
             $this->birthdate = null;
         }
+        else
+        {
+            $this->birthdate = $birthdate;
+        }
     }
 
     public function birthdate():?string
@@ -78,6 +82,10 @@ class UtilisateurEntity extends Entity
         if (Utilitaires::emptyMinusZero($prenom))
         {
             $this->prenom = null;
+        }
+        else
+        {
+            $this->prenom = $prenom;
         }
     }
 
@@ -93,6 +101,10 @@ class UtilisateurEntity extends Entity
         {
             $this->nom = null;
         }
+        else
+        {
+            $this->nom = $nom;
+        }
     }
 
     public function nom():?string
@@ -105,7 +117,11 @@ class UtilisateurEntity extends Entity
     {
         if (Utilitaires::emptyMinusZero($numero_rue))
         {
-            $this->numero_rue =null;
+            $this->numero_rue = null;
+        }
+        else
+        {
+            $this->numero_rue = $numero_rue;
         }
     }
 
@@ -121,6 +137,10 @@ class UtilisateurEntity extends Entity
         {
             $this->nom_rue = null;
         }
+        else
+        {
+            $this->nom_rue = $nom_rue;
+        }
     }
 
     public function nom_rue():?string
@@ -134,6 +154,10 @@ class UtilisateurEntity extends Entity
         if (Utilitaires::emptyMinusZero($complement_adresse))
         {
             $this->complement_adresse = null;
+        }
+        else
+        {
+            $this->complement_adresse = $complement_adresse;
         }
     }
 
@@ -149,6 +173,10 @@ class UtilisateurEntity extends Entity
         {
             $this->code_postal = null;
         }
+        else
+        {
+            $this->code_postal = $code_postal;
+        }
     }
 
     public function code_postal():?string
@@ -162,6 +190,10 @@ class UtilisateurEntity extends Entity
         if (Utilitaires::emptyMinusZero($ville))
         {
             $this->ville = null;
+        }
+        else
+        {
+            $this->ville = $ville;
         }
     }
 
@@ -177,6 +209,10 @@ class UtilisateurEntity extends Entity
         {
             $this->pays = null;
         }
+        else
+        {
+            $this->pays = $pays;
+        }
     }
 
     public function pays():?string
@@ -190,6 +226,10 @@ class UtilisateurEntity extends Entity
         if (Utilitaires::emptyMinusZero($telephone))
         {
             $this->telephone = null;
+        }
+        else
+        {
+            $this->telephone = $telephone;
         }
     }
 

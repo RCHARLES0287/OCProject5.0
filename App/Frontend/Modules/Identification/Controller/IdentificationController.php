@@ -51,11 +51,11 @@ class IdentificationController extends \RCFramework\BackController
             $newUtilisateurEntity->setPays($_POST['pays']);
             $newUtilisateurEntity->setTelephone($_POST['telephone']);
             $newUtilisateurEntity->setEmail($_POST['email_adress']);
-            $newUtilisateurEntity->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
+            $newUtilisateurEntity->setPassword(password_hash($_POST['password'], PASSWORD_DEFAULT));
 
             $newUtilisateurManager = new UtilisateursManager();
             $newUtilisateurManager->saveOneUtilisateur($newUtilisateurEntity);
-            
+
         }
     }
 }
