@@ -6,6 +6,7 @@ namespace App\Frontend\Modules\Commande\Controller;
 
 use Entity\GalerieEntity;
 use Entity\Ligne_de_commandeEntity;
+use Entity\PhotoEntity;
 use Model\DimensionsManager;
 use Model\GaleriesManager;
 use Model\LignesDeCommandesManager;
@@ -193,6 +194,40 @@ class CommandeController extends \RCFramework\BackController
 
         header('Content-Type: application/json');
         exit;
+    }
+
+
+    public function executeValidationpanier (HTTPRequest $request)
+    {
+        if (Utilitaires::emptyMinusZero($_SESSION['utilisateur_entity']))
+        {
+            header('Location: /logginginform');
+        }
+        else
+        {
+            foreach ($_SESSION['panier'] as $lignePanier)
+            {
+                $articleId = $lignePanier['articleId'];
+                $dimensionsId = $lignePanier['dimensionsId'];
+                $nombreArticles = $lignePanier['nombreArticles'];
+
+                $newPhotoManager = new PhotosManager();
+                $newPhotoEntity = $newPhotoManager->getOnePhoto($articleId);
+
+                $newTarifsManager = new TarifsManager();
+                $newTarifsEntity = $newTarifsManager->getOnePhotoTarifs();
+
+                $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
+//                A compléter
+                $newLigneDeCommandeEntity->setNom_prenom_adresse($_SESSION['utilisateur_entity']);
+                $newLigneDeCommandeEntity->setPhoto_serial_number($newPhotoEntity->serial_number());
+                $newLigneDeCommandeEntity->setPhoto_name($newPhotoEntity->name());
+                $newLigneDeCommandeEntity->setDimensions($dimensionsId);
+                $newLigneDeCommandeEntity->setTarif();
+                $newLigneDeCommandeEntity->setNombre_exemplaires($nombreArticles);
+
+            }
+        }
     }
 
 

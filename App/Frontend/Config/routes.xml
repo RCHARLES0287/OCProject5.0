@@ -11,11 +11,13 @@
     <route url="/validateonearticle" module="Commande" action="validateonearticle"/>
     <route url="/addorremoveonetoquantity" module="Commande" action="addorremoveonetoquantity"/>
     <route url="/affichagepanier" module="Commande" action="affichagepanier"/>
+    <route url="/validationpanier" module="Commande" action="validationpanier"/>
+
 
     <route url="/logginginform" module="Identification" action="logginginform"/>
     <route url="/loggingin" module="Identification" action="loggingin"/>
-    <route url="/signinginform" module="Identification" action="signinginform"/>
-    <route url="/signingin" module="Identification" action="signingin"/>
+    <route url="/signingupform" module="Identification" action="signingupform"/>
+    <route url="/signingup" module="Identification" action="signingup"/>
 
 
 </routes>
