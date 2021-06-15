@@ -1,0 +1,12 @@
+{% extends 'Frontend/Templates/frontend_layout.html.twig' %}
+
+{% block frontend_content %}
+
+    {#
+    <h2>Identification réussie. Bienvenue <?php echo $_SESSION['utilisateur_entity']; ?></h2>
+    #}
+
+    <h2>Identification réussie. Bienvenue {{ userSession.prenom}}</h2>
+
+
+{% endblock %}

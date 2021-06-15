@@ -22,19 +22,24 @@ class IdentificationController extends \RCFramework\BackController
 
         if ($utilisateurEntity !== null)
         {
+            /*
             $_SESSION['connexion_status'] = 'connected';
             $_SESSION['login'] = $utilisateurEntity->email();
+            */
+            $_SESSION['utilisateur_entity'] = $utilisateurEntity;
+            $userSession = $_SESSION['utilisateur_entity'];
         }
+
     }
 
 
-    public function executeSigninginform (HTTPRequest $request)
+    public function executeSigningupform (HTTPRequest $request)
     {
 
     }
 
 
-    public function executeSigningin (HTTPRequest $request)
+    public function executeSigningup (HTTPRequest $request)
     {
         if (isset($_POST['prenom']) && isset($_POST['nom']) && isset($_POST['birthdate']) && isset($_POST['numero_rue']) && isset($_POST['nom_rue'])
             && isset($_POST['code_postal']) && isset($_POST['ville']) && isset($_POST['pays']) && isset($_POST['email_adress']) && isset($_POST['password']))

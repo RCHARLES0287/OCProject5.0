@@ -36,6 +36,18 @@
 
         {% endfor %}
 
+        <div>
+            <form action="/validationpanier" method="post">
+                <button type="submit" id="bouton_validation_panier">Passer commande</button>
+            </form>
+        </div>
+
+        {#
+        <div>
+            <button type="submit" id="bouton_validation_panier" formaction="/logginginform">Passer commande</button>
+        </div>
+        #}
+
     </section>
 
 {% endblock %}
@@ -44,3 +56,4 @@
 <script type="application/javascript" src="/js/AddingOrRemovingOneToQuantityAjax.js"></script>
 <script type="application/javascript" src="/js/affichagePanier.js"></script>
 {% endblock %}
+
