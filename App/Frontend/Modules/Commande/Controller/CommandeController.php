@@ -201,10 +201,16 @@ class CommandeController extends \RCFramework\BackController
     {
         if (Utilitaires::emptyMinusZero($_SESSION['utilisateur_entity']))
         {
+            if ($request->postExists('marqueur_validation_panier'))
+            {
+                $_SESSION['marqueur_validation_panier'] = true;
+            }
             header('Location: /logginginform');
         }
         else
         {
+            /*var_dump('on est dans le controller');
+            exit;*/
             foreach ($_SESSION['panier'] as $lignePanier)
             {
                 try
@@ -220,7 +226,8 @@ class CommandeController extends \RCFramework\BackController
                     $tarif = $newTarifsManager->getOnePhotoAndDimensionsTarif($articleId, $dimensionsId);
 
                     $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
-//                A compléter
+                    /*var_dump('on fait encore plus de tests');
+                    exit;*/
                     $newLigneDeCommandeEntity->setNom_prenom_adresse($_SESSION['utilisateur_entity']->nom(),
                         $_SESSION['utilisateur_entity']->prenom(),
                         $_SESSION['utilisateur_entity']->numero_rue(),
@@ -228,6 +235,7 @@ class CommandeController extends \RCFramework\BackController
                         $_SESSION['utilisateur_entity']->code_postal(),
                         $_SESSION['utilisateur_entity']->ville(),
                         $_SESSION['utilisateur_entity']->pays());
+
                     $newLigneDeCommandeEntity->setPhoto_serial_number($newPhotoEntity->serial_number());
                     $newLigneDeCommandeEntity->setPhoto_name($newPhotoEntity->name());
                     $newLigneDeCommandeEntity->setDimensions($dimensionsId);

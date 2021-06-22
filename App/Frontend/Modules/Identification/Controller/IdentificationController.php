@@ -32,9 +32,10 @@ class IdentificationController extends \RCFramework\BackController
 
 
         }
-        if ($request->postExists('marqueur_validation_panier'))
+        if ($_SESSION['marqueur_validation_panier'] = true)
         {
-            header('Location: /validationpanier');
+            unset($_SESSION['marqueur_validation_panier']);
+//            header('Location: /validationpanier');
         }
 
     }
