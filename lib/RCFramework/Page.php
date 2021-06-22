@@ -34,6 +34,8 @@ class Page extends ApplicationComponent
             'cache' => false,
 //            'cache' => __DIR__.'/../../cache/twig'
         ]);
+//        Pour fournir le $_SESSION en global à Twig
+        $twig->addGlobal('GlobalSession', $_SESSION);
 
         ob_start();
 
