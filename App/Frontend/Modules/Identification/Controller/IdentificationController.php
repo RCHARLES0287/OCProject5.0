@@ -27,7 +27,14 @@ class IdentificationController extends \RCFramework\BackController
             $_SESSION['login'] = $utilisateurEntity->email();
             */
             $_SESSION['utilisateur_entity'] = $utilisateurEntity;
-            $userSession = $_SESSION['utilisateur_entity'];
+//            Cette autre méthode serait utilisée pour passer le prénom dans une variable utilisable avec Twig dans la vue si on n'avait pas fourni le $_SESSION en global à Twig dans le fichier page.php
+//            $this->page->addVar('prenomUtilisateur', $_SESSION['utilisateur_entity']->prenom());
+
+
+        }
+        if ($request->postExists('marqueur_validation_panier'))
+        {
+            header('Location: /validationpanier');
         }
 
     }

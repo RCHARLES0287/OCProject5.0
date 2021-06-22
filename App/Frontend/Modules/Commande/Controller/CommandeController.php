@@ -207,24 +207,40 @@ class CommandeController extends \RCFramework\BackController
         {
             foreach ($_SESSION['panier'] as $lignePanier)
             {
-                $articleId = $lignePanier['articleId'];
-                $dimensionsId = $lignePanier['dimensionsId'];
-                $nombreArticles = $lignePanier['nombreArticles'];
+                try
+                {
+                    $articleId = $lignePanier['articleId'];
+                    $dimensionsId = $lignePanier['dimensionsId'];
+                    $nombreArticles = $lignePanier['nombreArticles'];
 
-                $newPhotoManager = new PhotosManager();
-                $newPhotoEntity = $newPhotoManager->getOnePhoto($articleId);
+                    $newPhotoManager = new PhotosManager();
+                    $newPhotoEntity = $newPhotoManager->getOnePhoto($articleId);
 
-                $newTarifsManager = new TarifsManager();
-                $newTarifsEntity = $newTarifsManager->getOnePhotoTarifs();
+                    $newTarifsManager = new TarifsManager();
+                    $tarif = $newTarifsManager->getOnePhotoAndDimensionsTarif($articleId, $dimensionsId);
 
-                $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
+                    $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
 //                A compléter
-                $newLigneDeCommandeEntity->setNom_prenom_adresse($_SESSION['utilisateur_entity']);
-                $newLigneDeCommandeEntity->setPhoto_serial_number($newPhotoEntity->serial_number());
-                $newLigneDeCommandeEntity->setPhoto_name($newPhotoEntity->name());
-                $newLigneDeCommandeEntity->setDimensions($dimensionsId);
-                $newLigneDeCommandeEntity->setTarif();
-                $newLigneDeCommandeEntity->setNombre_exemplaires($nombreArticles);
+                    $newLigneDeCommandeEntity->setNom_prenom_adresse($_SESSION['utilisateur_entity']->nom(),
+                        $_SESSION['utilisateur_entity']->prenom(),
+                        $_SESSION['utilisateur_entity']->numero_rue(),
+                        $_SESSION['utilisateur_entity']->nom_rue(),
+                        $_SESSION['utilisateur_entity']->code_postal(),
+                        $_SESSION['utilisateur_entity']->ville(),
+                        $_SESSION['utilisateur_entity']->pays());
+                    $newLigneDeCommandeEntity->setPhoto_serial_number($newPhotoEntity->serial_number());
+                    $newLigneDeCommandeEntity->setPhoto_name($newPhotoEntity->name());
+                    $newLigneDeCommandeEntity->setDimensions($dimensionsId);
+                    $newLigneDeCommandeEntity->setTarif($tarif);
+                    $newLigneDeCommandeEntity->setNombre_exemplaires($nombreArticles);
+
+                    echo json_encode(['status'=>'Succès', 'message'=>'Ligne de commande validée']);
+                }
+                catch (\Throwable $exception)
+                {
+                    Utilitaires::logException($exception);
+                    echo json_encode(['status'=>'Erreur']);
+                }
 
             }
         }
