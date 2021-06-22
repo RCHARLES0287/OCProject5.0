@@ -1,0 +1,16 @@
+{% extends 'Frontend/Templates/frontend_layout.html.twig' %}
+
+{% block frontend_content %}
+
+    <h2>Souhaitez-vous quitter votre session?</h2>
+
+    <form action="/loggingout" method="post">
+        <button type="submit" id="bouton_confirmation_logout">Confirmer</button>
+    </form>
+
+    <form action="/showallavailablephotos" method="post">
+        <button type="submit" id="bouton_annulation_logout">Annuler</button>
+    </form>
+
+{% endblock %}
+

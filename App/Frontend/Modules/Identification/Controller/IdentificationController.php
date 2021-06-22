@@ -40,6 +40,20 @@ class IdentificationController extends \RCFramework\BackController
     }
 
 
+    public function executeLoggingoutform (HTTPRequest $request)
+    {
+
+    }
+
+
+    public function executeLoggingout (HTTPRequest $request)
+    {
+        unset($_SESSION['utilisateur_entity']);
+        header('Location: /showallavailablephotos');
+    }
+
+
+
     public function executeSigningupform (HTTPRequest $request)
     {
 

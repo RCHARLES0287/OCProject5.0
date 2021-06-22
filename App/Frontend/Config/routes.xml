@@ -16,6 +16,8 @@
 
     <route url="/logginginform" module="Identification" action="logginginform"/>
     <route url="/loggingin" module="Identification" action="loggingin"/>
+    <route url="/loggingoutform" module="Identification" action="loggingoutform"/>
+    <route url="/loggingout" module="Identification" action="loggingout"/>
     <route url="/signingupform" module="Identification" action="signingupform"/>
     <route url="/signingup" module="Identification" action="signingup"/>
 
