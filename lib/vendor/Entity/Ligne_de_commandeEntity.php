@@ -36,15 +36,21 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setNom_prenom_adresse($nom_prenom_adresse)
+    public function setNom_prenom_adresse($nom, $prenom, $numeroDeRue, $nomDeRue, $codePostal, $ville, $pays)
     {
-        if (Utilitaires::emptyMinusZero($nom_prenom_adresse))
+        if (Utilitaires::emptyMinusZero($nom) &&
+            Utilitaires::emptyMinusZero($prenom) &&
+            Utilitaires::emptyMinusZero($numeroDeRue) &&
+            Utilitaires::emptyMinusZero($nomDeRue) &&
+            Utilitaires::emptyMinusZero($codePostal) &&
+            Utilitaires::emptyMinusZero($ville) &&
+            Utilitaires::emptyMinusZero($pays))
         {
             throw new \Exception('Les nom, prénom et adresse doivent être renseignés');
         }
         else
         {
-            $this->nom_prenom_adresse = $nom_prenom_adresse;
+            $this->nom_prenom_adresse = $nom . '/' . $prenom . '/' . $numeroDeRue . '/' . $nomDeRue . '/' . $codePostal . '/' . $ville . '/' . $pays;
         }
     }
 
