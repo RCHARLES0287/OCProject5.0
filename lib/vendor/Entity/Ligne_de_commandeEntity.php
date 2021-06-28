@@ -22,7 +22,7 @@ class Ligne_de_commandeEntity extends Entity
     {
         if (Utilitaires::emptyMinusZero($commande_id))
         {
-            throw new \Exception("L'id de la commande doit être défini");
+            $this->commande_id = null;
         }
         else
         {
@@ -80,7 +80,7 @@ class Ligne_de_commandeEntity extends Entity
 
     public function setPhoto_name($photo_name)
     {
-        if (Utilitaires::emptyMinusZero($photo_serial_number))
+        if (Utilitaires::emptyMinusZero($photo_name))
         {
             throw new \Exception('Le nom de la photo doit être défini');
         }
@@ -114,7 +114,7 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setTarif($tarif)
+    public function setTarif(float $tarif)
     {
         if (Utilitaires::emptyMinusZero($tarif))
         {
@@ -140,7 +140,7 @@ class Ligne_de_commandeEntity extends Entity
         }
         else
         {
-            $this->tarif = $nombre_exemplaires;
+            $this->nombre_exemplaires = $nombre_exemplaires;
         }
     }
 
