@@ -2,13 +2,14 @@
 //Le session_start() est placé ici car on va utiliser la session dans de nombreuses pages
 use RCFramework\Utilitaires;
 
+require_once __DIR__ . "/../lib/vendor/autoload.php";
+
 session_start();
 
 const DEFAULT_APP = 'Frontend';
 
 try
 {
-    require_once __DIR__ . "/../lib/vendor/autoload.php";
 
 // Si l'application n'est pas valide, on va charger l'application par défaut qui se chargera de générer une erreur 404
     if (!isset($_GET['app']) || !file_exists(__DIR__.'/../App/'.$_GET['app']))
