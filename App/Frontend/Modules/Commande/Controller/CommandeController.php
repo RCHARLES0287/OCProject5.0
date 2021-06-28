@@ -226,8 +226,14 @@ class CommandeController extends \RCFramework\BackController
                     $tarif = $newTarifsManager->getOnePhotoAndDimensionsTarif($articleId, $dimensionsId);
 
                     $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
-                    /*var_dump('on fait encore plus de tests');
+
+//                    $newLigneDeCommandeEntity->setCommande_id(15);
+                    /*var_dump($newLigneDeCommandeEntity->commande_id());
                     exit;*/
+                    /*var_dump($nombreArticles);
+                    exit;*/
+
+
                     $newLigneDeCommandeEntity->setNom_prenom_adresse($_SESSION['utilisateur_entity']->nom(),
                         $_SESSION['utilisateur_entity']->prenom(),
                         $_SESSION['utilisateur_entity']->numero_rue(),
@@ -235,24 +241,26 @@ class CommandeController extends \RCFramework\BackController
                         $_SESSION['utilisateur_entity']->code_postal(),
                         $_SESSION['utilisateur_entity']->ville(),
                         $_SESSION['utilisateur_entity']->pays());
-
                     $newLigneDeCommandeEntity->setPhoto_serial_number($newPhotoEntity->serial_number());
                     $newLigneDeCommandeEntity->setPhoto_name($newPhotoEntity->name());
                     $newLigneDeCommandeEntity->setDimensions($dimensionsId);
-                    $newLigneDeCommandeEntity->setTarif($tarif);
+                    $newLigneDeCommandeEntity->setTarif($tarif->prix());
                     $newLigneDeCommandeEntity->setNombre_exemplaires($nombreArticles);
 
-                    echo json_encode(['status'=>'Succès', 'message'=>'Ligne de commande validée']);
+                    $newLigneDeCommandeManager = new LignesDeCommandesManager();
+                    $newLigneDeCommandeManager->saveOneLigneDeCommande($newLigneDeCommandeEntity);
                 }
+
                 catch (\Throwable $exception)
                 {
                     Utilitaires::logException($exception);
-                    echo json_encode(['status'=>'Erreur']);
+                    Utilitaires::returnJsonAndExit(['status'=>'Erreur']);
                 }
-
             }
+//            Utilitaires::returnJsonAndExit(['status'=>'Succès', 'message'=>'Ligne de commande validée']);
         }
     }
+
 
 
     /*public function executeRemoveonetoquantity (HTTPRequest $request)
@@ -366,3 +374,4 @@ array(3) {
         ["articleId"]=> string(1) "5" ["dimensionsId"]=> string(1) "2" ["nombreArticles"]=> string(1) "3"
     }
 }*/
+

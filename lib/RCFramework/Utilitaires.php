@@ -43,4 +43,15 @@ abstract class Utilitaires
     {
         file_put_contents(__DIR__.'/../../cache/erreur_'.date('Y-m-d').'.log', '['.date('H:i:s').'] '.$message.PHP_EOL, FILE_APPEND);
     }
+
+    public static function returnJsonAndExit ($value)
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        if ($value["status"] !== 'Succès')
+        {
+            echo json_encode($value, JSON_THROW_ON_ERROR);
+            exit;
+        }
+
+    }
 }
