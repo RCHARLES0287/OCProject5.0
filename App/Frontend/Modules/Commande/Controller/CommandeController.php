@@ -201,14 +201,14 @@ class CommandeController extends \RCFramework\BackController
     {
         if (Utilitaires::emptyMinusZero($_SESSION['utilisateur_entity']))
         {
-            if ($request->postExists('marqueur_validation_panier'))
-            {
-                $_SESSION['marqueur_validation_panier'] = true;
-            }
+//            $_SESSION['loggingin_redirection'] contient le chemin vers lequel devra être effectuée la redirection
+            $_SESSION['loggingin_redirection'] = '/validationpanier';
             header('Location: /logginginform');
+            exit;
         }
         else
         {
+
             /*var_dump('on est dans le controller');
             exit;*/
             foreach ($_SESSION['panier'] as $lignePanier)

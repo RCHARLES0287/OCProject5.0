@@ -6,6 +6,7 @@ namespace App\Frontend\Modules\Identification\Controller;
 use Entity\UtilisateurEntity;
 use Model\UtilisateursManager;
 use RCFramework\HTTPRequest;
+use RCFramework\Utilitaires;
 
 class IdentificationController extends \RCFramework\BackController
 {
@@ -32,10 +33,11 @@ class IdentificationController extends \RCFramework\BackController
 
 
         }
-        if ($_SESSION['marqueur_validation_panier'] = true)
+        if (!Utilitaires::emptyMinusZero($_SESSION['loggingin_redirection']))
         {
-            unset($_SESSION['marqueur_validation_panier']);
-//            header('Location: /validationpanier');
+            header('Location: ' .$_SESSION['loggingin_redirection']);
+            unset($_SESSION['loggingin_redirection']);
+            exit;
         }
 
     }
@@ -51,6 +53,7 @@ class IdentificationController extends \RCFramework\BackController
     {
         unset($_SESSION['utilisateur_entity']);
         header('Location: /showallavailablephotos');
+        exit;
     }
 
 
