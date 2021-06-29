@@ -2,5 +2,6 @@
 
 <routes>
     <route url="/adminconnexion" module="connexion" action="adminconnexion"/>
+    <route url="/adminconnexionform" module="connexion" action="adminconnexionform"/>
 </routes>
 

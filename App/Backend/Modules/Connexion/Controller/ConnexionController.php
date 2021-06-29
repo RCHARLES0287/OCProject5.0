@@ -14,6 +14,11 @@ class ConnexionController extends BackController
 
     }
 
+    public function executeAdminconnexionform (HTTPRequest $request)
+    {
+
+    }
+
 
     static public function isConnected()
     {
