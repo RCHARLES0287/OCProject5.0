@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <routes>
-    <route url="/adminconnexion" module="connexion" action="adminconnexion"/>
-    <route url="/adminconnexionform" module="connexion" action="adminconnexionform"/>
+    <route url="/admin/connexion" module="Connexion" action="adminconnexion"/>
+    <route url="/admin/connexionform" module="Connexion" action="adminconnexionform"/>
 </routes>
+
 

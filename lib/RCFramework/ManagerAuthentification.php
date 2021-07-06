@@ -7,8 +7,10 @@ namespace RCFramework;
 use Entity\CommandeEntity;
 use RCFramework\Manager;
 
-class ManagerAuthentification extends Manager
+abstract class ManagerAuthentification extends Manager
 {
+    protected abstract function getTypeOfUser ();
+
     public function compareIdentificationWithDb($login, $password, $requeteSQL, $correspondanceLoginDB)
     {
         if (!Utilitaires::emptyMinusZero($login) && !Utilitaires::emptyMinusZero($password))
@@ -22,7 +24,8 @@ class ManagerAuthentification extends Manager
                 return null;
             }
 
-            $userFeatures = new EntityAuthentificationUser($dbUser);
+            $typeOfUser = $this->getTypeOfUser();
+            $userFeatures = new $typeOfUser($dbUser);
 
             if (password_verify($password, $userFeatures->password()))
             {

@@ -13,8 +13,6 @@ class ConnexionController extends BackController
 {
     public function executeAdminconnexion (HTTPRequest $request)
     {
-        var_dump('On est bien dans le controller');
-        exit;
 
     }
 

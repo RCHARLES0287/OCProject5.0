@@ -9,9 +9,9 @@ use RCFramework\ManagerAuthentification;
 
 class AdministrateurManager extends ManagerAuthentification
 {
-    public function __construct()
+    protected function getTypeOfUser()
     {
-        parent::__construct();
+        return AdminEntity::class;
     }
 
     public function getOneAdministrateur ($adminId)
@@ -32,5 +32,6 @@ class AdministrateurManager extends ManagerAuthentification
             return new AdminEntity($dbAdministrateur);
         }
     }
+
 }
 

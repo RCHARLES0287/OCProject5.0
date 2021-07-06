@@ -9,7 +9,7 @@ use RCFramework\Utilitaires;
 
 class UtilisateurEntity extends EntityAuthentificationUser
 {
-//    protected const CLASS_PREFIX = 'utilisateurs';
+    protected const CLASS_PREFIX = 'utilisateurs';
     /*private string $email;
     private string $password;*/
     private ?string $birthdate = null;

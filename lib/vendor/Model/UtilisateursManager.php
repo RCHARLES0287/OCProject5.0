@@ -11,9 +11,9 @@ use RCFramework\Utilitaires;
 
 class UtilisateursManager extends ManagerAuthentification
 {
-    public function __construct()
+    protected function getTypeOfUser()
     {
-        parent::__construct();
+        return UtilisateurEntity::class;
     }
 
     public function getOneUtilisateur($utilisateurId)
@@ -113,5 +113,6 @@ class UtilisateursManager extends ManagerAuthentification
         }
         return null;
     }*/
+
 }
 
