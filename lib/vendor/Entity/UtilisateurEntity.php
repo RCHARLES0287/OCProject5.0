@@ -4,14 +4,14 @@
 namespace Entity;
 
 
-use RCFramework\Entity;
+use RCFramework\EntityAuthentificationUser;
 use RCFramework\Utilitaires;
 
-class UtilisateurEntity extends Entity
+class UtilisateurEntity extends EntityAuthentificationUser
 {
-    protected const CLASS_PREFIX = 'utilisateurs';
-    private string $email;
-    private string $password;
+//    protected const CLASS_PREFIX = 'utilisateurs';
+    /*private string $email;
+    private string $password;*/
     private ?string $birthdate = null;
     private ?string $prenom = null;
     private ?string $nom = null;
@@ -23,7 +23,7 @@ class UtilisateurEntity extends Entity
     private ?string $pays = null;
     private ?string $telephone = null;
 
-    public function setEmail($email)
+    /*public function setEmail($email)
     {
         if (Utilitaires::emptyMinusZero($email))
         {
@@ -33,15 +33,15 @@ class UtilisateurEntity extends Entity
         {
             $this->email = $email;
         }
-    }
+    }*/
 
-    public function email():string
+    /*public function email():string
     {
         return $this->email;
-    }
+    }*/
 
 
-    public function setPassword($password)
+    /*public function setPassword($password)
     {
         if (Utilitaires::emptyMinusZero($password))
         {
@@ -51,12 +51,12 @@ class UtilisateurEntity extends Entity
         {
             $this->password = $password;
         }
-    }
+    }*/
 
-    public function password():string
+    /*public function password():string
     {
         return $this->password;
-    }
+    }*/
 
 
     public function setBirthdate($birthdate)

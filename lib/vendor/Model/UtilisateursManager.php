@@ -3,12 +3,13 @@
 
 namespace Model;
 
+use Entity\PhotoEntity;
 use Entity\UtilisateurEntity;
 use PDO;
-use RCFramework\Manager;
+use RCFramework\ManagerAuthentification;
 use RCFramework\Utilitaires;
 
-class UtilisateursManager extends Manager
+class UtilisateursManager extends ManagerAuthentification
 {
     public function __construct()
     {
@@ -85,7 +86,7 @@ class UtilisateursManager extends Manager
     }
 
 
-    public function compareVisitorWithDb($visitorLogin, $visitorPwd)
+    /*public function compareVisitorWithDb($visitorLogin, $visitorPwd)
     {
         if (!Utilitaires::emptyMinusZero($visitorLogin) && !Utilitaires::emptyMinusZero($visitorPwd))
         {
@@ -111,6 +112,6 @@ class UtilisateursManager extends Manager
 
         }
         return null;
-    }
+    }*/
 }
 

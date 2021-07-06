@@ -18,28 +18,33 @@ class IdentificationController extends \RCFramework\BackController
 
     public function executeLoggingin (HTTPRequest $request)
     {
-        $UtilisateurManager = new UtilisateursManager();
-        $utilisateurEntity = $UtilisateurManager->compareVisitorWithDb($request->postData('email_adress'), $request->postData('password'));
-
-        if ($utilisateurEntity !== null)
+        if (!Utilitaires::emptyMinusZero($request->postData('email_adress'))
+            && !Utilitaires::emptyMinusZero($request->postData('password')))
         {
-            /*
-            $_SESSION['connexion_status'] = 'connected';
-            $_SESSION['login'] = $utilisateurEntity->email();
-            */
-            $_SESSION['utilisateur_entity'] = $utilisateurEntity;
+            $UtilisateurManager = new UtilisateursManager();
+            $SQLRequest = 'SELECT utilisateurs_email, utilisateurs_password FROM rc_photographe_utilisateurs WHERE utilisateurs_email=:utilisateurEmail';
+            $utilisateurEntity = $UtilisateurManager->compareIdentificationWithDb($request->postData('email_adress'),
+                                                                                    $request->postData('password'),
+                                                                                    $SQLRequest,
+                                                                                    'utilisateurEmail');
+
+            if ($utilisateurEntity !== null)
+            {
+                /*
+                $_SESSION['connexion_status'] = 'connected';
+                $_SESSION['login'] = $utilisateurEntity->email();
+                */
+                $_SESSION['utilisateur_entity'] = $utilisateurEntity;
 //            Cette autre méthode serait utilisée pour passer le prénom dans une variable utilisable avec Twig dans la vue si on n'avait pas fourni le $_SESSION en global à Twig dans le fichier page.php
 //            $this->page->addVar('prenomUtilisateur', $_SESSION['utilisateur_entity']->prenom());
-
-
+            }
+            if (!Utilitaires::emptyMinusZero($_SESSION['loggingin_redirection']))
+            {
+                header('Location: ' .$_SESSION['loggingin_redirection']);
+                unset($_SESSION['loggingin_redirection']);
+                exit;
+            }
         }
-        if (!Utilitaires::emptyMinusZero($_SESSION['loggingin_redirection']))
-        {
-            header('Location: ' .$_SESSION['loggingin_redirection']);
-            unset($_SESSION['loggingin_redirection']);
-            exit;
-        }
-
     }
 
 
