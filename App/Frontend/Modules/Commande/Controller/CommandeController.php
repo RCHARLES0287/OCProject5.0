@@ -11,6 +11,7 @@ use Model\DimensionsManager;
 use Model\GaleriesManager;
 use Model\LignesDeCommandesManager;
 use Model\PhotosManager;
+use Model\RangFactureCommandeManager;
 use Model\TarifsManager;
 use RCFramework\HTTPRequest;
 use RCFramework\Utilitaires;
@@ -215,6 +216,22 @@ class CommandeController extends \RCFramework\BackController
             {
                 try
                 {
+                    /*
+                    $bla = new RangFactureCommandeManager();
+                    var_dump($bla);
+                    exit;
+                    $resultat = $bla->getNextNumeroCommande();
+                    var_dump($resultat->numero_commande());
+                    exit;
+                    */
+
+                    $test = new RangFactureCommandeManager();
+                    $result = $test->getAndUpdateCurrentNumeroFactureCommande();
+                    var_dump($result);
+                    exit;
+
+
+
                     $articleId = $lignePanier['articleId'];
                     $dimensionsId = $lignePanier['dimensionsId'];
                     $nombreArticles = $lignePanier['nombreArticles'];
