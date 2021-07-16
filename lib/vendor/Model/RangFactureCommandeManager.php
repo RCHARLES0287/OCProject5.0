@@ -31,6 +31,7 @@ class RangFactureCommandeManager extends Manager
     /**
      * @param $typeOfData string type de données que l'on recherche : soit 'facture' soit 'commande'
      * @return RangFactureCommandeEntity
+     * @throws \Exception
      */
     public function getAndUpdateCurrentNumeroFactureCommande($typeOfData)
     {

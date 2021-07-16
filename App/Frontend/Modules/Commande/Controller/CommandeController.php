@@ -4,19 +4,23 @@
 namespace App\Frontend\Modules\Commande\Controller;
 
 
+use Entity\CommandeEntity;
 use Entity\GalerieEntity;
 use Entity\Ligne_de_commandeEntity;
 use Entity\PhotoEntity;
+use Model\CommandesManager;
 use Model\DimensionsManager;
 use Model\GaleriesManager;
 use Model\LignesDeCommandesManager;
 use Model\PhotosManager;
 use Model\RangFactureCommandeManager;
 use Model\TarifsManager;
+use RCFramework\BackController;
+use RCFramework\Entity;
 use RCFramework\HTTPRequest;
 use RCFramework\Utilitaires;
 
-class CommandeController extends \RCFramework\BackController
+class CommandeController extends BackController
 {
     public function executeShowallavailablephotos(HTTPRequest $request)
     {
@@ -209,29 +213,30 @@ class CommandeController extends \RCFramework\BackController
         }
         else
         {
+            $prixTotal = 0;
+            $newCommandeEntity = new CommandeEntity();
 
-            /*var_dump('on est dans le controller');
-            exit;*/
+            $newRangFactureCommandeManager = new RangFactureCommandeManager();
+            $newCommandeEntity->setNumero_commande($newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande('commande'));
+            $newCommandeEntity->setMontant_total($prixTotal);
+            $newCommandeEntity->setId_utilisateur($_SESSION['utilisateur_entity']->id());
+            $newCommandeEntity->setNom_et_prenom_utilisateur($_SESSION['utilisateur_entity']->nom(), $_SESSION['utilisateur_entity']->prenom());
+            $newCommandeEntity->setAdresse_utilisateur($_SESSION['utilisateur_entity']->numero_rue(),
+                $_SESSION['utilisateur_entity']->nom_rue(),
+                $_SESSION['utilisateur_entity']->code_postal(),
+                $_SESSION['utilisateur_entity']->ville(),
+                $_SESSION['utilisateur_entity']->pays());
+            $newCommandeEntity->setValidation_panier(0);
+
+            $newCommandeManager = new CommandesManager();
+            $newCommandeManager->saveOneCommande($newCommandeEntity);
+
+            $currentCommandeEntity = $newCommandeManager->getOneCommande($newCommandeEntity->numero_commande());
+
             foreach ($_SESSION['panier'] as $lignePanier)
             {
                 try
                 {
-                    /*
-                    $bla = new RangFactureCommandeManager();
-                    var_dump($bla);
-                    exit;
-                    $resultat = $bla->getNextNumeroCommande();
-                    var_dump($resultat->numero_commande());
-                    exit;
-                    */
-
-                    $test = new RangFactureCommandeManager();
-                    $result = $test->getAndUpdateCurrentNumeroFactureCommande();
-                    var_dump($result);
-                    exit;
-
-
-
                     $articleId = $lignePanier['articleId'];
                     $dimensionsId = $lignePanier['dimensionsId'];
                     $nombreArticles = $lignePanier['nombreArticles'];
@@ -244,13 +249,12 @@ class CommandeController extends \RCFramework\BackController
 
                     $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
 
-//                    $newLigneDeCommandeEntity->setCommande_id(15);
-                    /*var_dump($newLigneDeCommandeEntity->commande_id());
-                    exit;*/
-                    /*var_dump($nombreArticles);
-                    exit;*/
+                    $prixLigneDeCommande = $nombreArticles * $tarif;
+                    $prixTotal = $prixTotal + $prixLigneDeCommande;
+                    $currentCommandeEntity->setMontant_total($prixTotal);
 
 
+                    $newLigneDeCommandeEntity->setCommande_id($currentCommandeEntity->id());
                     $newLigneDeCommandeEntity->setNom_prenom_adresse($_SESSION['utilisateur_entity']->nom(),
                         $_SESSION['utilisateur_entity']->prenom(),
                         $_SESSION['utilisateur_entity']->numero_rue(),
@@ -267,14 +271,13 @@ class CommandeController extends \RCFramework\BackController
                     $newLigneDeCommandeManager = new LignesDeCommandesManager();
                     $newLigneDeCommandeManager->saveOneLigneDeCommande($newLigneDeCommandeEntity);
                 }
-
                 catch (\Throwable $exception)
                 {
                     Utilitaires::logException($exception);
                     Utilitaires::returnJsonAndExit(['status'=>'Erreur']);
                 }
             }
-//            Utilitaires::returnJsonAndExit(['status'=>'Succès', 'message'=>'Ligne de commande validée']);
+            $newCommandeManager->updateCommande($currentCommandeEntity, $currentCommandeEntity->id());
         }
     }
 

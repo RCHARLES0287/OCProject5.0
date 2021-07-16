@@ -33,20 +33,20 @@ class CommandesManager extends Manager
     }
 
 
-    public function getOneCommande($commandeId)
+    public function getOneCommande($numeroCommande)
     {
         $answerCommandeData = $this->db->prepare('SELECT commandes_id, commandes_numero_commande, commandes_numero_facture, commandes_montant_total, commandes_id_utilisateur, commandes_nom_et_prenom_utilisateur, commandes_adresse_utilisateur, commandes_validation_panier
                                                             FROM rc_photographe_commandes
-                                                            WHERE commandes_id=:commandeId');
+                                                            WHERE numero_commande=:numeroCommande');
         $answerCommandeData->execute(array(
-            'commandeId' => $commandeId
+            'numeroCommande' => $numeroCommande
         ));
 
         $dbCommande = $answerCommandeData->fetch();
 
         if ($dbCommande === false)
         {
-            throw new \Exception('La commande dont l\'id est ' . $commandeId . ' n\'existe pas');
+            throw new \Exception('La commande dont le numéro de commande est ' . $numeroCommande . ' n\'existe pas');
         }
         else
         {

@@ -11,15 +11,15 @@ class RangFactureCommandeEntity extends Entity
 {
     //    CLASS_PREFIX contient le préfixe de la table
     protected const CLASS_PREFIX = 'rangs_commandes';
-    private int $numero_commande;
-    private int $numero_facture;
+    private string $numero_commande;
+    private string $numero_facture;
 
-    public function setNumeros_commandes($numero_commande)
+    public function setNumero_commande($numero_commande)
     {
         $this->numero_commande = $numero_commande;
     }
 
-    public function numero_commande():int
+    public function numero_commande():string
     {
         return $this->numero_commande;
     }
@@ -30,9 +30,10 @@ class RangFactureCommandeEntity extends Entity
         $this->numero_facture = $numero_facture;
     }
 
-    public function numero_facture():int
+    public function numero_facture():string
     {
         return $this->numero_facture;
     }
 
 }
+

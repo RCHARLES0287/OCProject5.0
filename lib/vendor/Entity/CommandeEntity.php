@@ -90,15 +90,16 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setNom_et_prenom_utilisateur($nom_et_prenom_utilisateur)
+    public function setNom_et_prenom_utilisateur($nom, $prenom)
     {
-        if (Utilitaires::emptyMinusZero($nom_et_prenom_utilisateur))
+        if (Utilitaires::emptyMinusZero($nom) &&
+            Utilitaires::emptyMinusZero($prenom))
         {
             throw new \Exception("Les nom et prénom de l'utilisateur doivent être renseignés");
         }
         else
         {
-            $this->nom_et_prenom_utilisateur = $nom_et_prenom_utilisateur;
+            $this->nom_et_prenom_utilisateur = $nom . '/' . $prenom;
         }
     }
 
@@ -108,11 +109,15 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setAdresse_utilisateur($adresse_utilisateur)
+    public function setAdresse_utilisateur($numero_rue, $nom_rue, $code_postal, $ville, $pays)
     {
-        if (Utilitaires::emptyMinusZero($adresse_utilisateur))
+        if (Utilitaires::emptyMinusZero($numero_rue) &&
+            Utilitaires::emptyMinusZero($nom_rue) &&
+            Utilitaires::emptyMinusZero($code_postal) &&
+            Utilitaires::emptyMinusZero($ville) &&
+            Utilitaires::emptyMinusZero($pays))
         {
-            throw new \Exception("L'adresse de l'utilisateur doit être renseignée");
+            throw new \Exception("L'adresse de l'utilisateur doit être entièrement renseignée");
         }
         else
         {
