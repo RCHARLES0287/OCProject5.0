@@ -11,7 +11,7 @@ class Ligne_de_commandeEntity extends Entity
 {
     protected const CLASS_PREFIX = 'lignes_de_commandes';
     private int $commande_id;
-    private string $nom_prenom_adresse;
+//    private string $nom_prenom_adresse;
     private string $photo_serial_number;
     private string $photo_name;
     private string $dimensions;
@@ -36,7 +36,7 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setNom_prenom_adresse($nom, $prenom, $numeroDeRue, $nomDeRue, $codePostal, $ville, $pays)
+    /*public function setNom_prenom_adresse($nom, $prenom, $numeroDeRue, $nomDeRue, $codePostal, $ville, $pays)
     {
         if (Utilitaires::emptyMinusZero($nom) &&
             Utilitaires::emptyMinusZero($prenom) &&
@@ -57,7 +57,7 @@ class Ligne_de_commandeEntity extends Entity
     public function nom_prenom_adresse():string
     {
         return $this->nom_prenom_adresse;
-    }
+    }*/
 
 
     public function setPhoto_serial_number($photo_serial_number)
