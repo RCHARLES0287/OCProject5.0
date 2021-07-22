@@ -45,20 +45,24 @@ class RangFactureCommandeManager extends Manager
 
         $rangFactureCommandeEntity = new RangFactureCommandeEntity($dbNumerosFactureCommande);
 
-        if ($typeOfData === 'facture')
+        switch ($typeOfData)
         {
-            $this->updateNumerosFactureCommande('facture', $rangFactureCommandeEntity->numero_facture());
+            case 'facture':
+                $getter = 'numero_facture';
+                break;
+
+            case 'commande':
+                $getter = 'numero_commande';
+                break;
+
+            default:
+                $this->db->rollBack();
+                throw new \Exception('Erreur survenue dans le choix du paramètre à modifier, facture ou commande');
         }
-        else if ($typeOfData === 'commande')
-        {
-            $this->updateNumerosFactureCommande('commande', $rangFactureCommandeEntity->numero_commande());
-        }
-        else
-        {
-            throw new \Exception('Erreur survenue dans le choix du paramètre à modifier, facture ou commande');
-        }
+        $this->updateNumerosFactureCommande($typeOfData, $rangFactureCommandeEntity->$getter());
+
         $this->db->commit();
-        return $rangFactureCommandeEntity;
+        return $rangFactureCommandeEntity->$getter();
     }
 
 

@@ -22,7 +22,7 @@ class ConnexionController extends BackController
             && !Utilitaires::emptyMinusZero($request->postData('password')))
         {
             $AdministrateurManager = new AdministrateurManager();
-            $SQLRequest = 'SELECT admins_login, admins_password FROM rc_photographe_admins WHERE admins_login=:adminLogin';
+            $SQLRequest = 'SELECT * FROM rc_photographe_admins WHERE admins_login=:adminLogin';
             $administrateurEntity = $AdministrateurManager->compareIdentificationWithDb($request->postData('email_adress'),
                                                                                     $request->postData('password'),
                                                                                     $SQLRequest,

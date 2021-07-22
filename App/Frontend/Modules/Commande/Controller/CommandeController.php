@@ -204,7 +204,7 @@ class CommandeController extends BackController
 
     public function executeValidationpanier (HTTPRequest $request)
     {
-        if (Utilitaires::emptyMinusZero($_SESSION['utilisateur_entity']))
+        if (!isset($_SESSION['utilisateur_entity']) || !$_SESSION['utilisateur_entity']->testEntityExists())
         {
 //            $_SESSION['loggingin_redirection'] contient le chemin vers lequel devra être effectuée la redirection
             $_SESSION['loggingin_redirection'] = '/validationpanier';
@@ -213,12 +213,11 @@ class CommandeController extends BackController
         }
         else
         {
-            $prixTotal = 0;
-            $newCommandeEntity = new CommandeEntity();
-
             $newRangFactureCommandeManager = new RangFactureCommandeManager();
+
+            $newCommandeEntity = new CommandeEntity();
             $newCommandeEntity->setNumero_commande($newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande('commande'));
-            $newCommandeEntity->setMontant_total($prixTotal);
+            $newCommandeEntity->setMontant_total(0);
             $newCommandeEntity->setId_utilisateur($_SESSION['utilisateur_entity']->id());
             $newCommandeEntity->setNom_et_prenom_utilisateur($_SESSION['utilisateur_entity']->nom(), $_SESSION['utilisateur_entity']->prenom());
             $newCommandeEntity->setAdresse_utilisateur($_SESSION['utilisateur_entity']->numero_rue(),
@@ -228,10 +227,20 @@ class CommandeController extends BackController
                 $_SESSION['utilisateur_entity']->pays());
             $newCommandeEntity->setValidation_panier(0);
 
+            /*var_dump($newCommandeEntity->id());
+            exit;*/
+
             $newCommandeManager = new CommandesManager();
+
+            /*var_dump($newCommandeEntity->id());
+            exit;*/
+//            L'id est alimenté en automatique dans saveOneCommande
             $newCommandeManager->saveOneCommande($newCommandeEntity);
 
-            $currentCommandeEntity = $newCommandeManager->getOneCommande($newCommandeEntity->numero_commande());
+
+//            $newCommandeEntity->setId($newCommandeManager->getOneCommande());
+
+            $prixTotal = 0;
 
             foreach ($_SESSION['panier'] as $lignePanier)
             {
@@ -245,16 +254,21 @@ class CommandeController extends BackController
                     $newPhotoEntity = $newPhotoManager->getOnePhoto($articleId);
 
                     $newTarifsManager = new TarifsManager();
-                    $tarif = $newTarifsManager->getOnePhotoAndDimensionsTarif($articleId, $dimensionsId);
+                    $newTarifsEntity = $newTarifsManager->getOnePhotoAndDimensionsTarif($articleId, $dimensionsId);
+                    $tarif = $newTarifsEntity->prix();
+
+                    /*var_dump($tarif);
+                    exit;*/
 
                     $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
 
                     $prixLigneDeCommande = $nombreArticles * $tarif;
+                    /*var_dump($prixLigneDeCommande);
+                    exit;*/
                     $prixTotal = $prixTotal + $prixLigneDeCommande;
-                    $currentCommandeEntity->setMontant_total($prixTotal);
 
 
-                    $newLigneDeCommandeEntity->setCommande_id($currentCommandeEntity->id());
+                    $newLigneDeCommandeEntity->setCommande_id($newCommandeEntity->id());
                     $newLigneDeCommandeEntity->setNom_prenom_adresse($_SESSION['utilisateur_entity']->nom(),
                         $_SESSION['utilisateur_entity']->prenom(),
                         $_SESSION['utilisateur_entity']->numero_rue(),
@@ -265,9 +279,13 @@ class CommandeController extends BackController
                     $newLigneDeCommandeEntity->setPhoto_serial_number($newPhotoEntity->serial_number());
                     $newLigneDeCommandeEntity->setPhoto_name($newPhotoEntity->name());
                     $newLigneDeCommandeEntity->setDimensions($dimensionsId);
-                    $newLigneDeCommandeEntity->setTarif($tarif->prix());
+                    $newLigneDeCommandeEntity->setTarif($tarif);
                     $newLigneDeCommandeEntity->setNombre_exemplaires($nombreArticles);
 
+                    /*
+                    var_dump($newLigneDeCommandeEntity);
+                    exit;
+                    */
                     $newLigneDeCommandeManager = new LignesDeCommandesManager();
                     $newLigneDeCommandeManager->saveOneLigneDeCommande($newLigneDeCommandeEntity);
                 }
@@ -277,7 +295,8 @@ class CommandeController extends BackController
                     Utilitaires::returnJsonAndExit(['status'=>'Erreur']);
                 }
             }
-            $newCommandeManager->updateCommande($currentCommandeEntity, $currentCommandeEntity->id());
+            $newCommandeEntity->setMontant_total($prixTotal);
+            $newCommandeManager->updateCommande($newCommandeEntity);
         }
     }
 

@@ -22,7 +22,7 @@ class IdentificationController extends \RCFramework\BackController
             && !Utilitaires::emptyMinusZero($request->postData('password')))
         {
             $UtilisateurManager = new UtilisateursManager();
-            $SQLRequest = 'SELECT utilisateurs_email, utilisateurs_password FROM rc_photographe_utilisateurs WHERE utilisateurs_email=:utilisateurEmail';
+            $SQLRequest = 'SELECT * FROM rc_photographe_utilisateurs WHERE utilisateurs_email=:utilisateurEmail';
             $utilisateurEntity = $UtilisateurManager->compareIdentificationWithDb($request->postData('email_adress'),
                                                                                     $request->postData('password'),
                                                                                     $SQLRequest,

@@ -42,6 +42,7 @@ abstract class BackController extends ApplicationComponent
         } catch (\Throwable $e)
         {
             $this->page->addVar('exception', $e);
+//            var_dump($e);
         }
     }
 

@@ -11,12 +11,12 @@ class CommandeEntity extends Entity
 {
     protected const CLASS_PREFIX = 'commandes';
     private string $numero_commande;
-    private string $numero_facture;
+    private ?string $numero_facture = null;
     private float $montant_total;
     private ?int $id_utilisateur;
     private string $nom_et_prenom_utilisateur;
     private string $adresse_utilisateur;
-    private bool $validation_panier;
+    private int $validation_panier;
 
     public function setNumero_commande($numero_commande)
     {
@@ -35,12 +35,11 @@ class CommandeEntity extends Entity
         return $this->numero_commande;
     }
 
-
     public function setNumero_facture($numero_facture)
     {
         if (Utilitaires::emptyMinusZero($numero_facture))
         {
-            throw new \Exception('Le numéro de facture doit être renseigné');
+            $this->numero_facture = null;
         }
         else
         {
@@ -48,7 +47,7 @@ class CommandeEntity extends Entity
         }
     }
 
-    public function numero_facture():string
+    public function numero_facture():?string
     {
         return $this->numero_facture;
     }
@@ -92,9 +91,10 @@ class CommandeEntity extends Entity
 
     public function setNom_et_prenom_utilisateur($nom, $prenom)
     {
-        if (Utilitaires::emptyMinusZero($nom) &&
+        if (Utilitaires::emptyMinusZero($nom) ||
             Utilitaires::emptyMinusZero($prenom))
         {
+            var_dump($nom, $prenom);
             throw new \Exception("Les nom et prénom de l'utilisateur doivent être renseignés");
         }
         else
@@ -111,17 +111,17 @@ class CommandeEntity extends Entity
 
     public function setAdresse_utilisateur($numero_rue, $nom_rue, $code_postal, $ville, $pays)
     {
-        if (Utilitaires::emptyMinusZero($numero_rue) &&
-            Utilitaires::emptyMinusZero($nom_rue) &&
-            Utilitaires::emptyMinusZero($code_postal) &&
-            Utilitaires::emptyMinusZero($ville) &&
+        if (Utilitaires::emptyMinusZero($numero_rue) ||
+            Utilitaires::emptyMinusZero($nom_rue) ||
+            Utilitaires::emptyMinusZero($code_postal) ||
+            Utilitaires::emptyMinusZero($ville) ||
             Utilitaires::emptyMinusZero($pays))
         {
             throw new \Exception("L'adresse de l'utilisateur doit être entièrement renseignée");
         }
         else
         {
-            $this->adresse_utilisateur = $adresse_utilisateur;
+            $this->adresse_utilisateur = $numero_rue . '/' . $nom_rue . '/' . $code_postal . '/' . $ville . '/' . $pays;
         }
     }
 
@@ -136,7 +136,7 @@ class CommandeEntity extends Entity
         $this->validation_panier = $validation_panier;
     }
 
-    public function validation_panier():bool
+    public function validation_panier():int
     {
         return $this->validation_panier;
     }

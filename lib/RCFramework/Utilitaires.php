@@ -8,7 +8,7 @@ abstract class Utilitaires
 {
     public static function emptyMinusZero($value)
     {
-        if ($value == '')       //Contrôle les chaînes vides
+        if ($value === '')       //Contrôle les chaînes vides
         {
             return true;
         }

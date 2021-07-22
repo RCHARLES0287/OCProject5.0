@@ -32,7 +32,7 @@ class Entity implements \ArrayAccess
 
     public function testEntityExists()
     {
-        return $this->isEmpty;
+        return !$this->isEmpty;
     }
 
     public function id()
