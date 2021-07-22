@@ -211,8 +211,9 @@ class CommandeController extends BackController
             header('Location: /logginginform');
             exit;
         }
-        else
+        else if (isset($_SESSION['panier']))
         {
+//            var_dump('on est là');
             $newRangFactureCommandeManager = new RangFactureCommandeManager();
 
             $newCommandeEntity = new CommandeEntity();
@@ -297,6 +298,11 @@ class CommandeController extends BackController
             }
             $newCommandeEntity->setMontant_total($prixTotal);
             $newCommandeManager->updateCommande($newCommandeEntity);
+            unset($_SESSION['panier']);
+        }
+        else
+        {
+            $this->page->addVar('etatPanier', 'vide');
         }
     }
 

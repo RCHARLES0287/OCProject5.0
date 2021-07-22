@@ -2,6 +2,10 @@
 
 {% block frontend_content %}
 
+    {% if etatPanier is same as ('vide') %}
+    <h2>Votre panier est vide</h2>
+    {% else %}
     <h2>Merci pour votre commande!</h2>
+    {% endif %}
 
 {% endblock %}
