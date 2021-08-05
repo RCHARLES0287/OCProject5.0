@@ -14,6 +14,9 @@ class RangFactureCommandeManager extends Manager
         parent::__construct();
     }
 
+    public const COMMANDE = 'commande';
+    public const FACTURE = 'facture';
+
     private function getCurrentNumerosFactureCommande()
     {
 //        $this->db->beginTransaction();
@@ -47,11 +50,11 @@ class RangFactureCommandeManager extends Manager
 
         switch ($typeOfData)
         {
-            case 'facture':
+            case self::FACTURE:
                 $getter = 'numero_facture';
                 break;
 
-            case 'commande':
+            case self::COMMANDE:
                 $getter = 'numero_commande';
                 break;
 
