@@ -213,98 +213,110 @@ class CommandeController extends BackController
         }
         else if (isset($_SESSION['panier']))
         {
-//            var_dump('on est là');
-            $newRangFactureCommandeManager = new RangFactureCommandeManager();
+            $nbreTotalArticles = array_sum(array_map(function ($lignePanier)
+            {
+                return $lignePanier['nombreArticles'];
+            }, $_SESSION['panier']));
+            if ($nbreTotalArticles > 0)
+            {
+                $newRangFactureCommandeManager = new RangFactureCommandeManager();
 
-            $newCommandeEntity = new CommandeEntity();
-            $newCommandeEntity->setNumero_commande($newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande('commande'));
-            $newCommandeEntity->setMontant_total(0);
-            $newCommandeEntity->setId_utilisateur($_SESSION['utilisateur_entity']->id());
-            $newCommandeEntity->setNom_et_prenom_utilisateur($_SESSION['utilisateur_entity']->nom(), $_SESSION['utilisateur_entity']->prenom());
-            $newCommandeEntity->setAdresse_utilisateur($_SESSION['utilisateur_entity']->numero_rue(),
-                $_SESSION['utilisateur_entity']->nom_rue(),
-                $_SESSION['utilisateur_entity']->code_postal(),
-                $_SESSION['utilisateur_entity']->ville(),
-                $_SESSION['utilisateur_entity']->pays());
-            $newCommandeEntity->setValidation_panier(0);
+                $newCommandeEntity = new CommandeEntity();
+                $newCommandeEntity->setNumero_commande($newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande(RangFactureCommandeManager::COMMANDE));
+                $newCommandeEntity->setMontant_total(0);
+                $newCommandeEntity->setId_utilisateur($_SESSION['utilisateur_entity']->id());
+                $newCommandeEntity->setNom_et_prenom_utilisateur($_SESSION['utilisateur_entity']->nom(), $_SESSION['utilisateur_entity']->prenom());
+                $newCommandeEntity->setAdresse_utilisateur($_SESSION['utilisateur_entity']->numero_rue(),
+                    $_SESSION['utilisateur_entity']->nom_rue(),
+                    $_SESSION['utilisateur_entity']->code_postal(),
+                    $_SESSION['utilisateur_entity']->ville(),
+                    $_SESSION['utilisateur_entity']->pays());
+                $newCommandeEntity->setValidation_panier(0);
 
-            /*var_dump($newCommandeEntity->id());
-            exit;*/
+                $newCommandeManager = new CommandesManager();
 
-            $newCommandeManager = new CommandesManager();
-
-            /*var_dump($newCommandeEntity->id());
-            exit;*/
 //            L'id est alimenté en automatique dans saveOneCommande
-            $newCommandeManager->saveOneCommande($newCommandeEntity);
-
+                $newCommandeManager->saveOneCommande($newCommandeEntity);
 
 //            $newCommandeEntity->setId($newCommandeManager->getOneCommande());
 
-            $prixTotal = 0;
+                $prixTotal = 0;
 
-            foreach ($_SESSION['panier'] as $lignePanier)
-            {
-                try
+                foreach ($_SESSION['panier'] as $lignePanier)
                 {
-                    $articleId = $lignePanier['articleId'];
-                    $dimensionsId = $lignePanier['dimensionsId'];
-                    $nombreArticles = $lignePanier['nombreArticles'];
+                    try
+                    {
+                        $articleId = $lignePanier['articleId'];
+                        $dimensionsId = $lignePanier['dimensionsId'];
+                        $nombreArticles = $lignePanier['nombreArticles'];
 
-                    $newPhotoManager = new PhotosManager();
-                    $newPhotoEntity = $newPhotoManager->getOnePhoto($articleId);
+                        $newPhotoManager = new PhotosManager();
+                        $newPhotoEntity = $newPhotoManager->getOnePhoto($articleId);
 
-                    $newTarifsManager = new TarifsManager();
-                    $newTarifsEntity = $newTarifsManager->getOnePhotoAndDimensionsTarif($articleId, $dimensionsId);
-                    $tarif = $newTarifsEntity->prix();
+                        $newTarifsManager = new TarifsManager();
+                        $newTarifsEntity = $newTarifsManager->getOnePhotoAndDimensionsTarif($articleId, $dimensionsId);
+                        $tarif = $newTarifsEntity->prix();
 
-                    /*var_dump($tarif);
-                    exit;*/
+                        /*var_dump($tarif);
+                        exit;*/
 
-                    $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
+                        $newLigneDeCommandeEntity = new Ligne_de_commandeEntity();
 
-                    $prixLigneDeCommande = $nombreArticles * $tarif;
-                    /*var_dump($prixLigneDeCommande);
-                    exit;*/
-                    $prixTotal = $prixTotal + $prixLigneDeCommande;
+                        $prixLigneDeCommande = $nombreArticles * $tarif;
+                        /*var_dump($prixLigneDeCommande);
+                        exit;*/
+                        $prixTotal = $prixTotal + $prixLigneDeCommande;
 
 
-                    $newLigneDeCommandeEntity->setCommande_id($newCommandeEntity->id());
-                    $newLigneDeCommandeEntity->setNom_prenom_adresse($_SESSION['utilisateur_entity']->nom(),
-                        $_SESSION['utilisateur_entity']->prenom(),
-                        $_SESSION['utilisateur_entity']->numero_rue(),
-                        $_SESSION['utilisateur_entity']->nom_rue(),
-                        $_SESSION['utilisateur_entity']->code_postal(),
-                        $_SESSION['utilisateur_entity']->ville(),
-                        $_SESSION['utilisateur_entity']->pays());
-                    $newLigneDeCommandeEntity->setPhoto_serial_number($newPhotoEntity->serial_number());
-                    $newLigneDeCommandeEntity->setPhoto_name($newPhotoEntity->name());
-                    $newLigneDeCommandeEntity->setDimensions($dimensionsId);
-                    $newLigneDeCommandeEntity->setTarif($tarif);
-                    $newLigneDeCommandeEntity->setNombre_exemplaires($nombreArticles);
+                        $newLigneDeCommandeEntity->setCommande_id($newCommandeEntity->id());
+                        /*$newLigneDeCommandeEntity->setNom_prenom_adresse($_SESSION['utilisateur_entity']->nom(),
+                            $_SESSION['utilisateur_entity']->prenom(),
+                            $_SESSION['utilisateur_entity']->numero_rue(),
+                            $_SESSION['utilisateur_entity']->nom_rue(),
+                            $_SESSION['utilisateur_entity']->code_postal(),
+                            $_SESSION['utilisateur_entity']->ville(),
+                            $_SESSION['utilisateur_entity']->pays());*/
+                        $newLigneDeCommandeEntity->setPhoto_serial_number($newPhotoEntity->serial_number());
+                        $newLigneDeCommandeEntity->setPhoto_name($newPhotoEntity->name());
+                        $newLigneDeCommandeEntity->setDimensions($dimensionsId);
+                        $newLigneDeCommandeEntity->setTarif($tarif);
+                        $newLigneDeCommandeEntity->setNombre_exemplaires($nombreArticles);
 
-                    /*
-                    var_dump($newLigneDeCommandeEntity);
-                    exit;
-                    */
-                    $newLigneDeCommandeManager = new LignesDeCommandesManager();
-                    $newLigneDeCommandeManager->saveOneLigneDeCommande($newLigneDeCommandeEntity);
+                        /*
+                        var_dump($newLigneDeCommandeEntity);
+                        exit;
+                        */
+                        $newLigneDeCommandeManager = new LignesDeCommandesManager();
+                        $newLigneDeCommandeManager->saveOneLigneDeCommande($newLigneDeCommandeEntity);
+                    }
+                    catch (\Throwable $exception)
+                    {
+                        Utilitaires::logException($exception);
+                        Utilitaires::returnJsonAndExit(['status'=>'Erreur']);
+                    }
                 }
-                catch (\Throwable $exception)
-                {
-                    Utilitaires::logException($exception);
-                    Utilitaires::returnJsonAndExit(['status'=>'Erreur']);
-                }
+                $newCommandeEntity->setMontant_total($prixTotal);
+                $newCommandeManager->updateCommande($newCommandeEntity);
+                unset($_SESSION['panier']);
             }
-            $newCommandeEntity->setMontant_total($prixTotal);
-            $newCommandeManager->updateCommande($newCommandeEntity);
-            unset($_SESSION['panier']);
+            else
+            {
+                ///TODO Gérer le cas où la panier a une quantité égale à zéro
+            }
         }
         else
         {
             $this->page->addVar('etatPanier', 'vide');
         }
     }
+
+
+    public function executeConfirmationpaiement (HTTPRequest $request)
+    {
+
+    }
+
+
 
 
 
