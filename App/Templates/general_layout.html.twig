@@ -54,10 +54,14 @@
                     <a class="nav-link" href="/loggingoutform">Log out</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                    <form action = "/sendsearchrequest" method = "get">
+                        <input type = "search" name = "texte_recherche">
+                        <input type = "submit" name = "send_recherche" value = "Rechercher">
+                    </form>
+                    {#<a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
                         Recherche
-                    </a>
+                    </a>#}
                     <form class="form-inline dropdown-menu" aria-labelledby="navbarDropdown">
                         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Recherche</button>

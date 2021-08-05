@@ -12,6 +12,7 @@
     <route url="/addorremoveonetoquantity" module="Commande" action="addorremoveonetoquantity"/>
     <route url="/affichagepanier" module="Commande" action="affichagepanier"/>
     <route url="/validationpanier" module="Commande" action="validationpanier"/>
+    <route url="/confirmationpaiement" module="Commande" action="confirmationpaiement"/>
 
 
     <route url="/logginginform" module="Identification" action="logginginform"/>
@@ -20,6 +21,9 @@
     <route url="/loggingout" module="Identification" action="loggingout"/>
     <route url="/signingupform" module="Identification" action="signingupform"/>
     <route url="/signingup" module="Identification" action="signingup"/>
+
+
+    <route url="/sendsearchrequest" module="Recherche" action="sendsearchrequest"/>
 
 
 </routes>

@@ -92,6 +92,27 @@ class PhotosManager extends Manager
         return $photosFeatures;
     }
 
+
+    public function getAllPhotosFromTexteRecherche($texteRecherche)
+    {
+        $answerPhotosData = $this->db->prepare('SELECT *
+                                                    FROM rc_photographe_photos
+                                                    WHERE (photos_name, photos_lieu, photos_description)');
+        $answerPhotosData->execute();
+        $photosFeatures = [];
+
+        $dbPhotos = $answerPhotosData->fetchAll();
+
+        foreach ($dbPhotos as $photo)
+        {
+            $photosFeatures[] = new PhotoEntity($photo);
+        }
+
+        return $photosFeatures;
+    }
+
+
+
     public function saveOnePhoto(PhotoEntity $newPhotoEntity)
     {
         $testPhotoExist = $this->checkPhotoSerialNumber($newPhotoEntity);
