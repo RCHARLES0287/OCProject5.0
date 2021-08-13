@@ -27,6 +27,7 @@ class CommandeController extends BackController
             $texteRecherche = strip_tags($texteRecherche);
 //            Pour passer la chaîne de caractères en minuscules
             $texteRecherche = strtolower($texteRecherche);
+            ///Todo contrôler ce qui sort dans $texteRecherche notamment pour s'assurer que htmlspecialchars ne détériore pas la chaine de caractères
 
             $newPhotosManager = new PhotosManager();
             $matchingPhotos = $newPhotosManager->getAllPhotosFromTexteRecherche($texteRecherche);

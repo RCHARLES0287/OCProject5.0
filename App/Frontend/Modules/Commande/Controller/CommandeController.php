@@ -298,6 +298,8 @@ class CommandeController extends BackController
                 $newCommandeEntity->setMontant_total($prixTotal);
                 $newCommandeManager->updateCommande($newCommandeEntity);
                 unset($_SESSION['panier']);
+                $_SESSION['commande'] = $newCommandeEntity;
+                $this->page->addVar('commande_a_payer', $newCommandeEntity);
             }
             else
             {
@@ -316,6 +318,85 @@ class CommandeController extends BackController
 
     }
 
+
+    public function executeAnnulationpaiement (HTTPRequest $request)
+    {
+
+    }
+
+
+    public function executeRetourpaypal (HTTPRequest $request)
+    {
+        $req = "cmd=_notify-validate";
+//        Ici, le $_POST correspond aux données renvoyées par Paypal suite au paiement
+        foreach ($_POST as $key => $value) {
+//            Transforme la valeur dans un format de type $_POST (parce que retransmis quelques lignes plus bas avec le cURL)
+            $value = urlencode(stripslashes($value));
+            /*$req.= "&$key=$value"; équivaut à $req = $req . "&$key=$value";
+            Le & est le séparateur*/
+            $req.= "&$key=$value";
+        }
+        // Envoi des infos a Paypal
+//        curl_init initialise une requête
+        $fp = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');
+        curl_setopt($fp, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($fp, CURLOPT_POST, 1);
+        curl_setopt($fp, CURLOPT_RETURNTRANSFER,1);
+//        La chaine de données du $_POST, autrement dit ce qu'on va transmettre comme données'
+        curl_setopt($fp, CURLOPT_POSTFIELDS, $req);
+        curl_setopt($fp, CURLOPT_SSL_VERIFYPEER, 1);
+        curl_setopt($fp, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($fp, CURLOPT_FORBID_REUSE, 1);
+//        Donne le tableau de toutes les entêtes HTTP qu'on veut envoyer'
+        curl_setopt($fp, CURLOPT_HTTPHEADER, array('Connection: Close'));
+//        curl_exec execute la requête avec toutes les options qu'on vient de donner'
+        if( !($res = curl_exec($fp)) ) {
+//            curl_close met fin à la requête
+            curl_close($fp);
+            exit;
+            ///todo gérer le cas de l'erreur où on n'a même pas réussi à envoyer la requête à Paypal
+        }
+        curl_close($fp);
+// Le paiement est validé
+        if (strcmp(trim($res), "VERIFIED") == 0) {
+            // Vérifier que le statut du paiement est complet
+            if ($_POST['payment_status'] == "Completed") {
+                // Vérification de l'e-mail du vendeur
+                if (Utilitaires::EMAIL_VENDEUR == $_POST['receiver_email']) {
+                    // Vérification du montant de la commande dans MA BDD
+                    $req = "SELECT montant_ttc FROM commandes WHERE id=".$_POST['custom'];
+                    $rep = mysqli_query($db, $req);
+                    $row = mysqli_fetch_array($rep);
+                    ///todo réécrire les lignes ci-dessus avec PDO et en utilisant mes managers
+                    // Vérification de la concordance du montant
+                    if ($_POST['mc_gross'] == $row['montant_ttc']) {
+                        // Requête pour la mise à jour du statut de la commande => Statut à 1
+                        // Envoi du mail de récapitulatif de la commande à l'acheteur et au vendeur
+                        ///todo marche à suivre quand la commande est bien valide (générer numéro de facture etc)
+                        /// Possibilité de finir avec un exit;
+                    } else {
+                        // Envoi d'une alerte par mail (voir modèle en bas de cette section)
+                        // Envoi d'un mail au client pour lui dire qu'on ne s'est pas laissé avoir ^^
+                    }
+                } else {
+                    // Envoi d'une alerte par mail (voir modèle en bas de cette section)
+                    // Envoi d'un mail au client pour lui dire qu'on ne s'est pas laissé avoir ^^
+                }
+            } else {
+                // Envoi d'une alerte par mail (voir modèle en bas de cette section)
+            }
+        } else {
+            // Le paiement est invalide, envoi d'un mail au vendeur
+            $from = "From: " . Utilitaires::EMAIL_VENDEUR;
+            $to = Utilitaires::EMAIL_VENDEUR;
+            $sujet = "Paiement invalide";
+            $body = $req;
+            foreach ($_POST as $key => $value) {
+                $text.= $key . " = " .$value ."nn";
+            }
+            mail($to, $sujet, $text . "nn" . $body, $from);
+        }
+    }
 
 
 

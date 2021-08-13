@@ -13,6 +13,7 @@
     <route url="/affichagepanier" module="Commande" action="affichagepanier"/>
     <route url="/validationpanier" module="Commande" action="validationpanier"/>
     <route url="/confirmationpaiement" module="Commande" action="confirmationpaiement"/>
+    <route url="/annulationpaiement" module="Commande" action="annulationpaiement"/>
 
 
     <route url="/logginginform" module="Identification" action="logginginform"/>
