@@ -6,6 +6,9 @@ namespace RCFramework;
 
 abstract class Utilitaires
 {
+    const EMAIL_VENDEUR = 'romain.charles@rocketmail.com';
+
+
     public static function emptyMinusZero($value)
     {
         if ($value === '')       //Contrôle les chaînes vides
