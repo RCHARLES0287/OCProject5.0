@@ -101,9 +101,17 @@ class PhotosManager extends Manager
         $answerPhotosData->execute();
         $photosFeatures = [];
 
+        /*
+        Equivaut au bloc while juste en dessous, mais avec une étape (et une variable supplémentaire)
         $dbPhotos = $answerPhotosData->fetchAll();
 
         foreach ($dbPhotos as $photo)
+        {
+            $photosFeatures[] = new PhotoEntity($photo);
+        }
+        */
+
+        while (($photo = $answerPhotosData->fetch())!== false)
         {
             $photosFeatures[] = new PhotoEntity($photo);
         }
