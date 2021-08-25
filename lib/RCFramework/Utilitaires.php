@@ -7,6 +7,7 @@ namespace RCFramework;
 abstract class Utilitaires
 {
     const EMAIL_VENDEUR = 'romain.charles@rocketmail.com';
+    const MDP_EMAIL_VENDEUR = 'fmdusqdmfmksmlsu';
 
 
     public static function emptyMinusZero($value)
