@@ -18,6 +18,7 @@ use Model\TarifsManager;
 use RCFramework\BackController;
 use RCFramework\Entity;
 use RCFramework\HTTPRequest;
+use RCFramework\Mailing;
 use RCFramework\Utilitaires;
 
 class CommandeController extends BackController
@@ -364,19 +365,51 @@ class CommandeController extends BackController
                 // Vérification de l'e-mail du vendeur
                 if (Utilitaires::EMAIL_VENDEUR == $_POST['receiver_email']) {
                     // Vérification du montant de la commande dans MA BDD
-                    $req = "SELECT montant_ttc FROM commandes WHERE id=".$_POST['custom'];
+                    /*$req = "SELECT montant_ttc FROM commandes WHERE id=".$_POST['custom'];
                     $rep = mysqli_query($db, $req);
-                    $row = mysqli_fetch_array($rep);
+                    $row = mysqli_fetch_array($rep);*/
+                    $newCommandeManager = new CommandesManager();
+                    try
+                    {
+                        $newCommandeEntity = $newCommandeManager->getOneCommande($_POST['custom']);
+                    }
+                    catch (\Exception $e)
+                    {
+                        ///todo envoyer un mail à l'administrateur pour décrire l'exception
+                        exit;
+                    }
                     ///todo réécrire les lignes ci-dessus avec PDO et en utilisant mes managers
                     // Vérification de la concordance du montant
-                    if ($_POST['mc_gross'] == $row['montant_ttc']) {
+                    if ($_POST['mc_gross'] == $newCommandeEntity->montant_total()) {
                         // Requête pour la mise à jour du statut de la commande => Statut à 1
                         // Envoi du mail de récapitulatif de la commande à l'acheteur et au vendeur
+                        $newRangFactureCommandeManager = new RangFactureCommandeManager();
+                        $newRangFactureCommandeEntity = $newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande(RangFactureCommandeManager::FACTURE);
+                        $numeroFacture = $newRangFactureCommandeEntity->numero_facture();
+                        $numeroCommande = $newCommandeEntity->numero_commande();
+
+                        Mailing::sendingEmail('romain.charles@rocketmail.com',
+                                                '',
+                                                Utilitaires::EMAIL_VENDEUR,
+                                                '',
+                                                'test email validation commande',
+                                                'Merci pour votre commande. Le paiement a bien été reçu');
+
+                        /*
+                        $from = "From: " . Utilitaires::EMAIL_VENDEUR;
+                        $to = Utilitaires::EMAIL_VENDEUR;
+                        $sujet = "Confirmation paiement de la commande" . $numeroCommande;
+                        $body = "Merci pour votre commande. Le paiement a bien été effectué.
+                                Vous trouverez votre facture numéro" . $numeroFacture . "en pièce-jointe";
+                        mail($to, $sujet, $body, $from);
+                        */
+
                         ///todo marche à suivre quand la commande est bien valide (générer numéro de facture etc)
                         /// Possibilité de finir avec un exit;
                     } else {
                         // Envoi d'une alerte par mail (voir modèle en bas de cette section)
                         // Envoi d'un mail au client pour lui dire qu'on ne s'est pas laissé avoir ^^
+                        ///todo marche à suivre quand la commande n'est pas valide
                     }
                 } else {
                     // Envoi d'une alerte par mail (voir modèle en bas de cette section)

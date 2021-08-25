@@ -6,3 +6,4 @@ lib/vendor/*
 cache
 
 Web/images/
+.env

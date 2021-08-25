@@ -14,6 +14,7 @@
     <route url="/validationpanier" module="Commande" action="validationpanier"/>
     <route url="/confirmationpaiement" module="Commande" action="confirmationpaiement"/>
     <route url="/annulationpaiement" module="Commande" action="annulationpaiement"/>
+    <route url="/retourpaypal" module="Commande" action="retourpaypal"/>
 
 
     <route url="/logginginform" module="Identification" action="logginginform"/>
