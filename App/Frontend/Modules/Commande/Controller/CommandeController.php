@@ -226,8 +226,8 @@ class CommandeController extends BackController
                 $newCommandeEntity->setNumero_commande($newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande(RangFactureCommandeManager::COMMANDE));
                 $newCommandeEntity->setMontant_total(0);
                 $newCommandeEntity->setId_utilisateur($_SESSION['utilisateur_entity']->id());
-                $newCommandeEntity->setNom_et_prenom_utilisateur($_SESSION['utilisateur_entity']->nom(), $_SESSION['utilisateur_entity']->prenom());
-                $newCommandeEntity->setAdresse_utilisateur($_SESSION['utilisateur_entity']->numero_rue(),
+                $newCommandeEntity->setNom_et_prenom_utilisateur_parametres_separes($_SESSION['utilisateur_entity']->nom(), $_SESSION['utilisateur_entity']->prenom());
+                $newCommandeEntity->setAdresse_utilisateur_parametres_separes($_SESSION['utilisateur_entity']->numero_rue(),
                     $_SESSION['utilisateur_entity']->nom_rue(),
                     $_SESSION['utilisateur_entity']->code_postal(),
                     $_SESSION['utilisateur_entity']->ville(),
@@ -238,6 +238,7 @@ class CommandeController extends BackController
 
 //            L'id est alimenté en automatique dans saveOneCommande
                 $newCommandeManager->saveOneCommande($newCommandeEntity);
+
 
 //            $newCommandeEntity->setId($newCommandeManager->getOneCommande());
 
@@ -301,6 +302,7 @@ class CommandeController extends BackController
                 unset($_SESSION['panier']);
                 $_SESSION['commande'] = $newCommandeEntity;
                 $this->page->addVar('commande_a_payer', $newCommandeEntity);
+                $this->page->addVar('const_email_vendeur', Utilitaires::EMAIL_VENDEUR);
             }
             else
             {
@@ -310,6 +312,7 @@ class CommandeController extends BackController
         else
         {
             $this->page->addVar('etatPanier', 'vide');
+
         }
     }
 
@@ -330,7 +333,8 @@ class CommandeController extends BackController
     {
         $req = "cmd=_notify-validate";
 //        Ici, le $_POST correspond aux données renvoyées par Paypal suite au paiement
-        foreach ($_POST as $key => $value) {
+        foreach ($_POST as $key => $value)
+        {
 //            Transforme la valeur dans un format de type $_POST (parce que retransmis quelques lignes plus bas avec le cURL)
             $value = urlencode(stripslashes($value));
             /*$req.= "&$key=$value"; équivaut à $req = $req . "&$key=$value";
@@ -351,49 +355,96 @@ class CommandeController extends BackController
 //        Donne le tableau de toutes les entêtes HTTP qu'on veut envoyer'
         curl_setopt($fp, CURLOPT_HTTPHEADER, array('Connection: Close'));
 //        curl_exec execute la requête avec toutes les options qu'on vient de donner'
-        if( !($res = curl_exec($fp)) ) {
-//            curl_close met fin à la requête
-            curl_close($fp);
-            exit;
-            ///todo gérer le cas de l'erreur où on n'a même pas réussi à envoyer la requête à Paypal
+        if( !($res = curl_exec($fp)) )
+        {
+            Utilitaires::logMessage("Erreur dans l'envoi de la requête à Paypal");
+            try
+            {
+                //            curl_close met fin à la requête
+                curl_close($fp);
+                exit;
+            }
+            catch (\Throwable $exception)
+            {
+                Utilitaires::logException($exception);
+                echo "Erreur dans l'envoi de la requête à Paypal";
+                exit;
+            }
         }
         curl_close($fp);
 // Le paiement est validé
-        if (strcmp(trim($res), "VERIFIED") == 0) {
+        if (strcmp(trim($res), "VERIFIED") == 0)
+        {
             // Vérifier que le statut du paiement est complet
-            if ($_POST['payment_status'] == "Completed") {
+            if ($_POST['payment_status'] == "Completed")
+            {
                 // Vérification de l'e-mail du vendeur
-                if (Utilitaires::EMAIL_VENDEUR == $_POST['receiver_email']) {
+                if (Utilitaires::EMAIL_VENDEUR == $_POST['receiver_email'])
+                {
+                    Utilitaires::logMessage("Tout est bon jusqu'à la vérification de l'email vendeur");
                     // Vérification du montant de la commande dans MA BDD
                     /*$req = "SELECT montant_ttc FROM commandes WHERE id=".$_POST['custom'];
                     $rep = mysqli_query($db, $req);
                     $row = mysqli_fetch_array($rep);*/
+                    Utilitaires::logMessage($_POST['custom']);
+
                     $newCommandeManager = new CommandesManager();
                     try
                     {
                         $newCommandeEntity = $newCommandeManager->getOneCommande($_POST['custom']);
+                        Utilitaires::logMessage('Id entité commande');
                     }
                     catch (\Exception $e)
                     {
+                        Utilitaires::logMessage("Erreur : on arrive dans le catch");
                         ///todo envoyer un mail à l'administrateur pour décrire l'exception
+                        Utilitaires::logException($e);
                         exit;
                     }
                     ///todo réécrire les lignes ci-dessus avec PDO et en utilisant mes managers
-                    // Vérification de la concordance du montant
+                    // Vérification de la concordance du
+
+                    Utilitaires::logMessage("Commande trouvée");
+
+                    Utilitaires::logMessage("Montant donné par Paypal : " . $_POST['mc_gross']);
+                    Utilitaires::logMessage("Montant donné par la BDD : " . $newCommandeEntity->montant_total());
+
                     if ($_POST['mc_gross'] == $newCommandeEntity->montant_total()) {
+
+                        Utilitaires::logMessage("Le montant est bon");
+
                         // Requête pour la mise à jour du statut de la commande => Statut à 1
                         // Envoi du mail de récapitulatif de la commande à l'acheteur et au vendeur
-                        $newRangFactureCommandeManager = new RangFactureCommandeManager();
-                        $newRangFactureCommandeEntity = $newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande(RangFactureCommandeManager::FACTURE);
-                        $numeroFacture = $newRangFactureCommandeEntity->numero_facture();
-                        $numeroCommande = $newCommandeEntity->numero_commande();
+                        try
+                        {
+                            $newRangFactureCommandeManager = new RangFactureCommandeManager();
+                            $newRangFactureCommandeEntity = $newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande(RangFactureCommandeManager::FACTURE);
+                            $numeroFacture = $newRangFactureCommandeEntity->numero_facture();
+                            $numeroCommande = $newCommandeEntity->numero_commande();
+                        }
+                        catch (\Exception $exception)
+                        {
+                            Utilitaires::logException($exception);
+                            exit;
+                        }
+
+
+                        Utilitaires::logMessage('facture numero : ' . $numeroFacture);
+
+                        $newCommandeEntity->setNumero_facture($numeroFacture);
+                        $newCommandeManager->updateCommande($newCommandeEntity);
+
+
+
+
 
                         Mailing::sendingEmail('romain.charles@rocketmail.com',
                                                 '',
                                                 Utilitaires::EMAIL_VENDEUR,
                                                 '',
                                                 'test email validation commande',
-                                                'Merci pour votre commande. Le paiement a bien été reçu');
+                                                'Merci pour votre commande. Le paiement pour la commande ' . $numeroCommande . ' a bien été reçu. 
+                                                Vous trouverez ci-jointe la facture numéro ' . $numeroFacture);
 
                         /*
                         $from = "From: " . Utilitaires::EMAIL_VENDEUR;
@@ -406,19 +457,31 @@ class CommandeController extends BackController
 
                         ///todo marche à suivre quand la commande est bien valide (générer numéro de facture etc)
                         /// Possibilité de finir avec un exit;
-                    } else {
+                    }
+                    else
+                    {
                         // Envoi d'une alerte par mail (voir modèle en bas de cette section)
                         // Envoi d'un mail au client pour lui dire qu'on ne s'est pas laissé avoir ^^
                         ///todo marche à suivre quand la commande n'est pas valide
+                        Utilitaires::logMessage('Le montant de la commande dans Paypal ne correspond pas à celui de la BDD');
                     }
-                } else {
+                }
+                else
+                {
                     // Envoi d'une alerte par mail (voir modèle en bas de cette section)
                     // Envoi d'un mail au client pour lui dire qu'on ne s'est pas laissé avoir ^^
+                    Utilitaires::logMessage('Le mail vendeur renvoyé par Paypal ne correspond pas à celui fourni');
                 }
-            } else {
-                // Envoi d'une alerte par mail (voir modèle en bas de cette section)
             }
-        } else {
+            else
+            {
+                // Envoi d'une alerte par mail (voir modèle en bas de cette section)
+                Utilitaires::logMessage("Le statut du paiement n'est pas completed. Il est : " . $_POST['payment_status']);
+            }
+        }
+        else
+        {
+            Utilitaires::logMessage("Résultat incorrect. Reçu : " . $res);
             // Le paiement est invalide, envoi d'un mail au vendeur
             $from = "From: " . Utilitaires::EMAIL_VENDEUR;
             $to = Utilitaires::EMAIL_VENDEUR;

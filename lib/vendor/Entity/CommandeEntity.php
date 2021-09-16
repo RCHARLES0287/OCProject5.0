@@ -18,6 +18,7 @@ class CommandeEntity extends Entity
     private string $adresse_utilisateur;
     private int $validation_panier;
 
+
     public function setNumero_commande($numero_commande)
     {
         if (Utilitaires::emptyMinusZero($numero_commande))
@@ -89,18 +90,26 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setNom_et_prenom_utilisateur($nom, $prenom)
+    public function setNom_et_prenom_utilisateur_parametres_separes($nom, $prenom)
     {
         if (Utilitaires::emptyMinusZero($nom) ||
             Utilitaires::emptyMinusZero($prenom))
         {
-            var_dump($nom, $prenom);
-            throw new \Exception("Les nom et prénom de l'utilisateur doivent être renseignés");
+            throw new \Exception("Le nom et le prénom de l'utilisateur doivent être renseignés");
         }
         else
         {
-            $this->nom_et_prenom_utilisateur = $nom . '/' . $prenom;
+            $this->setNom_et_prenom_utilisateur( $nom . '/' . $prenom);
         }
+    }
+
+    protected function setNom_et_prenom_utilisateur ($combinaisonNomPrenom)
+    {
+        if (Utilitaires::emptyMinusZero($combinaisonNomPrenom))
+        {
+            throw new \Exception("Le nom et le prénom de l'utilisateur doivent être renseignés");
+        }
+        $this->nom_et_prenom_utilisateur = $combinaisonNomPrenom;
     }
 
     public function nom_et_prenom_utilisateur():string
@@ -109,7 +118,7 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setAdresse_utilisateur($numero_rue, $nom_rue, $code_postal, $ville, $pays)
+    public function setAdresse_utilisateur_parametres_separes($numero_rue, $nom_rue, $code_postal, $ville, $pays)
     {
         if (Utilitaires::emptyMinusZero($numero_rue) ||
             Utilitaires::emptyMinusZero($nom_rue) ||
@@ -124,6 +133,16 @@ class CommandeEntity extends Entity
             $this->adresse_utilisateur = $numero_rue . '/' . $nom_rue . '/' . $code_postal . '/' . $ville . '/' . $pays;
         }
     }
+
+    protected function setAdresse_utilisateur ($combinaisonNumerorueNomrueCodepostalVillePays)
+    {
+        if (Utilitaires::emptyMinusZero($combinaisonNumerorueNomrueCodepostalVillePays))
+        {
+            throw new \Exception("L'adresse de l'utilisateur doit être entièrement renseignée");
+        }
+        $this->adresse_utilisateur = $combinaisonNumerorueNomrueCodepostalVillePays;
+    }
+
 
     public function adresse_utilisateur():string
     {

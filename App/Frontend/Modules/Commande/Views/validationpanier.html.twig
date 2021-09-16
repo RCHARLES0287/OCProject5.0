@@ -25,7 +25,7 @@
 {#            Indication du type d'action#}
             <input name="cmd" type="hidden" value="_xclick" />
 {#            Indication de l'adresse e-mail test du vendeur (a remplacer par l'e-mail de votre compte Paypal en production)#}
-            <input name="business" type="hidden" value="romain.charles@rocketmail.com" />
+            <input name="business" type="hidden" value="{{ const_email_vendeur }}" />
 {#            Indication du libellé de la commande qui apparaitra sur Paypal#}
             <input name="item_name" type="hidden" value="Photos romaincharles.com - Commande numéro : {{ commande_a_payer.numero_commande }}" />
 {#            Indication permettant à l'acheteur de laisser un message lors du paiement#}
