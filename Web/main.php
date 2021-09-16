@@ -8,6 +8,19 @@ session_start();
 
 const DEFAULT_APP = 'Frontend';
 
+error_reporting(E_ALL & ~E_NOTICE);
+
+function ultimateErrorHandler ($severity, $message, $file, $line)
+{
+    if (!(error_reporting() & $severity))
+    {
+        return;
+    }
+    Utilitaires::logMessage("Erreur inattendue. Fichier : " . $file . ". Ligne : " . $line . ". Sévérité : " . $severity . ". Message : " . $message);
+    throw new ErrorException($message, 0, $severity, $file, $line);
+}
+set_error_handler('ultimateErrorHandler');
+
 try
 {
 
