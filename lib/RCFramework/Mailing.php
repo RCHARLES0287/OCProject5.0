@@ -20,7 +20,7 @@ abstract class Mailing
             $mail->Host       = 'mail.yahoo.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = Utilitaires::EMAIL_VENDEUR;
-            $mail->Password   = Utilitaires::MDP_EMAIL_VENDEUR;
+            $mail->Password   = file_get_contents(__DIR__ .'/../../.env');
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = 465;
 

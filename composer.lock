@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19512b79ad6e12a7c988fa7bcd9187e9",
+    "content-hash": "64de7335870a23c93728dfbc1c499bc5",
     "packages": [
         {
             "name": "fpdf/fpdf",
@@ -51,6 +51,89 @@
                 "source": "https://github.com/coreydoughty/Fpdf/tree/1.83.2"
             },
             "time": "2021-07-07T10:26:51+00:00"
+        },
+        {
+            "name": "jrosset/envreader",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.jrosset.ovh/jrosset/PhpEnvReader",
+                "reference": "a2565e945f2e74c3150611213d0195e2437471bc"
+            },
+            "require": {
+                "jrosset/singleton": "^1.0",
+                "php": "~7.4 || ~8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "jrosset\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-4.0"
+            ],
+            "authors": [
+                {
+                    "name": "Julien Rosset",
+                    "email": "jul.rosset@gmail.com"
+                }
+            ],
+            "description": "Utility class for ENV file reading",
+            "homepage": "https://git.jrosset.ovh/jrosset/PhpEnvReader",
+            "support": {
+                "docs": "https://git.jrosset.ovh/jrosset/PhpEnvReader/wiki",
+                "email": "jul.rosset@gmail.com",
+                "issues": "https://git.jrosset.ovh/jrosset/PhpEnvReader/issues",
+                "source": "https://git.jrosset.ovh/jrosset/PhpEnvReader",
+                "wiki": "https://git.jrosset.ovh/jrosset/PhpEnvReader/wiki"
+            },
+            "time": "2021-09-03T16:57:27+00:00"
+        },
+        {
+            "name": "jrosset/singleton",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.jrosset.ovh/jrosset/PhpSingleton",
+                "reference": "e666d93f28fd33402e51bc1fe55e22115b2d5edb"
+            },
+            "require": {
+                "php": "~7.4 || ~8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "jrosset\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-4.0"
+            ],
+            "authors": [
+                {
+                    "name": "Julien Rosset",
+                    "email": "jul.rosset@gmail.com"
+                }
+            ],
+            "description": "PHP Trait to implements the singleton design pattern",
+            "homepage": "https://git.jrosset.ovh/jrosset/PhpSingleton",
+            "support": {
+                "docs": "https://git.jrosset.ovh/jrosset/PhpSingleton/wiki",
+                "email": "jul.rosset@gmail.com",
+                "issues": "https://git.jrosset.ovh/jrosset/PhpSingleton/issues",
+                "source": "https://git.jrosset.ovh/jrosset/PhpSingleton",
+                "wiki": "https://git.jrosset.ovh/jrosset/PhpSingleton/wiki"
+            },
+            "time": "2021-09-04T14:43:43+00:00"
         }
     ],
     "packages-dev": [],
