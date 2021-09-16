@@ -6,6 +6,7 @@ namespace Model;
 
 use Entity\CommandeEntity;
 use RCFramework\Manager;
+use RCFramework\Utilitaires;
 
 class CommandesManager extends Manager
 {
@@ -37,7 +38,7 @@ class CommandesManager extends Manager
     {
         $answerCommandeData = $this->db->prepare('SELECT *
                                                             FROM rc_photographe_commandes
-                                                            WHERE numero_commande=:numeroCommande');
+                                                            WHERE commandes_numero_commande=:numeroCommande');
         $answerCommandeData->execute(array(
             'numeroCommande' => $numeroCommande
         ));
@@ -50,8 +51,11 @@ class CommandesManager extends Manager
         }
         else
         {
+            Utilitaires::logMessage("Dans le else");
+            Utilitaires::logMessage(serialize($dbCommande));
             return new CommandeEntity($dbCommande);
         }
+
     }
 
 
