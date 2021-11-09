@@ -4,6 +4,7 @@ namespace RCFramework;
 
 use Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 abstract class Mailing
 {
@@ -14,25 +15,40 @@ abstract class Mailing
 
         try
         {
+            Utilitaires::logMessage("Paramétrage SMTP");
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;
             $mail->isSMTP();
-            $mail->Host       = 'mail.yahoo.com';
+            $mail->Host       = 'smtp.mail.yahoo.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = Utilitaires::EMAIL_VENDEUR;
+            $mail->Username   = Utilitaires::EMAIL_VENDEUR_TEST;
             $mail->Password   = file_get_contents(__DIR__ .'/../../.env');
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = 465;
+            $mail->CharSet    = PHPMailer::CHARSET_UTF8;
 
             //Recipients
-            $mail->setFrom(Utilitaires::EMAIL_VENDEUR);
-            $mail->addAddress($emailDestinataire);
+            Utilitaires::logMessage("Construction mail");
+            $mail->setFrom(Utilitaires::EMAIL_VENDEUR_TEST);
+//            $mail->addAddress($emailDestinataire);
+            $mail->addAddress(Utilitaires::EMAIL_VENDEUR_TEST);
 //            $mail->addReplyTo('info@example.com', 'Information');
-            $mail->addCC($emailEnCopie);
-            $mail->addBCC($emailEnCopieCachee);
+            if (!Utilitaires::emptyMinusZero($emailEnCopie))
+            {
+                $mail->addCC($emailEnCopie);
+            }
+            if (!Utilitaires::emptyMinusZero($emailEnCopieCachee))
+            {
+                $mail->addBCC($emailEnCopieCachee);
+            }
+
 
             //Attachments
-            $mail->addAttachment($attachement);
+            if (!Utilitaires::emptyMinusZero($attachement))
+            {
+                $mail->addAttachment($attachement);
+            }
+
 
             //Content
             //Set email format to HTML
@@ -41,13 +57,19 @@ abstract class Mailing
             $mail->Body    = $emailBody;
 //            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-            $mail->send();
+            Utilitaires::logMessage("Envoi du mail prêt");
+            $reponseMailing = $mail->send();
+            Utilitaires::logMessage("Résultat de l'envoi du mail : ");
+            Utilitaires::logMessage($reponseMailing);
 //            echo 'Message has been sent';
         }
         catch (Exception $e)
         {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            Utilitaires::logMessage("Bla bla bla");
+            Utilitaires::logException($e);
+//            Utilitaires::logMessage("Erreur dans l'envoi du mail " . $mail->ErrorInfo);
         }
+        Utilitaires::logMessage("Bla bla bla bla bla bla");
 
     }
 }
