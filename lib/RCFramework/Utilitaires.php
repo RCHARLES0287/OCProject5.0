@@ -6,8 +6,10 @@ namespace RCFramework;
 
 abstract class Utilitaires
 {
+    const EMAIL_VENDEUR_TEST = 'romain.charles@rocketmail.com';
     const EMAIL_VENDEUR = 'sb-ahide6955388@business.example.com';
     ///Todo Repasser sur la vraie adresse mail du vendeur
+    const FRAIS_DE_PORT = 250;
 
 
     public static function emptyMinusZero($value)
