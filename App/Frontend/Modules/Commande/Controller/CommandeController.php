@@ -8,6 +8,7 @@ use Entity\CommandeEntity;
 use Entity\GalerieEntity;
 use Entity\Ligne_de_commandeEntity;
 use Entity\PhotoEntity;
+use FPDF;
 use Model\CommandesManager;
 use Model\DimensionsManager;
 use Model\GaleriesManager;
@@ -15,8 +16,10 @@ use Model\LignesDeCommandesManager;
 use Model\PhotosManager;
 use Model\RangFactureCommandeManager;
 use Model\TarifsManager;
+use Model\UtilisateursManager;
 use RCFramework\BackController;
 use RCFramework\Entity;
+use RCFramework\FacturePDF;
 use RCFramework\HTTPRequest;
 use RCFramework\Mailing;
 use RCFramework\Utilitaires;
@@ -303,6 +306,7 @@ class CommandeController extends BackController
                 $_SESSION['commande'] = $newCommandeEntity;
                 $this->page->addVar('commande_a_payer', $newCommandeEntity);
                 $this->page->addVar('const_email_vendeur', Utilitaires::EMAIL_VENDEUR);
+                $this->page->addVar('frais_de_port', Utilitaires::FRAIS_DE_PORT);
             }
             else
             {
@@ -407,9 +411,15 @@ class CommandeController extends BackController
                     Utilitaires::logMessage("Commande trouvée");
 
                     Utilitaires::logMessage("Montant donné par Paypal : " . $_POST['mc_gross']);
+                    Utilitaires::logMessage("Serialize de l'entité Commande par la BDD : " . serialize($newCommandeEntity));
+                    Utilitaires::logMessage("Numéro de commande donné par la BDD : " . $newCommandeEntity->numero_commande());
+                    Utilitaires::logMessage("Id donné par la BDD : " . $newCommandeEntity->id());
                     Utilitaires::logMessage("Montant donné par la BDD : " . $newCommandeEntity->montant_total());
 
-                    if ($_POST['mc_gross'] == $newCommandeEntity->montant_total()) {
+                    $totalCommandeAvecPort = $newCommandeEntity->montant_total() + Utilitaires::FRAIS_DE_PORT;
+
+//                    if ($_POST['mc_gross'] == $newCommandeEntity->montant_total()) {
+                    if ($_POST['mc_gross'] == $totalCommandeAvecPort) {
 
                         Utilitaires::logMessage("Le montant est bon");
 
@@ -418,9 +428,11 @@ class CommandeController extends BackController
                         try
                         {
                             $newRangFactureCommandeManager = new RangFactureCommandeManager();
-                            $newRangFactureCommandeEntity = $newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande(RangFactureCommandeManager::FACTURE);
-                            $numeroFacture = $newRangFactureCommandeEntity->numero_facture();
-                            $numeroCommande = $newCommandeEntity->numero_commande();
+                            Utilitaires::logMessage("Création Manager");
+                            $numeroFacture = $newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande(RangFactureCommandeManager::FACTURE);
+                            Utilitaires::logMessage("Numéro facture :");
+                            Utilitaires::logMessage($numeroFacture);
+
                         }
                         catch (\Exception $exception)
                         {
@@ -435,16 +447,53 @@ class CommandeController extends BackController
                         $newCommandeManager->updateCommande($newCommandeEntity);
 
 
+                        Utilitaires::logMessage("Envoi du mail");
+
+                        $newUtilisateursManager = new UtilisateursManager();
+                        $newUtilisateurEntity = $newUtilisateursManager->getOneUtilisateur($newCommandeEntity->id_utilisateur());
+
+                        $newLignesDeCommandeManager = new LignesDeCommandesManager();
+                        $allLignesDeCommandeFromCommandeId = $newLignesDeCommandeManager->getAllLignesDeCommandeFromOneCommande($newCommandeEntity->id());
+
+                        /*$newFacturePDF = new FacturePDF();
+                        $cheminFacture = __DIR__ . '/../../../../../Factures_generees/facture_numero_'.$numeroFacture.'.pdf';
+                        $newFacturePDF->complementEntete($nomClient, $adresseClient);
+                        $newFacturePDF->Output('F', $cheminFacture);*/
+
+                        $nomClient = '' . $newUtilisateurEntity->prenom() . '' . $newUtilisateurEntity->nom() . '';
+                        $adresseClient = '' . $newUtilisateurEntity->numero_rue() . '' . $newUtilisateurEntity->nom_rue() . '' . $newUtilisateurEntity->birthdate() . '' . $newUtilisateurEntity->ville() . '';
+//                        $nomClient = 'Bob Trucmuche';
+//                        $adresseClient = '31 rue de Rivoli 75004 Paris';
+                        $complementInfoClient = '';
+//                        $numeroFacture = 70;
+//                        $entetesColonnes = ['Produit(s) et/ou Prestations', 'Prix unitaire', 'Quantité', 'Total'] ;
+                        $tableauData = [];
+                        foreach ($allLignesDeCommandeFromCommandeId as $ligneDeCommande)
+                        {
+//                            $tableauData [] = [$ligneDeCommande->];
+                        }
+                        $tableauData = [['Photo mission Apollo', 50, 2, 100], ['Photo Space Shuttle', 30, 5, 150]];
+                        $fraisDePort = 250;
+                        $total = 1350;
+                        $date = '25/06/2021';
+
+                        $cheminFacture = __DIR__ . '/facture_numero_'.$numeroFacture.'.pdf';
 
 
+                        $newFacturePDF = new FacturePDF($nomClient, $adresseClient, $complementInfoClient, $date, $numeroFacture,
+                            $tableauData, $fraisDePort, $total, $cheminFacture);
+
+                        
 
                         Mailing::sendingEmail('romain.charles@rocketmail.com',
                                                 '',
-                                                Utilitaires::EMAIL_VENDEUR,
-                                                '',
+                                                Utilitaires::EMAIL_VENDEUR_TEST,
+                                                $cheminFacture,
                                                 'test email validation commande',
-                                                'Merci pour votre commande. Le paiement pour la commande ' . $numeroCommande . ' a bien été reçu. 
-                                                Vous trouverez ci-jointe la facture numéro ' . $numeroFacture);
+                                                'Merci pour votre commande. Le paiement pour la commande ' . $newCommandeEntity->numero_commande() . ' a bien été reçu. <br>'
+                                                . 'Vous trouverez ci-jointe la facture numéro ' . $newCommandeEntity->numero_facture());
+
+                        Utilitaires::logMessage("Mail envoyé");
 
                         /*
                         $from = "From: " . Utilitaires::EMAIL_VENDEUR;
