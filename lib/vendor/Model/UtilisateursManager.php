@@ -31,7 +31,7 @@ class UtilisateursManager extends ManagerAuthentification
         }
         else
         {
-            return new PhotoEntity($dbUtilisateur);
+            return new UtilisateurEntity($dbUtilisateur);
         }
     }
 
