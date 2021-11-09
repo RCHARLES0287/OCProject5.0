@@ -33,6 +33,25 @@ class LignesDeCommandesManager extends Manager
         return $lignesCommandesFeatures;
     }
 
+    public function getAllLignesDeCommandeFromOneCommande($commandeId)
+    {
+        $answerLignesDeCommandeData = $this->db->prepare('SELECT * FROM rc_photographe_lignes_de_commandes WHERE lignes_de_commandes_commande_id=:commandeId');
+        $answerLignesDeCommandeData->execute(array(
+            'commandeId' => $commandeId
+        ));
+
+        $lignesDeCommandeFeatures = [];
+
+        $dbLignesDeCommande = $answerLignesDeCommandeData->fetchAll();
+
+        foreach ($dbLignesDeCommande as $ligneDeCommande)
+        {
+            $lignesDeCommandeFeatures[] = new Ligne_de_commandeEntity($ligneDeCommande);
+        }
+
+        return $lignesDeCommandeFeatures;
+    }
+
 
     public function saveOneLigneDeCommande(Ligne_de_commandeEntity &$newLigneDeCommandeEntity)
     {
