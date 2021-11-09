@@ -2,7 +2,11 @@
 //Le session_start() est placé ici car on va utiliser la session dans de nombreuses pages
 use RCFramework\Utilitaires;
 
+//const FPDF_FONTPATH = __DIR__ . '/../lib/vendor/setasign/tfpdf/font/';
+
 require_once __DIR__ . "/../lib/vendor/autoload.php";
+//Le require ci-dessous n'est pas nécessaire car on passe par Composer
+//require_once __DIR__ . "/../vendor/fpdf/fpdf/original/fpdf.php";
 
 session_start();
 

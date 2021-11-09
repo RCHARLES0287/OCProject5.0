@@ -33,10 +33,10 @@ class RangFactureCommandeManager extends Manager
 
     /**
      * @param $typeOfData string type de données que l'on recherche : soit 'facture' soit 'commande'
-     * @return RangFactureCommandeEntity
+     * @return string Retourne le rang de facture ou de commande actuel
      * @throws \Exception
      */
-    public function getAndUpdateCurrentNumeroFactureCommande($typeOfData)
+    public function getAndUpdateCurrentNumeroFactureCommande(string $typeOfData)
     {
         $this->db->beginTransaction();
 
