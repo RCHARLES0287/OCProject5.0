@@ -34,20 +34,20 @@ class CommandesManager extends Manager
     }
 
 
-    public function getOneCommande($numeroCommande)
+    public function getOneCommande($idCommande)
     {
         $answerCommandeData = $this->db->prepare('SELECT *
                                                             FROM rc_photographe_commandes
-                                                            WHERE commandes_numero_commande=:numeroCommande');
+                                                            WHERE commandes_id=:idCommande');
         $answerCommandeData->execute(array(
-            'numeroCommande' => $numeroCommande
+            'idCommande' => $idCommande
         ));
 
         $dbCommande = $answerCommandeData->fetch();
 
         if ($dbCommande === false)
         {
-            throw new \Exception('La commande dont le numéro de commande est ' . $numeroCommande . ' n\'existe pas');
+            throw new \Exception('La commande avec l\'Id de commande ' . $idCommande . ' n\'existe pas');
         }
         else
         {
