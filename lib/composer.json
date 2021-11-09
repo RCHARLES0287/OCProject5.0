@@ -5,7 +5,9 @@
         "php": ">=7.4",
         "ext-pdo": "*",
       "ext-json": "*",
-        "phpmailer/phpmailer": "^6.5"
+        "phpmailer/phpmailer": "^6.5",
+        "setasign/fpdf": "^1.8",
+        "setasign/tfpdf": "1.32"
     },
     "autoload": {
         "psr-4": {
@@ -16,5 +18,3 @@
         }
     }
 }
-
-
