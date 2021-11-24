@@ -33,6 +33,10 @@ class LignesDeCommandesManager extends Manager
         return $lignesCommandesFeatures;
     }
 
+    /**
+     * @param int $commandeId
+     * @return Ligne_de_commandeEntity[]
+     */
     public function getAllLignesDeCommandeFromOneCommande($commandeId)
     {
         $answerLignesDeCommandeData = $this->db->prepare('SELECT * FROM rc_photographe_lignes_de_commandes WHERE lignes_de_commandes_commande_id=:commandeId');
