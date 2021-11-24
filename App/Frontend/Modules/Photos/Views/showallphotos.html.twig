@@ -6,7 +6,10 @@
         {{ photos|map(p=>"#{p.lieu}")|join(', ') }}
         <p>
             {% for photo in photos %}
-            {{ photo.serial_number }} : {{ photo.lieu }} <br>
+        <div class="photo_dans_galerie">
+            {{ photo.serial_number }} : {{ photo.lieu }}
+            <img alt="description" src="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}">
+        </div>
             {% endfor %}
         </p>
     </section>

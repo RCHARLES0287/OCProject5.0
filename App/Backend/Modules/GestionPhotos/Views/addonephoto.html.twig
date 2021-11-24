@@ -1,0 +1,30 @@
+{% extends 'Backend/Templates/backend_layout.html.twig' %}
+
+{% block backend_content %}
+
+    <h2>Ajout photo</h2>
+
+    <form class="ajout_photo_form" id="formulaire_ajout_photo" action="/admin/ajoutphotoform" method="post" novalidate>
+        <label for="galerie">Galerie</label>
+        <select name="galerie" id="galerie">
+            {% for uneGalerie in allGaleries %}
+                <option value="{{ uneGalerie.id }}">{{ uneGalerie.nom_galerie }}</option>
+            {% endfor %}
+        </select>
+
+
+
+
+        {#<label for="ordre_carousel">Ordre dans le carousel</label>
+        <select name="ordre_carousel" id="ordre_carousel">
+            {% for uneGalerie in allGaleries %}
+                <option value="{{ uneGalerie.id }}">{{ uneGalerie.nom_galerie }}</option>
+            {% endfor %}
+        </select>#}
+
+
+
+        <button id="validation_photo" class="btn btn-primary" name="bouton_validation_photo" type="submit">Valider</button>
+    </form>
+
+{% endblock %}

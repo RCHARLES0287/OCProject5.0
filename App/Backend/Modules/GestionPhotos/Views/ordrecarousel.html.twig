@@ -1,0 +1,71 @@
+{% extends 'Backend/Templates/backend_layout.html.twig' %}
+
+{% block backend_content %}
+
+    <h2>Ordre des photos dans le carousel</h2>
+
+
+    {% for unePhoto in allPhotos %}
+
+        <div class="all_photos" id="{{ photo.photos_id }}">
+            {{ photo.serial_number }} : {{ photo.lieu }}
+            <img alt="description" src="/images/{{ allGaleries[photo.galerie_id()].nom_galerie ~ '/' ~ photo.serial_number }}" draggable="true" width="100" height="100">
+        </div>
+
+    {% endfor %}
+
+
+
+    <div class="zone_cible" id="zone_1" width="100" height="100"> Emplacement 1
+    </div>
+
+    <div class="zone_cible" id="zone_2" width="100" height="100"> Emplacement 2
+    </div>
+
+    <div class="zone_cible" id="zone_3" width="100" height="100"> Emplacement 3
+    </div>
+
+    <div class="zone_cible" id="zone_4" width="100" height="100"> Emplacement 4
+    </div>
+
+    <div class="zone_cible" id="zone_5" width="100" height="100"> Emplacement 5
+    </div>
+
+    <style>
+        .zone_cible
+        {
+            background-color: grey;
+        }
+    </style>
+
+    <script type="text/javascript">
+        /* ajouter propriété pour drop et transfert de données */
+        // e.originalEvent.dataTransfer.setData('text/html', id);
+        $(document).ready(function() {
+            $('.all_photos').on({
+                dragstart: function(e) {
+                    let id = $(this).attr('id');
+                    $(this).css('opacity', '0.5');
+                    /* on garde l'identifiant en mémoire */
+                    e.dataTransfer.setData('text/html', id);
+                },
+                dragend: function() {
+                    // let id = $(this).attr('id');
+                    $(this).css('opacity', '1');
+                }
+            });
+            $('.zone_cible').on({
+                dragover: function(e) {
+                    e.preventDefault();
+                },
+                drop: function(e) {
+                    e.preventDefault();
+                    let data = e.dataTransfer.getData('text/html');
+                    $(this).append($("#"+data));
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
+
