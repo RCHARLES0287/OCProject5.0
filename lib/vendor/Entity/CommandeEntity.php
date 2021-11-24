@@ -16,7 +16,7 @@ class CommandeEntity extends Entity
     private ?int $id_utilisateur;
     private string $nom_et_prenom_utilisateur;
     private string $adresse_utilisateur;
-    private int $validation_panier;
+    private string $date_facturation;
 
 
     public function setNumero_commande($numero_commande)
@@ -118,7 +118,18 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setAdresse_utilisateur_parametres_separes($numero_rue, $nom_rue, $code_postal, $ville, $pays)
+    /**
+     * Définit l'adresse de l'utilisateur
+     *
+     * @param string $numero_rue
+     * @param string $nom_rue
+     * @param string|null $complement_adresse
+     * @param string|null $code_postal
+     * @param string $ville
+     * @param string $pays
+     * @throws \Exception
+     */
+    public function setAdresse_utilisateur_parametres_separes($numero_rue, $nom_rue, $complement_adresse, $code_postal, $ville, $pays)
     {
         if (Utilitaires::emptyMinusZero($numero_rue) ||
             Utilitaires::emptyMinusZero($nom_rue) ||
@@ -130,8 +141,22 @@ class CommandeEntity extends Entity
         }
         else
         {
-            $this->adresse_utilisateur = $numero_rue . '/' . $nom_rue . '/' . $code_postal . '/' . $ville . '/' . $pays;
+            $this->adresse_utilisateur = $numero_rue . '/' . $nom_rue . '/' . $complement_adresse . '/' . $code_postal . '/' . $ville . '/' . $pays;
         }
+    }
+
+    /**
+     * @return array{numero_rue:string, nom_rue:string, complement_adresse:string|null, code_postal:string|null, ville:string, pays:string}
+     */
+    public function adresse_utilisateur_parametres_separes()
+    {
+        $adresseTableauRaw = explode('/', $this->adresse_utilisateur);
+        return ['numero_rue'=>$adresseTableauRaw[0],
+            'nom_rue'=>$adresseTableauRaw[1],
+            'complement_adresse'=>$adresseTableauRaw[2],
+            'code_postal'=>$adresseTableauRaw[3],
+            'ville'=>$adresseTableauRaw[4],
+            'pays'=>$adresseTableauRaw[5]];
     }
 
     protected function setAdresse_utilisateur ($combinaisonNumerorueNomrueCodepostalVillePays)
@@ -150,14 +175,14 @@ class CommandeEntity extends Entity
     }
 
 
-    public function setValidation_panier($validation_panier)
+    public function setDatefacturation($date_facturation)
     {
-        $this->validation_panier = $validation_panier;
+        $this->date_facturation = $date_facturation;
     }
 
-    public function validation_panier():int
+    public function date_facturation():string
     {
-        return $this->validation_panier;
+        return $this->date_facturation;
     }
 }
 
