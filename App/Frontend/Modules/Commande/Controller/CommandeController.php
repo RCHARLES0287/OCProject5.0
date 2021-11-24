@@ -232,10 +232,11 @@ class CommandeController extends BackController
                 $newCommandeEntity->setNom_et_prenom_utilisateur_parametres_separes($_SESSION['utilisateur_entity']->nom(), $_SESSION['utilisateur_entity']->prenom());
                 $newCommandeEntity->setAdresse_utilisateur_parametres_separes($_SESSION['utilisateur_entity']->numero_rue(),
                     $_SESSION['utilisateur_entity']->nom_rue(),
+                    $_SESSION['utilisateur_entity']->complement_adresse(),
                     $_SESSION['utilisateur_entity']->code_postal(),
                     $_SESSION['utilisateur_entity']->ville(),
                     $_SESSION['utilisateur_entity']->pays());
-                $newCommandeEntity->setValidation_panier(0);
+                $newCommandeEntity->setDatefacturation(0);
 
                 $newCommandeManager = new CommandesManager();
 
@@ -444,46 +445,51 @@ class CommandeController extends BackController
                         Utilitaires::logMessage('facture numero : ' . $numeroFacture);
 
                         $newCommandeEntity->setNumero_facture($numeroFacture);
+                        $newCommandeEntity->setDatefacturation(date('c'));
                         $newCommandeManager->updateCommande($newCommandeEntity);
 
 
                         Utilitaires::logMessage("Envoi du mail");
 
-                        $newUtilisateursManager = new UtilisateursManager();
-                        $newUtilisateurEntity = $newUtilisateursManager->getOneUtilisateur($newCommandeEntity->id_utilisateur());
-
+//                        $newUtilisateursManager = new UtilisateursManager();
+//                        $newUtilisateurEntity = $newUtilisateursManager->getOneUtilisateur($newCommandeEntity->id_utilisateur());
+/*
                         $newLignesDeCommandeManager = new LignesDeCommandesManager();
-                        $allLignesDeCommandeFromCommandeId = $newLignesDeCommandeManager->getAllLignesDeCommandeFromOneCommande($newCommandeEntity->id());
+
+                        $allLignesDeCommandeFromCommandeId = $newLignesDeCommandeManager->getAllLignesDeCommandeFromOneCommande($newCommandeEntity->id());*/
 
                         /*$newFacturePDF = new FacturePDF();
                         $cheminFacture = __DIR__ . '/../../../../../Factures_generees/facture_numero_'.$numeroFacture.'.pdf';
                         $newFacturePDF->complementEntete($nomClient, $adresseClient);
                         $newFacturePDF->Output('F', $cheminFacture);*/
 
-                        $nomClient = '' . $newUtilisateurEntity->prenom() . '' . $newUtilisateurEntity->nom() . '';
-                        $adresseClient = '' . $newUtilisateurEntity->numero_rue() . '' . $newUtilisateurEntity->nom_rue() . '' . $newUtilisateurEntity->birthdate() . '' . $newUtilisateurEntity->ville() . '';
+//                        $nomClient = '' . $newUtilisateurEntity->prenom() . '' . $newUtilisateurEntity->nom() . '';
+//                        $adresseClient = '' . $newUtilisateurEntity->numero_rue() . '' . $newUtilisateurEntity->nom_rue() . '' . $newUtilisateurEntity->birthdate() . '' . $newUtilisateurEntity->ville() . '';
+
 //                        $nomClient = 'Bob Trucmuche';
 //                        $adresseClient = '31 rue de Rivoli 75004 Paris';
-                        $complementInfoClient = '';
 //                        $numeroFacture = 70;
 //                        $entetesColonnes = ['Produit(s) et/ou Prestations', 'Prix unitaire', 'Quantité', 'Total'] ;
+                        /*
                         $tableauData = [];
                         foreach ($allLignesDeCommandeFromCommandeId as $ligneDeCommande)
                         {
-//                            $tableauData [] = [$ligneDeCommande->];
+                            $tableauData [] = [$ligneDeCommande->photo_name(),
+                                $ligneDeCommande->tarif(),
+                                $ligneDeCommande->nombre_exemplaires()];
                         }
-                        $tableauData = [['Photo mission Apollo', 50, 2, 100], ['Photo Space Shuttle', 30, 5, 150]];
-                        $fraisDePort = 250;
+                        */
+//                        $tableauData = [['Photo mission Apollo', 50, 2], ['Photo Space Shuttle', 30, 5]];
+                        /*$fraisDePort = 250;
                         $total = 1350;
-                        $date = '25/06/2021';
+                        $date = '25/06/2021';*/
 
                         $cheminFacture = __DIR__ . '/facture_numero_'.$numeroFacture.'.pdf';
 
 
-                        $newFacturePDF = new FacturePDF($nomClient, $adresseClient, $complementInfoClient, $date, $numeroFacture,
-                            $tableauData, $fraisDePort, $total, $cheminFacture);
+                        $newFacturePDF = new FacturePDF($newCommandeEntity, $cheminFacture);
 
-                        
+
 
                         Mailing::sendingEmail('romain.charles@rocketmail.com',
                                                 '',

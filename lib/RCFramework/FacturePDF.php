@@ -2,33 +2,35 @@
 
 namespace RCFramework;
 
+use DateTime;
+use Entity\CommandeEntity;
+use Model\LignesDeCommandesManager;
 use tFPDF;
 
 
 
 class FacturePDF extends tFPDF
 {
-    protected float $col = 0; // Colonne courante
-    protected float $y0;      // Ordonnée du début des colonnes
-    protected float $y0bloc;  // Ordonnée du début du bloc
+    private float $col = 0; // Colonne courante
+    private float $y0;      // Ordonnée du début des colonnes
+    private float $y0bloc;  // Ordonnée du début du bloc
     const PAYPAL = 'Paypal';
 
 
-    public function __construct($nomClient, $adresseClient, $complementInfoClient, $date, $numeroFacture,
-                                $tableauData, $fraisDePort, $total, $cheminFacture)
+    public function __construct($entiteCommande, $cheminFacture)
     {
         parent::__construct();
         $this->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
         $this->AddFont('DejaVu','B','DejaVuSansCondensed-Bold.ttf',true);
 
         $this->AddPage();
-        $this->complementEntete($nomClient, $adresseClient, $complementInfoClient);
+        $this->complementEntete($entiteCommande);
         $this->writeParagrapheLegal();
-        $this->setDate($date);
-        $this->setNumeroFacture($numeroFacture);
-        $this->ajoutArticles($tableauData);
-        $this->setFraisDePortEtTotal ($fraisDePort, $total);
-        $this->setDateEtModeReglement($date);
+        $this->setDateEntete($entiteCommande);
+        $this->setNumeroFacture($entiteCommande);
+        $this->ajoutArticles($entiteCommande);
+        $this->setFraisDePortEtTotal ($entiteCommande);
+        $this->setDateEtModeReglement($entiteCommande);
         $this->Output('F', $cheminFacture);
     }
 
@@ -57,7 +59,10 @@ class FacturePDF extends tFPDF
 //        $this->Ln(10);
     }
 
-    protected function complementEntete ($nomClient, $adresseClient, $complementInfoClient)
+    /**
+     * @param CommandeEntity $entiteCommande
+     */
+    private function complementEntete (CommandeEntity $entiteCommande)
     {
         $entete = 'Facture';
         $w = $this->GetStringWidth($entete);
@@ -87,14 +92,17 @@ class FacturePDF extends tFPDF
 
         $this->SetY($this->y0bloc);
         $this->SetCol(1);
-        $enteteClient = $nomClient . "\n" . $adresseClient . "\n" . $complementInfoClient;
+        $adresseClient = $entiteCommande->adresse_utilisateur_parametres_separes();
+        $enteteClient = $entiteCommande->nom_et_prenom_utilisateur() . "\n" . $adresseClient['numero_rue'] . ' ' . $adresseClient['nom_rue'] . (Utilitaires::emptyMinusZero($adresseClient['complement_adresse'])?'':"\n" . $adresseClient['complement_adresse']) . "\n" . $adresseClient['code_postal'] . ' ' . $adresseClient['ville'] . "\n" . $adresseClient['pays'];
         $this->SetFont('DejaVu','',10);
         $this->SetLineWidth(1);
-        $largeurNomClient = $this->GetStringWidth($nomClient);
-        $largeurAdresseClient = $this->GetStringWidth($adresseClient);
-        $largeurComplementInfoClient = $this->GetStringWidth($complementInfoClient);
 
-        $largeurEnteteVendeurEtClient = max($largeurNomClient, $largeurAdresseClient, $largeurComplementInfoClient);
+        $largeurEnteteVendeurEtClient = max($this->GetStringWidth($entiteCommande->nom_et_prenom_utilisateur()),
+            $this->GetStringWidth($adresseClient['numero_rue'] . ' ' . $adresseClient['nom_rue']),
+            $this->GetStringWidth($adresseClient['complement_adresse']),
+        $this->GetStringWidth($adresseClient['code_postal'] . ' ' . $adresseClient['ville']),
+        $this->GetStringWidth($adresseClient['pays']));
+
         $this->SetX(200-$largeurEnteteVendeurEtClient);
 //        $this->MultiCell($largeurEnteteVendeurEtClient, 5, $enteteClient, 1,0,'');
         $this->MultiCell($largeurEnteteVendeurEtClient, 5, $enteteClient, 1, 'C', false);
@@ -115,7 +123,7 @@ class FacturePDF extends tFPDF
         $this->Ln(10);*/
     }
 
-    protected function SetCol($col)
+    private function SetCol($col)
     {
         // Positionnement sur une colonne
         $this->col = $col;
@@ -124,7 +132,7 @@ class FacturePDF extends tFPDF
         $this->SetX($x);
     }
 
-    protected function writeParagrapheLegal ()
+    private function writeParagrapheLegal ()
     {
         $this->y0bloc = $this->GetY();
         $this->SetX(10);
@@ -135,25 +143,61 @@ class FacturePDF extends tFPDF
             0,'J','');
     }
 
-    protected function setDate ($date)
+
+    /**
+     * @param CommandeEntity $entiteCommande
+     */
+    private function setDate (CommandeEntity $entiteCommande)
     {
+        try
+        {
+            $dateFacturation = new DateTime($entiteCommande->date_facturation());
+        }
+        catch (\Exception $exception)
+        {
+//            Par défaut DateTime() renvoie la date/heure actuelle (du serveur)
+            $dateFacturation = new DateTime();
+            Utilitaires::logMessage('Une exception a été levée sur la date de facturation : ' . $exception->getMessage() . ', la date qui génère l\'erreur est ' . $entiteCommande->date_facturation());
+        }
+        $dateFacturation = new DateTime($entiteCommande->date_facturation());
+
+        return $dateFacturation->format("d/m/Y");
+    }
+
+
+    /**
+     * @param CommandeEntity $commandeEntity
+     */
+    private function setDateEntete (CommandeEntity $commandeEntity)
+    {
+        $dateFacturation = $this->SetDate($commandeEntity);
         $this->SetCol(1);
         $this->SetY($this->y0bloc+5);
         $this->SetFont('DejaVu','',10);
         $this->SetLineWidth(1);
-        $this->Cell(100, 5, 'Date : ' . $date, 0, 1, 'C');
+        $this->Cell(100, 5, 'Date : ' . $dateFacturation, 0, 1, 'C');
         $this->Ln(15);
     }
 
-    protected function setNumeroFacture ($numeroFacture)
+
+
+
+
+    /**
+     * @param CommandeEntity $entiteCommande
+     */
+    private function setNumeroFacture (CommandeEntity $entiteCommande)
     {
         $this->SetCol(0);
         $this->SetFont('DejaVu','',10);
-        $this->Cell(100, 5, 'Pièce n° : ' . $numeroFacture);
+        $this->Cell(100, 5, 'Pièce n° : ' . $entiteCommande->numero_facture());
         $this->Ln(10);
     }
 
-    protected function ajoutArticles($tableauData)
+    /**
+     * @param CommandeEntity $entiteCommande
+     */
+    private function ajoutArticles(CommandeEntity $entiteCommande)
     {
         // Couleurs, épaisseur du trait et police grasse
         $this->SetFillColor(255,0,0);
@@ -173,49 +217,63 @@ class FacturePDF extends tFPDF
         $this->SetFont('');
         // Données
         $fill = false;
-        foreach($tableauData as $row)
+
+        $newLignesDeCommandeManager = new LignesDeCommandesManager();
+        $allLignesDeCommandeFromCommandeId = $newLignesDeCommandeManager->getAllLignesDeCommandeFromOneCommande($entiteCommande->id());
+
+        foreach ($allLignesDeCommandeFromCommandeId as $ligneDeCommande)
         {
-            $this->Cell($w[0],6,$row[0],'LR',0,'L',$fill);
-            $this->Cell($w[1],6,number_format($row[1],2,',',' '),'LR',0,'L',$fill);
-            $this->Cell($w[2],6,number_format($row[2],0,',',' '),'LR',0,'R',$fill);
-            $this->Cell($w[3],6,number_format($row[3],2,',',' '),'LR',0,'R',$fill);
+            $this->Cell($w[0],6,$ligneDeCommande->photo_name(),'LR',0,'L',$fill);
+            $this->Cell($w[1],6,number_format($ligneDeCommande->tarif(),2,',',' '),'LR',0,'L',$fill);
+            $this->Cell($w[2],6,number_format($ligneDeCommande->nombre_exemplaires(),0,',',' '),'LR',0,'R',$fill);
+            $this->Cell($w[3],6,number_format($ligneDeCommande->tarif() * $ligneDeCommande->nombre_exemplaires(),2,',',' '),'LR',0,'R',$fill);
             $this->Ln();
             $fill = !$fill;
         }
+
         // Trait de terminaison
         $this->Cell(array_sum($w),0,'','T');
     }
 
-    protected function setFraisDePortEtTotal ($fraisDePort, $total)
+
+    /**
+     * @param CommandeEntity $entiteCommande
+     */
+    private function setFraisDePortEtTotal (CommandeEntity $entiteCommande)
     {
 
         $this->SetFont('DejaVu','',10);
         $this->SetLineWidth(1);
         $this->SetX(145);
         $this->Cell(25, 5, 'Frais de port', 0, 0, 'R');
-        $this->Cell(30, 5, number_format($fraisDePort, 2, ',', ' '), 0, 1, 'R');
+        $this->Cell(30, 5, number_format(Utilitaires::FRAIS_DE_PORT, 2, ',', ' '), 0, 1, 'R');
         $this->SetX(145);
         $this->Cell(25, 5, 'Total HT', 1, 0, 'R');
-        $this->Cell(30, 5, number_format($total, 2, ',', ' '), 1, 1, 'R');
+        $this->Cell(30, 5, number_format($entiteCommande->montant_total() + Utilitaires::FRAIS_DE_PORT, 2, ',', ' '), 1, 1, 'R');
         $this->SetFont('DejaVu','',8);
         $this->SetX(145);
         $this->Cell(55, 5, 'TVA non applicable, art. 293 B du CGI', 0, 0, 'C');
         $this->Ln(10);
     }
 
-    protected function setDateEtModeReglement ($date)
+
+    /**
+     * @param CommandeEntity $commandeEntity
+     */
+    private function setDateEtModeReglement (CommandeEntity $commandeEntity)
     {
+        $dateFacturation = $this->SetDate($commandeEntity);
         $this->SetFont('DejaVu','',10);
         $this->y0bloc = $this->GetY();
         $this->Cell(65, 5, 'Date de règlement : ', 0, 0, 'L');
         $this->SetY($this->y0bloc);
         $this->SetX(67);
-        $this->Cell(50, 5, $date, 0, 1, 'L');
+        $this->Cell(50, 5, $dateFacturation, 0, 1, 'L');
         $this->y0bloc = $this->GetY();
         $this->Cell(65, 5, 'Date d\'exécution de la vente : ', 0, 0, 'L');
         $this->SetY($this->y0bloc);
         $this->SetX(67);
-        $this->Cell(50, 5, $date, 0, 1, 'L');
+        $this->Cell(50, 5, $dateFacturation, 0, 1, 'L');
         $this->y0bloc = $this->GetY();
         $this->Cell(65, 5, 'Mode de règlement : ', 0, 0, 'L');
         $this->SetY($this->y0bloc);

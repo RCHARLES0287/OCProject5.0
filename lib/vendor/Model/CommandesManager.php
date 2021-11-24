@@ -61,8 +61,8 @@ class CommandesManager extends Manager
 
     public function saveOneCommande(CommandeEntity &$newCommandeEntity)
     {
-        $req = $this->db->prepare('INSERT INTO rc_photographe_commandes(commandes_numero_commande, commandes_numero_facture, commandes_montant_total, commandes_id_utilisateur, commandes_nom_et_prenom_utilisateur, commandes_adresse_utilisateur, commandes_validation_panier)
-                                            VALUES (:numero_commande, :numero_facture, :montant_total, :id_utilisateur, :nom_et_prenom_utilisateur, :adresse_utilisateur, :validation_panier)');
+        $req = $this->db->prepare('INSERT INTO rc_photographe_commandes(commandes_numero_commande, commandes_numero_facture, commandes_montant_total, commandes_id_utilisateur, commandes_nom_et_prenom_utilisateur, commandes_adresse_utilisateur, commandes_date_facturation)
+                                            VALUES (:numero_commande, :numero_facture, :montant_total, :id_utilisateur, :nom_et_prenom_utilisateur, :adresse_utilisateur, :date_facturation)');
         $req->execute(array(
             'numero_commande' => $newCommandeEntity->numero_commande(),
             'numero_facture' => $newCommandeEntity->numero_facture(),
@@ -70,7 +70,7 @@ class CommandesManager extends Manager
             'id_utilisateur' => $newCommandeEntity->id_utilisateur(),
             'nom_et_prenom_utilisateur' => $newCommandeEntity->nom_et_prenom_utilisateur(),
             'adresse_utilisateur' => $newCommandeEntity->adresse_utilisateur(),
-            'validation_panier' => $newCommandeEntity->validation_panier()
+            'date_facturation' => $newCommandeEntity->date_facturation()
         ));
 //        lastInsertId sert à alimenter automatiquement l'id de l'entité qui a été passée en paramètre suite à sa création dans la BDD
         $newCommandeEntity->setId($this->db->lastInsertId());
@@ -86,7 +86,7 @@ class CommandesManager extends Manager
                                                 commandes_id_utilisateur=:id_utilisateur,
                                                 commandes_nom_et_prenom_utilisateur=:nom_et_prenom_utilisateur,
                                                 commandes_adresse_utilisateur=:adresse_utilisateur,
-                                                commandes_validation_panier=:validation_panier
+                                                commandes_date_facturation=:date_facturation
                                             WHERE commandes_id=:commandId');
         $req->execute(array(
             'numero_commande' => $modifiedCommande->numero_commande(),
@@ -95,7 +95,7 @@ class CommandesManager extends Manager
             'id_utilisateur' => $modifiedCommande->id_utilisateur(),
             'nom_et_prenom_utilisateur' => $modifiedCommande->nom_et_prenom_utilisateur(),
             'adresse_utilisateur' => $modifiedCommande->adresse_utilisateur(),
-            'validation_panier' => $modifiedCommande->validation_panier(),
+            'date_facturation' => $modifiedCommande->date_facturation(),
             'commandId' => $modifiedCommande->id()
         ));
         /*var_dump("jusque là ça marche");
