@@ -4,6 +4,7 @@
 namespace App\Backend;
 
 
+use App\Backend\Modules\Connexion\Controller\ConnexionController;
 use RCFramework\Application;
 use RCFramework\BackController;
 
@@ -22,11 +23,12 @@ class BackendApplication extends Application
         /** @var BackController $controller */
         $controller = $this->getController();
 
-        if ($controller->getModule() !== 'Connexion' && ConnexionController::isConnected() === false)
+        ///todo Dé-commenter le bloc ci-dessous et faire le nécessaire pour gérer la connexion à l'admin
+        /*if ($controller->getModule() !== 'Connexion' && ConnexionController::isConnected() === false)
         {
             header('Location: /admin/errorauthentification');
             exit;
-        }
+        }*/
 
         $controller->execute();
 
