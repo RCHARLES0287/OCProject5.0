@@ -146,6 +146,7 @@ class FacturePDF extends tFPDF
 
     /**
      * @param CommandeEntity $entiteCommande
+     * @return string
      */
     private function setDate (CommandeEntity $entiteCommande)
     {
@@ -159,7 +160,6 @@ class FacturePDF extends tFPDF
             $dateFacturation = new DateTime();
             Utilitaires::logMessage('Une exception a été levée sur la date de facturation : ' . $exception->getMessage() . ', la date qui génère l\'erreur est ' . $entiteCommande->date_facturation());
         }
-        $dateFacturation = new DateTime($entiteCommande->date_facturation());
 
         return $dateFacturation->format("d/m/Y");
     }
