@@ -160,6 +160,24 @@ class PhotosManager extends Manager
         ));
     }
 
+    public function updateOrdreCarousel($photoId, $ordreCarousel)
+    {
+        $req = $this->db->prepare('UPDATE rc_photographe_photos
+                                            SET photos_ordre_carousel=null
+                                            WHERE photos_ordre_carousel=:ordreCarousel');
+        $req->execute(array(
+            'ordreCarousel' => $ordreCarousel
+        ));
+
+        $req = $this->db->prepare('UPDATE rc_photographe_photos
+                                            SET photos_ordre_carousel=:newOrdreCarousel
+                                            WHERE photos_id=:photoId');
+        $req->execute(array(
+            'photoId' => $photoId,
+            'newOrdreCarousel' => $ordreCarousel
+        ));
+    }
+
     public function deleteOnePhoto($photoId)
     {
         $req = $this->db->prepare('DELETE FROM rc_photographe_photos WHERE photos_id=:photoId');
@@ -187,4 +205,5 @@ class PhotosManager extends Manager
             return false;
         }
     }
+
 }

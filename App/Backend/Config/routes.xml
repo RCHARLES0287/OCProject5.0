@@ -6,6 +6,7 @@
     <route url="/admin/ajoutphoto" module="GestionPhotos" action="addonephoto"/>
     <route url="/admin/ajoutphotoform" module="GestionPhotos" action="ajoutphotoform"/>
     <route url="/admin/ordrecarousel" module="GestionPhotos" action="ordrecarousel"/>
+    <route url="/admin/validateordrecarousel" module="GestionPhotos" action="validateordrecarousel"/>
 
 
 </routes>

@@ -2,70 +2,101 @@
 
 {% block backend_content %}
 
-    <h2>Ordre des photos dans le carousel</h2>
+    <style>
+        img {
+            width: 100px;
+            height: 100px;
+        }
 
+        .zone_cible {
+            background-color: grey;
+            width: 100px;
+            height: 100px;
+        }
+
+    </style>
+
+    <h2>Ordre des photos dans le carousel</h2>
 
     {% for unePhoto in allPhotos %}
 
-        <div class="all_photos" id="{{ photo.photos_id }}">
-            {{ photo.serial_number }} : {{ photo.lieu }}
-            <img alt="description" src="/images/{{ allGaleries[photo.galerie_id()].nom_galerie ~ '/' ~ photo.serial_number }}" draggable="true" width="100" height="100">
+        <div class="all_photos" id="{{ unePhoto.id }}">
+            <p>{{ unePhoto.serial_number }} : {{ unePhoto.lieu }}</p>
+            <img alt="description"
+                 src="/images/{{ allGaleries[unePhoto.galerie_id()].nom_galerie ~ '/' ~ unePhoto.serial_number }}"
+                 draggable="true">
         </div>
 
     {% endfor %}
 
 
 
-    <div class="zone_cible" id="zone_1" width="100" height="100"> Emplacement 1
-    </div>
+    <form id="formulaire_carousel" class="formulaire_ordre_carousel" action="/admin/validateordrecarousel" method="post"
+          novalidate>
+        <div class="zone_cible" id="zone_1">
+            <input type="hidden" name="input_1" value="">
+            <div> Emplacement 1</div>
+        </div>
 
-    <div class="zone_cible" id="zone_2" width="100" height="100"> Emplacement 2
-    </div>
+        <div class="zone_cible" id="zone_2">
+            <input type="hidden" name="input_2" value="">
+            <div> Emplacement 2</div>
+        </div>
 
-    <div class="zone_cible" id="zone_3" width="100" height="100"> Emplacement 3
-    </div>
+        <div class="zone_cible" id="zone_3">
+            <input type="hidden" name="input_3" value="">
+            <div> Emplacement 3</div>
+        </div>
 
-    <div class="zone_cible" id="zone_4" width="100" height="100"> Emplacement 4
-    </div>
+        <div class="zone_cible" id="zone_4">
+            <input type="hidden" name="input_4" value="">
+            <div> Emplacement 4</div>
+        </div>
 
-    <div class="zone_cible" id="zone_5" width="100" height="100"> Emplacement 5
-    </div>
+        <div class="zone_cible" id="zone_5">
+            <input type="hidden" name="input_5" value="">
+            <div> Emplacement 5</div>
+        </div>
 
-    <style>
-        .zone_cible
-        {
-            background-color: grey;
-        }
-    </style>
+        <button id="validation_ordre_carousel" class="btn btn-primary" name="bouton_validation_ordre_carousel"
+                type="submit">Valider ordre
+        </button>
+    </form>
 
-    <script type="text/javascript">
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script type="application/javascript">
         /* ajouter propriété pour drop et transfert de données */
         // e.originalEvent.dataTransfer.setData('text/html', id);
-        $(document).ready(function() {
+        $(function () {
             $('.all_photos').on({
-                dragstart: function(e) {
-                    let id = $(this).attr('id');
+                dragstart: function (e) {
+                    let idPhoto = $(this).attr('id');
                     $(this).css('opacity', '0.5');
                     /* on garde l'identifiant en mémoire */
-                    e.dataTransfer.setData('text/html', id);
+                    e.originalEvent.dataTransfer.setData('text/plain', idPhoto);
                 },
-                dragend: function() {
+                dragend: function () {
                     // let id = $(this).attr('id');
                     $(this).css('opacity', '1');
                 }
             });
             $('.zone_cible').on({
-                dragover: function(e) {
+                dragover: function (e) {
                     e.preventDefault();
                 },
-                drop: function(e) {
+                drop: function (e) {
                     e.preventDefault();
-                    let data = e.dataTransfer.getData('text/html');
-                    $(this).append($("#"+data));
+                    let idPhoto = e.originalEvent.dataTransfer.getData('text/plain');
+                    $(this).children('div').html($("#" + idPhoto + ' img').clone());
+                    //dans append
+                    $(this).children('input').val(idPhoto);
                 }
             });
         });
     </script>
-
 {% endblock %}
 
