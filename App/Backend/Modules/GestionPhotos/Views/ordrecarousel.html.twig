@@ -2,101 +2,84 @@
 
 {% block backend_content %}
 
-    <style>
-        img {
-            width: 100px;
-            height: 100px;
-        }
-
-        .zone_cible {
-            background-color: grey;
-            width: 100px;
-            height: 100px;
-        }
-
-    </style>
 
     <h2>Ordre des photos dans le carousel</h2>
 
-    {% for unePhoto in allPhotos %}
+    <div id="all_photos_available_carousel">
+        {% for unePhoto in allPhotos %}
 
-        <div class="all_photos" id="{{ unePhoto.id }}">
-            <p>{{ unePhoto.serial_number }} : {{ unePhoto.lieu }}</p>
-            <img alt="description"
-                 src="/images/{{ allGaleries[unePhoto.galerie_id()].nom_galerie ~ '/' ~ unePhoto.serial_number }}"
-                 draggable="true">
-        </div>
+            <div class="all_photos" id="{{ unePhoto.id }}">
+                <p>{{ unePhoto.serial_number }} : {{ unePhoto.lieu }}</p>
+                <img alt="description"
+                     src="/images/{{ allGaleries[unePhoto.galerie_id()].nom_galerie ~ '/' ~ unePhoto.serial_number }}"
+                     draggable="true">
+            </div>
 
-    {% endfor %}
+        {% endfor %}
+    </div>
+
 
 
 
     <form id="formulaire_carousel" class="formulaire_ordre_carousel" action="/admin/validateordrecarousel" method="post"
           novalidate>
-        <div class="zone_cible" id="zone_1">
-            <input type="hidden" name="input_1" value="">
-            <div> Emplacement 1</div>
-        </div>
+        <div id="zones_cibles">
+            <div class="bloc_zone_cible">
+                <div class="zone_cible" id="zone_1">
+                    <input type="hidden" name="input_1" value="">
+                    <div> Emplacement 1</div>
+                </div>
+                <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
+            </div>
 
-        <div class="zone_cible" id="zone_2">
-            <input type="hidden" name="input_2" value="">
-            <div> Emplacement 2</div>
-        </div>
 
-        <div class="zone_cible" id="zone_3">
-            <input type="hidden" name="input_3" value="">
-            <div> Emplacement 3</div>
-        </div>
+            <div class="bloc_zone_cible">
+                <div class="zone_cible" id="zone_2">
+                    <input type="hidden" name="input_2" value="">
+                    <div> Emplacement 2</div>
+                </div>
+                <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
+            </div>
 
-        <div class="zone_cible" id="zone_4">
-            <input type="hidden" name="input_4" value="">
-            <div> Emplacement 4</div>
-        </div>
+            <div class="bloc_zone_cible">
+                <div class="zone_cible" id="zone_3">
+                    <input type="hidden" name="input_3" value="">
+                    <div> Emplacement 3</div>
+                </div>
+                <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
+            </div>
 
-        <div class="zone_cible" id="zone_5">
-            <input type="hidden" name="input_5" value="">
-            <div> Emplacement 5</div>
+            <div class="bloc_zone_cible">
+                <div class="zone_cible" id="zone_4">
+                    <input type="hidden" name="input_4" value="">
+                    <div> Emplacement 4</div>
+                </div>
+                <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
+            </div>
+
+            <div class="bloc_zone_cible">
+                <div class="zone_cible" id="zone_5">
+                    <input type="hidden" name="input_5" value="">
+                    <div> Emplacement 5</div>
+                </div>
+                <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
+            </div>
         </div>
 
         <button id="validation_ordre_carousel" class="btn btn-primary" name="bouton_validation_ordre_carousel"
                 type="submit">Valider ordre
         </button>
     </form>
-
-
-
 {% endblock %}
 
 {% block javascript %}
-    <script type="application/javascript">
-        /* ajouter propriété pour drop et transfert de données */
-        // e.originalEvent.dataTransfer.setData('text/html', id);
-        $(function () {
-            $('.all_photos').on({
-                dragstart: function (e) {
-                    let idPhoto = $(this).attr('id');
-                    $(this).css('opacity', '0.5');
-                    /* on garde l'identifiant en mémoire */
-                    e.originalEvent.dataTransfer.setData('text/plain', idPhoto);
-                },
-                dragend: function () {
-                    // let id = $(this).attr('id');
-                    $(this).css('opacity', '1');
-                }
-            });
-            $('.zone_cible').on({
-                dragover: function (e) {
-                    e.preventDefault();
-                },
-                drop: function (e) {
-                    e.preventDefault();
-                    let idPhoto = e.originalEvent.dataTransfer.getData('text/plain');
-                    $(this).children('div').html($("#" + idPhoto + ' img').clone());
-                    //dans append
-                    $(this).children('input').val(idPhoto);
-                }
-            });
-        });
-    </script>
+{#    Permet de conserver le contenu des parents#}
+    {{ parent() }}
+    <script type="application/javascript" src="/js/OrdreCarousel.js"></script>
+    <script type="application/javascript" src="/js/CarouselAdmin.js"></script>
 {% endblock %}
 
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/ordrecarousel.css">
+{% endblock %}

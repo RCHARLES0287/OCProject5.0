@@ -206,4 +206,22 @@ class PhotosManager extends Manager
         }
     }
 
+
+    public function getAllPhotosForCarousel(): array
+    {
+        $photosFeatures = [];
+        $answerPhotosData = $this->db->prepare('SELECT * FROM rc_photographe_photos WHERE photos_ordre_carousel IS NOT NULL ORDER BY photos_ordre_carousel ASC');
+
+        $answerPhotosData->execute();
+        $dbPhotos = $answerPhotosData->fetchAll();
+
+        foreach ($dbPhotos as $dbPhoto)
+        {
+            $photosFeatures [] = new PhotoEntity($dbPhoto);
+        }
+
+        return $photosFeatures;
+    }
 }
+
+

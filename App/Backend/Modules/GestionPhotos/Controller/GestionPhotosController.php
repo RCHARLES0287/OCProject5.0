@@ -57,5 +57,7 @@ class GestionPhotosController extends BackController
                 $newPhotoManager->updateOrdreCarousel($carouselZoneiIdPhoto, $zoneCarousel);
             }
         }
+
+        header('Location: /admin/accueiladmin');
     }
 }
