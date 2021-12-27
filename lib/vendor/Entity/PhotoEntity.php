@@ -4,6 +4,7 @@
 namespace Entity;
 
 
+use Model\GaleriesManager;
 use RCFramework\Entity;
 use RCFramework\Utilitaires;
 
@@ -142,5 +143,13 @@ class PhotoEntity extends Entity
     public function description():?string
     {
         return $this->description;
+    }
+
+    public function cheminPhoto():?string
+    {
+        $newGalerieManager = new GaleriesManager();
+        $newGalerieEntity = $newGalerieManager->getOneGalerie($this->galerie_id);
+
+        return '/images/' . $newGalerieEntity->nom_galerie() . '/' . $this->serial_number;
     }
 }
