@@ -1,0 +1,25 @@
+
+.affichage_galerie
+{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.photo_dans_galerie
+{
+    width: 25%;
+    margin: 5px;
+
+}
+
+.photo_dans_galerie img
+{
+    max-width: 100%;
+}
+
+
+
+
