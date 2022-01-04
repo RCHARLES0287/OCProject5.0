@@ -8,7 +8,7 @@
         <div class="affichage_galerie">
             {% for photo in photos %}
                 <div class="photo_dans_galerie">
-                    {{ photo.serial_number }} : {{ photo.lieu }}
+                    <div class="descriptif_photo">{{ photo.serial_number }} : {{ photo.lieu }}</div>
                     <img alt="description" src="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}">
                 </div>
             {% endfor %}
@@ -16,5 +16,9 @@
     </section>
 {% endblock %}
 
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/unegalerie.css">
+{% endblock %}
 
 

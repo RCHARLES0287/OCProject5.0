@@ -38,7 +38,8 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="menu_galerie">
                         {% for galerie in allGaleries %}
-                            <a class="dropdown-item" href="#">{{ galerie.nom_galerie }}</a>
+                            <a class="dropdown-item" href="/showonegalerie?galerie_id={{ galerie.id }}">{{ galerie.nom_galerie }}</a>
+{#                            <a class="dropdown-item" href="/showonegalerie?galerie_id=1">{{ galerie.nom_galerie }}</a>#}
                         {% endfor %}
                     </div>
                 </li>
