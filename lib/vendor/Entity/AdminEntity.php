@@ -11,24 +11,7 @@ class AdminEntity extends EntityAuthentificationUser
 {
     protected const CLASS_PREFIX = 'admins';
 
-    private ?string $email_password = null;
 
-    public function setEmail_password($emailPassword)
-    {
-        if (Utilitaires::emptyMinusZero($emailPassword))
-        {
-            throw new \Exception("Un mot de passe de messagerie doit être défini");
-        }
-        else
-        {
-            $this->email_password = $emailPassword;
-        }
-    }
-
-    public function email_password():string
-    {
-        return $this->email_password;
-    }
 
 
     /*private string $login;
