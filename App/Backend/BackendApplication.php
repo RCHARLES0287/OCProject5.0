@@ -5,11 +5,14 @@ namespace App\Backend;
 
 
 use App\Backend\Modules\Connexion\Controller\ConnexionController;
+use App\TraitLayoutContent;
 use RCFramework\Application;
 use RCFramework\BackController;
 
 class BackendApplication extends Application
 {
+    use TraitLayoutContent;
+
     public function __construct()
     {
         parent::__construct();

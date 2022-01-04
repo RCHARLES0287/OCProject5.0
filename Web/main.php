@@ -1,6 +1,8 @@
 <?php
 //Le session_start() est placé ici car on va utiliser la session dans de nombreuses pages
+
 use RCFramework\Utilitaires;
+
 
 //const FPDF_FONTPATH = __DIR__ . '/../lib/vendor/setasign/tfpdf/font/';
 
