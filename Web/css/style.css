@@ -1,5 +1,25 @@
 /*Feuille de style du projet*/
 
+body
+{
+    position: relative;
+    min-height: 100vh;
+    /*margin-bottom: 40px;*/
+}
+
+footer
+{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+
 .un_article_panier
 {
     border: solid black 1px;
