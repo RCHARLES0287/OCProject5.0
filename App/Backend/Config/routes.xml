@@ -3,10 +3,14 @@
 <routes>
     <route url="/admin/connexion" module="Connexion" action="adminconnexion"/>
     <route url="/admin/connexionform" module="Connexion" action="adminconnexionform"/>
+    <route url="/admin/deconnexion" module="Connexion" action="admindeconnexion"/>
+
     <route url="/admin/ajoutphoto" module="GestionPhotos" action="addonephoto"/>
     <route url="/admin/ajoutphotoform" module="GestionPhotos" action="ajoutphotoform"/>
+
     <route url="/admin/ordrecarousel" module="GestionPhotos" action="ordrecarousel"/>
     <route url="/admin/validateordrecarousel" module="GestionPhotos" action="validateordrecarousel"/>
+
     <route url="/admin/accueiladmin" module="Accueiladmin" action="accueiladmin"/>
 
 

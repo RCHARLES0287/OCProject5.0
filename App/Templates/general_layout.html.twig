@@ -81,16 +81,24 @@
 {% else %}
     <h1>Voici le template général</h1>
 
-    {% block content %}{% endblock %}
+    <section>
+        {% block content %}{% endblock %}
+    </section>
+
 {% endif %}
 
 
 <footer>
     <div id="contenu_footer">
+        {% if adminConnectionStatus == false %}
         <a href="/admin/connexion">Espace administrateur</a>
+        {% else %}
+        <a href="/admin/deconnexion">Déconnexion administrateur</a>
+        {% endif %}
     </div>
 
 </footer>
+
 
 
 <!-- MDB -->

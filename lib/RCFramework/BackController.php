@@ -33,12 +33,12 @@ abstract class BackController extends ApplicationComponent
 
         try
         {
+            $this->$method($this->app->httpRequest());
 //            Pour exécuter la fourniture des données nécessaires à l'affichage du layout global au chargement de chaque page
             if (is_callable([$this->app, 'executeLayoutContent']))
             {
                 $this->app->executeLayoutContent($this->page);
             }
-            $this->$method($this->app->httpRequest());
         } catch (\Throwable $e)
         {
             $this->page->addVar('exception', $e);

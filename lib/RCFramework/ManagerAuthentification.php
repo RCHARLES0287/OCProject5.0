@@ -24,8 +24,12 @@ abstract class ManagerAuthentification extends Manager
                 return null;
             }
 
+//            var_dump($dbUser);
             $typeOfUser = $this->getTypeOfUser();
             $userFeatures = new $typeOfUser($dbUser);
+            /*var_dump($userFeatures);
+            exit;*/
+
 
             if (password_verify($password, $userFeatures->password()))
             {
