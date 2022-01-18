@@ -2,9 +2,11 @@
 
 namespace App\Backend\Modules\GestionPhotos\Controller;
 
+use App\Backend\Modules\Connexion\Controller\ConnexionController;
 use Entity\PhotoEntity;
 use Model\GaleriesManager;
 use Model\PhotosManager;
+use RCFramework\Application;
 use RCFramework\BackController;
 use RCFramework\HTTPRequest;
 

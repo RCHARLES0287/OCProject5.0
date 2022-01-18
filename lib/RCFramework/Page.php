@@ -25,6 +25,16 @@ class Page extends ApplicationComponent
         $this->vars[$var] = $value;
     }
 
+//    A utiliser systématiquement dans TraitLayoutContent.php
+    public function addVarIfUndifined($var, $value)
+    {
+        if (!isset($this->vars[$var]))
+        {
+            $this->addVar($var, $value);
+        }
+    }
+
+
     public function getGeneratedPage()    // Lire le contenu du fichier vue, le renvoyer sous la forme d'une chaîne de caractères. Applique en automatique le layout.
     {
 //        Charge la bibliothèque Twig
