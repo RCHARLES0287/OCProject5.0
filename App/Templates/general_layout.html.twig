@@ -29,46 +29,63 @@
     <nav class="navbar">
         <h1>Romain CHARLES<br>
             PHOTOGRAPHE</h1>
+        <label>
+            <input hidden id="admin_connection_status" value="{{ adminConnectionStatus }}">
+        </label>
         <div class="menu_general">
             <ul class="nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="menu_galerie" href="#" role="button"
-                       data-mdb-toggle="dropdown" aria-expanded="false">
-                        Galeries
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="menu_galerie">
-                        {% for galerie in allGaleries %}
-                            <a class="dropdown-item" href="/showonegalerie?galerie_id={{ galerie.id }}">{{ galerie.nom_galerie }}</a>
-{#                            <a class="dropdown-item" href="/showonegalerie?galerie_id=1">{{ galerie.nom_galerie }}</a>#}
-                        {% endfor %}
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">Boutique</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/affichagepanier">Panier</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logginginform">Log in</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/loggingoutform">Log out</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <form action = "/sendsearchrequest" method = "get">
-                        <input type = "search" name = "texte_recherche">
-                        <input type = "submit" name = "send_recherche" value = "Rechercher">
-                    </form>
-                    {#<a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                {% if adminConnectionStatus == false %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="menu_galerie" href="#" role="button"
+                           data-mdb-toggle="dropdown" aria-expanded="false">
+                            Galeries
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menu_galerie">
+                            {% for galerie in allGaleries %}
+                                <a class="dropdown-item" href="/showonegalerie?galerie_id={{ galerie.id }}">{{ galerie.nom_galerie }}</a>
+                                {#                            <a class="dropdown-item" href="/showonegalerie?galerie_id=1">{{ galerie.nom_galerie }}</a>#}
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Boutique</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/affichagepanier">Panier</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logginginform">Log in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loggingoutform">Log out</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <form action = "/sendsearchrequest" method = "get">
+                            <input type = "search" name = "texte_recherche">
+                            <input type = "submit" name = "send_recherche" value = "Rechercher">
+                        </form>
+                        {#<a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
                         Recherche
                     </a>#}
-                    <form class="form-inline dropdown-menu" aria-labelledby="navbarDropdown">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Recherche</button>
-                    </form>
-                </li>
+                        <form class="form-inline dropdown-menu" aria-labelledby="navbarDropdown">
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Recherche</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <div> A COMPLETER </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/ordrecarousel">Carousel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/ajoutphoto">Gestion photos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Gestion galeries</a>
+                    </li>
+                {% endif %}
+
             </ul>
 
         </div>
@@ -112,7 +129,18 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous">
 </script>
-{% block javascript %}{% endblock %}
+{#{% block javascript %}
+    #}{#    Permet de conserver le contenu des parents#}{#
+
+    {{ parent() }}
+
+/*Version alternative du changement de menu. J'utilise plutôt le changement de menu directement dans la vue avec Twig mais
+je garde cette version pour mémoire*/
+
+    <script type="application/javascript" src="/js/ChangingMenu.js"></script>
+    <script type="application/javascript" src="/js/ComportementGeneralLayout.js"></script>
+
+{% endblock %}#}
 </body>
 </html>
 

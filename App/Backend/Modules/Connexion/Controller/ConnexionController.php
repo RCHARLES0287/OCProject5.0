@@ -64,7 +64,7 @@ class ConnexionController extends BackController
     static public function isAdminConnected(): bool
     {
 //        Ici return ne renvoie pas le contenu de $_SESSION['connexion_admin_status'], mais il renvoie le resultat du double test
-//          qui se trouve être true (donc équivalent au contenu de $_SESSION['connexion_admin_status'].
+//          qui se trouve être true (donc équivalent au contenu de $_SESSION['connexion_admin_status']).
         return isset($_SESSION['connexion_admin_status']) && $_SESSION['connexion_admin_status'] == true;
     }
 }
