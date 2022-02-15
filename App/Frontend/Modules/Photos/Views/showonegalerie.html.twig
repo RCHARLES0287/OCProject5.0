@@ -1,11 +1,12 @@
 {% extends 'Frontend/Templates/frontend_layout.html.twig' %}
 
 {% block frontend_content %}
-    <section>
+
+    <section class="contenu_galerie">
 
         <p>Voici l'ensemble des photos de la galerie "{{ galerie_entity.nom_galerie }}"</p>
 
-        <div class="affichage_galerie">
+        <div class="affichage_galerie" data-galerieid="{{ galerie_entity.id }}">
             {% for photo in photos %}
                 <div class="photo_dans_galerie">
                     <div class="descriptif_photo">{{ photo.serial_number }} : {{ photo.lieu }}</div>
@@ -14,6 +15,40 @@
             {% endfor %}
         </div>
     </section>
+
+    {% if number_of_pages > 1 %}
+    <div class="pagination" id="pagination_galerie" data-numberofpages="{{ number_of_pages }}" data-startpage="{{ start_page }}">
+        <nav aria-label="...">
+            <ul class="pagination pagination-circle">
+
+                <li class="page-item">
+                    <a class="page-link previous-button">Previous</a>
+                </li>
+
+                {% for currentpage in 1..number_of_pages %}
+                <li class="page-item page-number-button {% if currentpage == start_page %} active {% endif %}" aria-current="page">
+                    <a class="page-link" data-pagenumber="{{ currentpage }}" href="#">{{ currentpage }}</a>
+                </li>
+                {% endfor %}
+
+                {#
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                #}
+
+                <li class="page-item">
+                    <a class="page-link next-button">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+
 {% endblock %}
 
 {% block css %}
@@ -21,4 +56,13 @@
     <link rel="stylesheet" href="/css/unegalerie.css">
 {% endblock %}
 
+{% block javascript %}
+{# Permet de conserver le contenu des parents #}
+{{ parent() }}
+
+<script type="application/javascript" src="/js/AppelAjax.js"></script>
+<script type="application/javascript" src="/js/PaginationButtons.js"></script>
+<script type="application/javascript" src="/js/ShowOneGalerie.js"></script>
+
+{% endblock %}
 

@@ -10,6 +10,7 @@ abstract class Utilitaires
     const EMAIL_VENDEUR = 'sb-ahide6955388@business.example.com';
     ///Todo Repasser sur la vraie adresse mail du vendeur
     const FRAIS_DE_PORT = 250;
+    const NOMBRE_PHOTOS_PAR_PAGE_GALERIES = 6;
 
 
     public static function emptyMinusZero($value)

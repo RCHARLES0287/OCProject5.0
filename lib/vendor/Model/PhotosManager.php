@@ -7,6 +7,7 @@ namespace Model;
 use Entity\PhotoEntity;
 use PDO;
 use RCFramework\Manager;
+use RCFramework\Utilitaires;
 
 class PhotosManager extends Manager
 {
@@ -56,6 +57,32 @@ class PhotosManager extends Manager
         $answerPhotosData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
         $answerPhotosData->execute(array(
             'galerieId' => $galerieId
+        ));
+
+        $photosFeatures = [];
+
+        $dbPhotos = $answerPhotosData->fetchAll();
+
+        foreach ($dbPhotos as $photo)
+        {
+            $photosFeatures[] = new PhotoEntity($photo);
+        }
+
+        return $photosFeatures;
+    }
+
+    public function getOneGaleriePhotosWithPageNumber($galerieId, $pageNumber)
+    {
+        $answerPhotosData = $this->db->prepare('SELECT * 
+                                                        FROM rc_photographe_photos 
+                                                        WHERE photos_galerie_id=:galerieId 
+                                                        ORDER BY photos_id
+                                                        LIMIT photos_par_page
+                                                        OFFSET nombre_photos_a_ignorer');
+        $answerPhotosData->execute(array(
+            'galerieId' => $galerieId,
+            'photos_par_page' => Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES,
+            'nombre_photos_a_ignorer' => Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES * ($pageNumber - 1)
         ));
 
         $photosFeatures = [];

@@ -11,7 +11,7 @@
             rel="stylesheet"
     /> #}
     <!-- Material Design for Bootstrap (MDB) -->
-     <link
+    <link
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.css"
             rel="stylesheet"
             integrity="sha512-9PSp7LjOrKa8teKpNGcBfno5hk3BhDCDAs4CKjZ/aQpaVqQ/VmHV+WBjWUV2KjXySB5CbVt4/Qu8KeCVt+HvGg=="
@@ -42,8 +42,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="menu_galerie">
                             {% for galerie in allGaleries %}
-                                <a class="dropdown-item" href="/showonegalerie?galerie_id={{ galerie.id }}">{{ galerie.nom_galerie }}</a>
-                                {#                            <a class="dropdown-item" href="/showonegalerie?galerie_id=1">{{ galerie.nom_galerie }}</a>#}
+                                <a class="dropdown-item"
+                                   href="/showonegalerie?galerie_id={{ galerie.id }}">{{ galerie.nom_galerie }}</a>
+                                {# <a class="dropdown-item" href="/showonegalerie?galerie_id=1">{{ galerie.nom_galerie }}</a> #}
                             {% endfor %}
                         </div>
                     </li>
@@ -60,21 +61,21 @@
                         <a class="nav-link" href="/loggingoutform">Log out</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <form action = "/sendsearchrequest" method = "get">
-                            <input type = "search" name = "texte_recherche">
-                            <input type = "submit" name = "send_recherche" value = "Rechercher">
+                        <form action="/sendsearchrequest" method="get">
+                            <input type="search" name="texte_recherche">
+                            <input type="submit" name="send_recherche" value="Rechercher">
                         </form>
-                        {#<a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        {# <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
                         Recherche
-                    </a>#}
+                    </a> #}
                         <form class="form-inline dropdown-menu" aria-labelledby="navbarDropdown">
                             <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Recherche</button>
                         </form>
                     </li>
                 {% else %}
-                    <div> A COMPLETER </div>
+                    <div> A COMPLETER</div>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/ordrecarousel">Carousel</a>
                     </li>
@@ -91,31 +92,31 @@
         </div>
     </nav>
 </header>
+<main>
+    {% if exception is defined and exception %}
+        <h1>ERREUR : </h1>
+        <p>{{ exception.message }}</p>
+    {% else %}
+        <h1>Voici le template général</h1>
 
-{% if exception is defined and exception %}
-    <h1>ERREUR : </h1>
-    <p>{{ exception.message }}</p>
-{% else %}
-    <h1>Voici le template général</h1>
+        <section>
+            {% block content %}{% endblock %}
+        </section>
 
-    <section>
-        {% block content %}{% endblock %}
-    </section>
-
-{% endif %}
+    {% endif %}
+</main>
 
 
 <footer>
     <div id="contenu_footer">
         {% if adminConnectionStatus == false %}
-        <a href="/admin/connexion">Espace administrateur</a>
+            <a href="/admin/connexion">Espace administrateur</a>
         {% else %}
-        <a href="/admin/deconnexion">Déconnexion administrateur</a>
+            <a href="/admin/deconnexion">Déconnexion administrateur</a>
         {% endif %}
     </div>
 
 </footer>
-
 
 
 <!-- MDB -->
@@ -129,18 +130,17 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous">
 </script>
-{#{% block javascript %}
-    #}{#    Permet de conserver le contenu des parents#}{#
-
-    {{ parent() }}
+{# {% block javascript %}
+#}{# Permet de conserver le contenu des parents #}{#
+{{ parent() }}
 
 /*Version alternative du changement de menu. J'utilise plutôt le changement de menu directement dans la vue avec Twig mais
 je garde cette version pour mémoire*/
 
-    <script type="application/javascript" src="/js/ChangingMenu.js"></script>
-    <script type="application/javascript" src="/js/ComportementGeneralLayout.js"></script>
+<script type="application/javascript" src="/js/ChangingMenu.js"></script>
+<script type="application/javascript" src="/js/ComportementGeneralLayout.js"></script>
 
-{% endblock %}#}
+{% endblock %} #}
 </body>
 </html>
 
