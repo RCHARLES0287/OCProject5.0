@@ -36,13 +36,40 @@ class PhotosController extends \RCFramework\BackController
             $galerieManager = new GaleriesManager();
             $galerieEntity = $galerieManager->getOneGalerie($request->getData('galerie_id'));
 
+
+
+            $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), 2);
+
+            var_dump($newPagePhotos);
+            exit;
+
+            $newPagePhotosHTML = '';
+            foreach ($newPagePhotos as $photo)
+            {
+//                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
+                $newPagePhotosHTML .= '<div class="descriptif_photo">' . $photo->serial_number() . ' : ' . $photo->lieu() . '</div>
+                    <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">';
+            }
+
+            var_dump($newPagePhotosHTML);
+            exit;
+
+
+
+
+
+
+
 //            if ($request->getExists('new_page_number') && is_int($request->getData('new_page_number')))
             if ($request->getExists('new_page_number'))
             {
-                var_dump('On a cliqué sur un changement de page');
-                exit;
+                /*var_dump('On a cliqué sur un changement de page');
+                exit;*/
 
                 $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), $request->getData('new_page_number'));
+
+                var_dump($newPagePhotos);
+                exit;
 
                 $newPagePhotosHTML = '';
                 foreach ($newPagePhotos as $photo)
@@ -52,9 +79,12 @@ class PhotosController extends \RCFramework\BackController
                     <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">';
                 }
 
-                echo $newPagePhotosHTML;
-                header('Content-Type: text/html; charset=utf-8');
+                var_dump($newPagePhotosHTML);
                 exit;
+
+                /*echo $newPagePhotosHTML;
+                header('Content-Type: text/html; charset=utf-8');
+                exit;*/
             }
 
             $galeriePhotosData = $photosManager->getOneGaleriePhotos($request->getData('galerie_id'));

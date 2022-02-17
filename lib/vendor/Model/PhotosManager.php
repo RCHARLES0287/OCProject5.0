@@ -73,6 +73,8 @@ class PhotosManager extends Manager
 
     public function getOneGaleriePhotosWithPageNumber($galerieId, $pageNumber)
     {
+        /*var_dump($galerieId);
+        exit;*/
         $answerPhotosData = $this->db->prepare('SELECT * 
                                                         FROM rc_photographe_photos 
                                                         WHERE photos_galerie_id=:galerieId 
@@ -88,6 +90,9 @@ class PhotosManager extends Manager
         $photosFeatures = [];
 
         $dbPhotos = $answerPhotosData->fetchAll();
+
+        var_dump($dbPhotos);
+        exit;
 
         foreach ($dbPhotos as $photo)
         {

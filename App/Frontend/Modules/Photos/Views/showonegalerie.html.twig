@@ -26,8 +26,8 @@
                 </li>
 
                 {% for currentpage in 1..number_of_pages %}
-                <li class="page-item page-number-button {% if currentpage == start_page %} active {% endif %}" aria-current="page">
-                    <a class="page-link" data-pagenumber="{{ currentpage }}" href="#">{{ currentpage }}</a>
+                <li class="page-item page-number-button {% if currentpage == start_page %} active {% endif %}" data-pagenumber="{{ currentpage }}" aria-current="page">
+                    <a class="page-link" href="#">{{ currentpage }}</a>
                 </li>
                 {% endfor %}
 

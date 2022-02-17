@@ -130,8 +130,8 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous">
 </script>
-{# {% block javascript %}
-#}{# Permet de conserver le contenu des parents #}{#
+{% block javascript %}
+{# Permet de conserver le contenu des parents #}{#
 {{ parent() }}
 
 /*Version alternative du changement de menu. J'utilise plutôt le changement de menu directement dans la vue avec Twig mais
@@ -139,8 +139,8 @@ je garde cette version pour mémoire*/
 
 <script type="application/javascript" src="/js/ChangingMenu.js"></script>
 <script type="application/javascript" src="/js/ComportementGeneralLayout.js"></script>
-
-{% endblock %} #}
+#}
+{% endblock %}
 </body>
 </html>
 

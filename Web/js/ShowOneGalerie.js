@@ -15,10 +15,10 @@ $(function () {
 
     console.log('le fichier js est chargé');
 
-    $(".previous-button").click(newPaginationButtons.previousButtonBehaviour);
+    $(".previous-button").click(newPaginationButtons.previousButtonBehaviour.bind(newPaginationButtons));
     // $(".previous-button").click(newPaginationButtons.previousButtonBehaviour);
-    $(".next-button").click(newPaginationButtons.nextButtonBehaviour);
-    $(".page-number-button").click(newPaginationButtons.pageNumberButtonBehaviour);
+    $(".next-button").click(newPaginationButtons.nextButtonBehaviour.bind(newPaginationButtons));
+    $(".page-number-button").click(newPaginationButtons.pageNumberButtonBehaviour.bind(newPaginationButtons));
 
 
 

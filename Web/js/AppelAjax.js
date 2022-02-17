@@ -8,6 +8,7 @@ class AppelAjax {
         req.addEventListener("load", function () {
             if (req.status >= 200 && req.status < 400) {
                 // Appelle la fonction callback en lui passant la réponse de la requête
+                console.log(req.responseText);
                 callback (req.responseText);
             } else {
                 console.error (req.status + " " + req.statusText + " " + url);
@@ -23,8 +24,12 @@ class AppelAjax {
 
     callAndExtract (url, callback) {
         // const GETTER = new Ajax ();
+        console.log('on est toujours bon');
+
         this.ajaxGet (url, function (response) {
+            console.log('feu vert');
             console.log (response);
+            console.log('all good');
             callback(response);
 
 
