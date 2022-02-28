@@ -52,47 +52,50 @@ class PhotosManager extends Manager
         }
     }
 
-    public function getOneGaleriePhotos($galerieId)
+    public function getOneGalerieNumberOfPhotos($galerieId)
     {
-        $answerPhotosData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
-        $answerPhotosData->execute(array(
+        $answerNumberOfPhotosData = $this->db->prepare('SELECT count(*) FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
+        $answerNumberOfPhotosData->execute(array(
             'galerieId' => $galerieId
         ));
 
-        $photosFeatures = [];
-
-        $dbPhotos = $answerPhotosData->fetchAll();
-
-        foreach ($dbPhotos as $photo)
-        {
-            $photosFeatures[] = new PhotoEntity($photo);
-        }
-
-        return $photosFeatures;
+        return $answerNumberOfPhotosData->fetchColumn();
     }
 
-    public function getOneGaleriePhotosWithPageNumber($galerieId, $pageNumber)
+    public function getOneGaleriePhotosWithPageNumber($galerieId, $pageNumber):array
     {
+
         /*var_dump($galerieId);
+        var_dump($pageNumber);
         exit;*/
+
         $answerPhotosData = $this->db->prepare('SELECT * 
                                                         FROM rc_photographe_photos 
                                                         WHERE photos_galerie_id=:galerieId 
                                                         ORDER BY photos_id
-                                                        LIMIT photos_par_page
-                                                        OFFSET nombre_photos_a_ignorer');
-        $answerPhotosData->execute(array(
-            'galerieId' => $galerieId,
-            'photos_par_page' => Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES,
-            'nombre_photos_a_ignorer' => Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES * ($pageNumber - 1)
-        ));
+                                                        LIMIT :photos_par_page
+                                                        OFFSET :nombre_photos_a_ignorer');
+
+        /*$answerPhotosData = $this->db->prepare('SELECT *
+                                                        FROM rc_photographe_photos 
+                                                        WHERE photos_galerie_id=:galerieId 
+                                                        ORDER BY photos_id
+                                                        LIMIT 6
+                                                        OFFSET 6');*/
+        $answerPhotosData->bindValue('galerieId', $galerieId, PDO::PARAM_INT);
+        $answerPhotosData->bindValue('photos_par_page', Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES, PDO::PARAM_INT);
+        $answerPhotosData->bindValue('nombre_photos_a_ignorer', Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES * ($pageNumber - 1), PDO::PARAM_INT);
+        $answerPhotosData->execute();
 
         $photosFeatures = [];
 
         $dbPhotos = $answerPhotosData->fetchAll();
 
-        var_dump($dbPhotos);
-        exit;
+
+        /*var_dump($dbPhotos);
+        exit;*/
+
+
 
         foreach ($dbPhotos as $photo)
         {

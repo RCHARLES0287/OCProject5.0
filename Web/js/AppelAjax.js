@@ -31,6 +31,7 @@ class AppelAjax {
             console.log (response);
             console.log('all good');
             callback(response);
+            console.log('still good');
 
 
         }.bind (this))

@@ -38,10 +38,8 @@ class PhotosController extends \RCFramework\BackController
 
 
 
+            /*
             $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), 2);
-
-            var_dump($newPagePhotos);
-            exit;
 
             $newPagePhotosHTML = '';
             foreach ($newPagePhotos as $photo)
@@ -53,8 +51,7 @@ class PhotosController extends \RCFramework\BackController
 
             var_dump($newPagePhotosHTML);
             exit;
-
-
+            */
 
 
 
@@ -64,33 +61,42 @@ class PhotosController extends \RCFramework\BackController
             if ($request->getExists('new_page_number'))
             {
                 /*var_dump('On a cliqué sur un changement de page');
+                var_dump($request->getData('galerie_id'));
+                var_dump($request->getData('new_page_number'));
                 exit;*/
 
                 $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), $request->getData('new_page_number'));
+//                $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber(2, 2);
 
-                var_dump($newPagePhotos);
-                exit;
+                /*var_dump($newPagePhotos);
+                exit;*/
 
                 $newPagePhotosHTML = '';
                 foreach ($newPagePhotos as $photo)
                 {
 //                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
-                    $newPagePhotosHTML .= '<div class="descriptif_photo">' . $photo->serial_number() . ' : ' . $photo->lieu() . '</div>
-                    <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">';
+                    $newPagePhotosHTML .= '<div class="photo_dans_galerie">
+                                                <div class="descriptif_photo">' . $photo->serial_number() . ' : ' . $photo->lieu() . '</div>
+                                                <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">
+                                           </div>';
                 }
 
+                /*var_dump("On est dans la controller. On reçoit le bloque HTML");
                 var_dump($newPagePhotosHTML);
-                exit;
-
-                /*echo $newPagePhotosHTML;
-                header('Content-Type: text/html; charset=utf-8');
                 exit;*/
+
+
+
+                echo $newPagePhotosHTML;
+                header('Content-Type: text/html; charset=utf-8');
+                exit;
             }
 
-            $galeriePhotosData = $photosManager->getOneGaleriePhotos($request->getData('galerie_id'));
-            $numberOfPhotos = count($galeriePhotosData);
+            $numberOfPhotos = $photosManager->getOneGalerieNumberOfPhotos($request->getData('galerie_id'));
 //            Ceil() si le résultat n'est pas un entier, renvoie l'arrondi à l'entier supérieur
             $numberOfPages = ceil($numberOfPhotos / (float)Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES);
+
+            $galeriePhotosData = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), 1);
 
             $this->page->addVar('photos', $galeriePhotosData);
             $this->page->addVar('galerie_entity', $galerieEntity);
