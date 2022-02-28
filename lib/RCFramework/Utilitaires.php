@@ -49,6 +49,7 @@ abstract class Utilitaires
     public static function logException($exception)
     {
         $message = 'EXCEPTION [' . get_class($exception) . '] : ' . $exception->getMessage() . ' (' . $exception->getFile() . ':' . $exception->getLine() . ')';
+        $message.= "\ntrace : ". $exception->getTraceAsString();
         static::logMessage($message);
     }
 
