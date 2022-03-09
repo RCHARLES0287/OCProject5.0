@@ -4,27 +4,39 @@
 
     <h2>Ajout photo</h2>
 
-    <form class="ajout_photo_form" id="formulaire_ajout_photo" action="/admin/ajoutphotoform" method="post" novalidate>
+    <form class="ajout_photo_form" id="formulaire_ajout_photo" action="/admin/ajoutphotoform" method="post" enctype="multipart/form-data" novalidate>
         <label for="galerie">Galerie</label>
-        <select name="galerie" id="galerie">
+        <select name="galerie_id" id="galerie" required>
             {% for uneGalerie in allGaleries %}
                 <option value="{{ uneGalerie.id }}">{{ uneGalerie.nom_galerie }}</option>
             {% endfor %}
         </select>
 
+        <label for="choix_photo">Choisir une photo</label>
+        <input name="choix_photo" id="choix_photo" type="file" accept="image/*" required>
 
+        <label for="choix_photo_name">Nom de la photo</label>
+        <input name="photo_name" id="choix_photo_name" type="text" required>
 
+        <div>
+            <label>Type de photo</label><br>
+            <input aria-label="Numérique" type="radio" name="type_photo" value="1" checked>Numérique
+            <input aria-label="Argentique" type="radio" name="type_photo" value="2">Argentique
+        </div>
 
-        {#<label for="ordre_carousel">Ordre dans le carousel</label>
-        <select name="ordre_carousel" id="ordre_carousel">
-            {% for uneGalerie in allGaleries %}
-                <option value="{{ uneGalerie.id }}">{{ uneGalerie.nom_galerie }}</option>
-            {% endfor %}
-        </select>#}
+        <label for="choix_photo_lieu">Lieu de la photo</label>
+        <input name="choix_photo_lieu" id="choix_photo_lieu" type="text">
 
+        <label for="photo_description">Description de la photo</label>
+        <textarea name="photo_description" id="photo_description"></textarea>
 
 
         <button id="validation_photo" class="btn btn-primary" name="bouton_validation_photo" type="submit">Valider</button>
     </form>
 
+{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/addonephoto.css">
 {% endblock %}

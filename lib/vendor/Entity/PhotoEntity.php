@@ -20,6 +20,8 @@ class PhotoEntity extends Entity
     private ?string $lieu;
     private ?string $description;
 
+    public const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'gif', 'png'];
+
     public function setGalerie_id($galerie_id)
     {
         if (Utilitaires::emptyMinusZero($galerie_id))

@@ -4,6 +4,7 @@ namespace App\Backend\Modules\GestionPhotos\Controller;
 
 use App\Backend\Modules\Connexion\Controller\ConnexionController;
 use Entity\PhotoEntity;
+use Exception;
 use Model\GaleriesManager;
 use Model\PhotosManager;
 use RCFramework\Application;
@@ -20,11 +21,6 @@ class GestionPhotosController extends BackController
         $this->page->addVar('allGaleries', $allGaleries);
     }
 
-
-    public function executeAjoutphotoform(HTTPRequest $request)
-    {
-
-    }
 
     public function executeOrdrecarousel(HTTPRequest $request)
     {
@@ -61,5 +57,66 @@ class GestionPhotosController extends BackController
         }
 
         header('Location: /admin/accueiladmin');
+    }
+
+
+    public function executeAjoutphotoform(HTTPRequest $request)
+    {
+        if (!isset($_POST['galerie_id'])
+            || !isset($_POST['photo_name'])
+            || !isset($_POST['type_photo'])
+            || !isset($_POST['choix_photo_lieu'])
+            || !isset($_POST['photo_description'])
+            || !isset($_FILES['choix_photo'])
+            || $_FILES['choix_photo']['error'] != 0)
+        {
+            throw new Exception("Erreur dans le remplissage du formulaire d'ajout de photo");
+        }
+        else
+        {
+//            On vérifie que le fichier joint dans le formulaire ne dépasse pas environ 20Mo
+            if ($_FILES['choix_photo']['size'] > 20000000)
+            {
+                throw new Exception("Le fichier joint dépasse la taille limite d'environ 20Mo");
+            }
+            else
+            {
+//                On s'assure que l'extension du fichier reçu est bien dans la liste des extensions qu'on souhaite authoriser
+                $fileInfos = pathinfo($_FILES['choix_photo']['name']);
+                $extension = strtolower($fileInfos['extension']);
+
+                if (!in_array($extension, PhotoEntity::ALLOWED_EXTENSIONS))
+                {
+                    throw new Exception("Echec : extension non supportée");
+                }
+                else
+                {
+                    $newPhotoEntity = new PhotoEntity();
+                    $newPhotoEntity->setGalerie_id($_POST['galerie_id']);
+                    $newPhotoEntity->setOrdre_carousel(null);
+                    $newPhotoEntity->setSerial_number($_FILES['choix_photo']['name']);
+                    $newPhotoEntity->setName($_POST['photo_name']);
+                    $newPhotoEntity->setType_id($_POST['type_photo']);
+                    $newPhotoEntity->setLieu($_POST['choix_photo_lieu']);
+                    $newPhotoEntity->setDescription($_POST['photo_description']);
+
+                    $newGalerieManager = new GaleriesManager();
+                    $newGalerieEntity = $newGalerieManager->getOneGalerie($_POST['galerie_id']);
+
+                    $uploadPhoto = move_uploaded_file($_FILES['choix_photo']['tmp_name'],
+                        __DIR__ . '/../../../../../Web/images/' . $newGalerieEntity->nom_galerie() . '/' . $newPhotoEntity->serial_number());
+
+                    if ($uploadPhoto != true)
+                    {
+                        throw new Exception("Echec de l'enregistrement de la photo");
+                    }
+                    else
+                    {
+                        $newPhotoManager = new PhotosManager();
+                        $newPhotoManager->saveOnePhoto($newPhotoEntity);
+                    }
+                }
+            }
+        }
     }
 }

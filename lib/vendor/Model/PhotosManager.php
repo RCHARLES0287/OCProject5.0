@@ -156,7 +156,7 @@ class PhotosManager extends Manager
 
 
 
-    public function saveOnePhoto(PhotoEntity $newPhotoEntity)
+    public function saveOnePhoto(PhotoEntity &$newPhotoEntity)
     {
         $testPhotoExist = $this->checkPhotoSerialNumber($newPhotoEntity);
         if ($testPhotoExist === true)
@@ -176,6 +176,8 @@ class PhotosManager extends Manager
         {
             throw new \Exception("Une photo porte déjà ce numéro de série");
         }
+        //        lastInsertId sert à alimenter automatiquement l'id de l'entité qui a été passée en paramètre suite à sa création dans la BDD
+        $newPhotoEntity->setId($this->db->lastInsertId());
     }
 
     public function updateOnePhoto(PhotoEntity $photoEntity, $photoId)

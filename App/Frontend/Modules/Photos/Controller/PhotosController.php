@@ -24,52 +24,16 @@ class PhotosController extends \RCFramework\BackController
 
     public function executeShowonegalerie(HTTPRequest $request)
     {
-        /*var_dump('On est bien dans le controller des photos');
-        exit;*/
-        /*var_dump($request->getData('galerie_id'));
-        exit;*/
-
-//        if ($request->getExists('galerie_id') && is_int($request->getData('galerie_id')))
         if ($request->getExists('galerie_id'))
         {
             $photosManager = new PhotosManager();
             $galerieManager = new GaleriesManager();
             $galerieEntity = $galerieManager->getOneGalerie($request->getData('galerie_id'));
 
-
-
-            /*
-            $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), 2);
-
-            $newPagePhotosHTML = '';
-            foreach ($newPagePhotos as $photo)
-            {
-//                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
-                $newPagePhotosHTML .= '<div class="descriptif_photo">' . $photo->serial_number() . ' : ' . $photo->lieu() . '</div>
-                    <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">';
-            }
-
-            var_dump($newPagePhotosHTML);
-            exit;
-            */
-
-
-
-
-
-//            if ($request->getExists('new_page_number') && is_int($request->getData('new_page_number')))
             if ($request->getExists('new_page_number'))
             {
-                /*var_dump('On a cliqué sur un changement de page');
-                var_dump($request->getData('galerie_id'));
-                var_dump($request->getData('new_page_number'));
-                exit;*/
 
                 $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), $request->getData('new_page_number'));
-//                $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber(2, 2);
-
-                /*var_dump($newPagePhotos);
-                exit;*/
 
                 $newPagePhotosHTML = '';
                 foreach ($newPagePhotos as $photo)
@@ -80,12 +44,6 @@ class PhotosController extends \RCFramework\BackController
                                                 <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">
                                            </div>';
                 }
-
-                /*var_dump("On est dans la controller. On reçoit le bloque HTML");
-                var_dump($newPagePhotosHTML);
-                exit;*/
-
-
 
                 echo $newPagePhotosHTML;
                 header('Content-Type: text/html; charset=utf-8');
