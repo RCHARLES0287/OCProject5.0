@@ -119,4 +119,72 @@ class GestionPhotosController extends BackController
             }
         }
     }
+
+    public function executeSuppressionphotochoixgalerie (HTTPRequest $request)
+    {
+        if ($request->getExists('idgalerie'))
+        {
+            $newGalerieManager = new GaleriesManager();
+            $galerieEntity = $newGalerieManager->getOneGalerie($request->getData('idgalerie'));
+            $newPhotoManager = new PhotosManager();
+            $selectedGaleriePhotos = $newPhotoManager->getOneGaleriePhotos($request->getData('idgalerie'));
+
+
+            $galeriePhotosHTML = '';
+            foreach ($selectedGaleriePhotos as $photo)
+            {
+//                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
+//                Attention : pour bien préciser qu'on va transmettre un tableau avec potentiellement plusieurs entrées, à la fin du name on ajoute[]
+                $galeriePhotosHTML .= '<div class="photo_dans_galerie">
+                                                <div class="descriptif_photo">' . $photo->serial_number() . ' : ' . $photo->lieu() . '</div>
+                                                <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">
+                                                
+                                                <input type="checkbox" class="checkbox_suppr_photo" id="' . $photo->id() .'" name="checkbox_suppr_photo[]" value="' . $photo->id() . '" />
+                                                <label for="' . $photo->id() . '">Supprimer</label>
+                                       </div>';
+            }
+
+//            Bien mettre le header avant le echo. Cela évite une erreur si une partie des données est déjà en cours d'envoi.
+            header('Content-Type: text/html; charset=utf-8');
+            echo $galeriePhotosHTML;
+            exit;
+        }
+
+        $newGalerieManager = new GaleriesManager();
+        $allGaleries = $newGalerieManager->getAllGaleries();
+
+        $this->page->addVar('all_galeries', $allGaleries);
+    }
+
+    public function executeConfirmationsuppressionphoto (HTTPRequest $request)
+    {
+        if (!$request->postExists('checkbox_suppr_photo'))
+        {
+            throw new Exception("Vous n'avez sélectionné aucune photo");
+        }
+        else
+        {
+            /*var_dump($request->postData('checkbox_suppr_photo'));
+            exit;*/
+            $newPhotoManager = new PhotosManager();
+            $newGalerieManager = new GaleriesManager();
+
+
+            $photosId = $request->postData('checkbox_suppr_photo');
+            foreach ($photosId as $photoId)
+            {
+                $newPhotoEntity = $newPhotoManager->getOnePhoto($photoId);
+                $newGalerieEntity = $newGalerieManager->getOneGalerie($newPhotoEntity->galerie_id());
+
+                $fichierASupprimer = __DIR__ . '/../../../../../Web/images/' . $newGalerieEntity->nom_galerie() . '/' . $newPhotoEntity->serial_number();
+
+                $newPhotoManager->deleteOnePhoto($photoId);
+                unlink($fichierASupprimer);
+
+            }
+        }
+    }
 }
+/*
+<input type="checkbox" class="checkbox_suppr_photo" id="' . $photo->id() .'" name="checkbox_suppr_photo" value="' . $photo->id() . '" />
+                                                <label for="' . $photo->id() . '">Supprimer</label>*/

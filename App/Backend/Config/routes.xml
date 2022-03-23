@@ -7,9 +7,14 @@
 
     <route url="/admin/ajoutphoto" module="GestionPhotos" action="addonephoto"/>
     <route url="/admin/ajoutphotoform" module="GestionPhotos" action="ajoutphotoform"/>
+    <route url="/admin/suppressionphotochoixgalerie" module="GestionPhotos" action="suppressionphotochoixgalerie"/>
+    <route url="/admin/confirmationsuppressionphoto" module="GestionPhotos" action="confirmationsuppressionphoto"/>
 
     <route url="/admin/ordrecarousel" module="GestionPhotos" action="ordrecarousel"/>
     <route url="/admin/validateordrecarousel" module="GestionPhotos" action="validateordrecarousel"/>
+
+    <route url="/admin/ajoutgalerie" module="GestionGaleries" action="ajoutgalerie"/>
+    <route url="/admin/suppressiongalerie" module="GestionGaleries" action="suppressiongalerie"/>
 
     <route url="/admin/accueiladmin" module="Accueiladmin" action="accueiladmin"/>
 

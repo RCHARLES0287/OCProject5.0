@@ -1,0 +1,17 @@
+.photos_a_supprimer
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+/*.photo_a_supprimer*/
+/*{*/
+/*    width: 70px;*/
+/*}*/
+
+.photo_dans_galerie img
+{
+    width: 100px;
+}

@@ -83,11 +83,42 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/ordrecarousel">Carousel</a>
                     </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="menu_gestion_photos" href="#" role="button"
+                           data-mdb-toggle="dropdown" aria-expanded="false">
+                            Gestion photos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menu_gestion_photos">
+                            <a class="dropdown-item"
+                               href="/admin/ajoutphoto">Ajout photo
+                            </a>
+                            <a class="dropdown-item"
+                               href="/admin/suppressionphotochoixgalerie">Suppression photo
+                            </a>
+                        </div>
+                    </li>
+
+
+
+                    {#
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/ajoutphoto">Gestion photos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Gestion galeries</a>
+                    #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="menu_gestion_galeries" href="#" role="button"
+                           data-mdb-toggle="dropdown" aria-expanded="false">
+                            Gestion galeries
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menu_gestion_galeries">
+                            <a class="dropdown-item"
+                               href="/admin/ajoutgalerie">Ajout galerie
+                            </a>
+                            <a class="dropdown-item"
+                               href="/admin/suppressiongalerie">Suppression galerie
+                            </a>
+                        </div>
                     </li>
                 {% endif %}
 
