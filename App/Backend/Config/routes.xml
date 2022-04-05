@@ -14,7 +14,10 @@
     <route url="/admin/validateordrecarousel" module="GestionPhotos" action="validateordrecarousel"/>
 
     <route url="/admin/ajoutgalerie" module="GestionGaleries" action="ajoutgalerie"/>
+    <route url="/admin/ajoutgalerieform" module="GestionGaleries" action="ajoutgalerieform"/>
+    <route url="/admin/confirmationsuppressiongaleries" module="GestionGaleries" action="confirmationsuppressiongaleries"/>
     <route url="/admin/suppressiongalerie" module="GestionGaleries" action="suppressiongalerie"/>
+    <route url="/admin/suppressiongalerieform" module="GestionGaleries" action="suppressiongalerieform"/>
 
     <route url="/admin/accueiladmin" module="Accueiladmin" action="accueiladmin"/>
 

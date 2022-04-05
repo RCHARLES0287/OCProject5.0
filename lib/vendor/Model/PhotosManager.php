@@ -241,6 +241,15 @@ class PhotosManager extends Manager
         ));
     }
 
+
+    public function deleteAllPhotosWithGalerieId ($galerieId)
+    {
+        $req = $this->db->prepare('DELETE FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
+        $req->bindValue('galerieId', $galerieId, PDO::PARAM_INT);
+        $req->execute();
+    }
+
+
     public function checkPhotoSerialNumber(PhotoEntity $photoEntity)
     {
 

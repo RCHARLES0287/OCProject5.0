@@ -3,6 +3,7 @@
 
 namespace Model;
 
+use PDO;
 use RCFramework\Manager;
 use Entity\GalerieEntity;
 use RCFramework\Utilitaires;
@@ -57,12 +58,13 @@ class GaleriesManager extends Manager
 
     public function saveGalerie(GalerieEntity $newGalerieEntity)
     {
-        $req = $this->db->prepare('INSERT INTO rc_photographe_galeries(galeries_nom, galeries_ordre_affichage, galeries_chemin_miniature) VALUES (:galeries_nom, :galeries_ordre_affichage, :galeries_chemin_miniature)');
-        $req->execute(array(
-            'galeries_nom' => $newGalerieEntity->nom_galerie(),
-            'galeries_ordre_affichage' => $newGalerieEntity->ordre_affichage(),
-            'galeries_chemin_miniature' => $newGalerieEntity->chemin_miniature()
-        ));
+        $req = $this->db->prepare('INSERT INTO rc_photographe_galeries(galeries_nom_galerie, galeries_ordre_affichage, galeries_chemin_miniature) 
+                                            VALUES (:galeries_nom_galerie, :galeries_ordre_affichage, :galeries_chemin_miniature)');
+        $req->bindValue('galeries_nom_galerie', $newGalerieEntity->nom_galerie(), PDO::PARAM_STR);
+        $req->bindValue('galeries_ordre_affichage', $newGalerieEntity->ordre_affichage(), PDO::PARAM_INT);
+        $req->bindValue('galeries_chemin_miniature', $newGalerieEntity->chemin_miniature(), PDO::PARAM_STR);
+
+        $req->execute();
     }
 
 
@@ -70,6 +72,7 @@ class GaleriesManager extends Manager
     {
         $req = $this->db->prepare('DELETE FROM rc_photographe_galeries WHERE galeries_id=:galerieId');
         $req->bindValue('galerieId', $galerieId, \PDO::PARAM_INT);
+
         $req->execute();
     }
 

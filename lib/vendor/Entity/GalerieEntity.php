@@ -3,6 +3,7 @@
 
 namespace Entity;
 
+use Exception;
 use RCFramework\Entity;
 use RCFramework\Utilitaires;
 
@@ -18,7 +19,7 @@ class GalerieEntity extends Entity
     {
         if (Utilitaires::emptyMinusZero($nom_galerie))
         {
-            throw  new \Exception('Un nom de galerie doit être renseigné');
+            throw  new Exception('Un nom de galerie doit être renseigné');
         }
         else
         {
@@ -33,13 +34,13 @@ class GalerieEntity extends Entity
 
     /**
      * @param string|int $ordre_affichage
-     * @throws \Exception
+     * @throws Exception
      */
     public function setOrdre_affichage($ordre_affichage)
     {
         if (Utilitaires::emptyMinusZero($ordre_affichage))
         {
-            throw new \Exception("L'ordre de la galerie doit être défini");
+            $this->ordre_affichage = null;
         }
         else
         {

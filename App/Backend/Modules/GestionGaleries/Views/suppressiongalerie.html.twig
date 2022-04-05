@@ -1,0 +1,36 @@
+{% extends 'Backend/Templates/backend_layout.html.twig' %}
+
+{% block backend_content %}
+
+    <h2>Choix des galeries à supprimer</h2>
+
+    <p>Voici l'ensemble des galeries</p>
+
+    <form id="formulaire_suppression_galeries" action="/admin/confirmationsuppressiongaleries" method="post">
+        {% for galerie in all_galeries %}
+            <div class="selection_galerie">
+                <div class="entete_nom_galerie">{{ galerie.nom_galerie }}</div>
+                <img alt="description" src="/images/{{ galerie.nom_galerie }}/Miniature/{{ galerie.chemin_miniature }}">
+{#                Attention : pour bien préciser qu'on va transmettre un tableau avec potentiellement plusieurs entrées, à la fin du name on ajoute[]#}
+                <input type="checkbox" class="checkbox_suppr_galerie" id="{{ galerie.id }}" name="checkbox_suppr_galerie[]" value="{{ galerie.id }}" />
+                <label for="{{ galerie.id }}">Supprimer</label>
+
+                {#<button class="bouton_selection_galerie btn btn-primary" type="button" data-idgalerie="{{ galerie.id }}">{{ galerie.nom_galerie }}</button>
+                <div class="photos_a_supprimer" id="photos_galerie_{{ galerie.id }}"></div>#}
+
+            </div>
+        {% endfor %}
+
+        <button id="bouton_validation_suppression_galeries" type="submit">Valider suppression</button>
+    </form>
+
+{% endblock %}
+
+{% block javascript %}
+    {# Permet de conserver le contenu des parents #}
+    {{ parent() }}
+
+    <script type="application/javascript" src="/js/BoiteDeDialogueConfirmation.js"></script>
+    <script type="application/javascript" src="/js/SuppressionGalerie.js"></script>
+
+{% endblock %}
