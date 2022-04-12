@@ -39,6 +39,25 @@ abstract class Utilitaires
         }
     }
 
+/*
+    public static function deletedirectory ($dir)
+    {
+        foreach (scandir($dir) as $sousElement)
+        {
+            if (is_dir($sousElement))
+            {
+                Utilitaires::deletedirectory($sousElement);
+            }
+            else
+            {
+                unlink($sousElement);
+            }
+        }
+        return rmdir($dir);
+    }
+*/
+
+
     public static function var_dump($var)
     {
         echo '<pre>';
