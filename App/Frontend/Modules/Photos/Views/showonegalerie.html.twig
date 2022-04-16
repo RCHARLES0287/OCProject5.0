@@ -2,52 +2,54 @@
 
 {% block frontend_content %}
 
-    <section class="contenu_galerie">
+    <div id="page_contenu_galerie">
 
-        <p>Voici l'ensemble des photos de la galerie "{{ galerie_entity.nom_galerie }}"</p>
+        <h2>Galerie "{{ galerie_entity.nom_galerie }}"</h2>
 
-        <div class="affichage_galerie" data-galerieid="{{ galerie_entity.id }}">
-            {% for photo in photos %}
-                <div class="photo_dans_galerie">
-                    <div class="descriptif_photo">{{ photo.serial_number }} : {{ photo.lieu }}</div>
-                    <img alt="description" src="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}">
-                </div>
-            {% endfor %}
-        </div>
-    </section>
+        <section class="contenu_galerie">
 
-    {% if number_of_pages > 1 %}
-    <div class="pagination" id="pagination_galerie" data-numberofpages="{{ number_of_pages }}" data-startpage="{{ start_page }}">
-        <nav aria-label="...">
-            <ul class="pagination pagination-circle">
-
-                <li class="page-item">
-                    <a class="page-link previous-button">Previous</a>
-                </li>
-
-                {% for currentpage in 1..number_of_pages %}
-                <li class="page-item page-number-button {% if currentpage == start_page %} active {% endif %}" data-pagenumber="{{ currentpage }}" aria-current="page">
-                    <a class="page-link" href="#">{{ currentpage }}</a>
-                </li>
+            <div class="affichage_galerie" data-galerieid="{{ galerie_entity.id }}">
+                {% for photo in photos %}
+                    <div class="bloc_photo">
+                        <div class="photo_dans_galerie">
+                            <a href="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}"
+                               title="{{ photo.serial_number }}">
+                                <img alt="description"
+                                     src="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}">
+                            </a>
+                        </div>
+                        <div class="descriptif_photo">{{ photo.serial_number }} : {{ photo.lieu }}</div>
+                    </div>
                 {% endfor %}
+            </div>
 
-                {#
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
+        </section>
 
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
-                #}
+        {% if number_of_pages > 1 %}
+            <div class="pagination" id="pagination_galerie" data-numberofpages="{{ number_of_pages }}"
+                 data-startpage="{{ start_page }}">
+                <nav aria-label="...">
+                    <ul class="pagination pagination-circle">
 
-                <li class="page-item">
-                    <a class="page-link next-button">Next</a>
-                </li>
-            </ul>
-        </nav>
+                        <li class="page-item">
+                            <a class="page-link previous-button">Previous</a>
+                        </li>
+
+                        {% for currentpage in 1..number_of_pages %}
+                            <li class="page-item page-number-button {% if currentpage == start_page %} active {% endif %}"
+                                data-pagenumber="{{ currentpage }}" aria-current="page">
+                                <a class="page-link" href="#">{{ currentpage }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <li class="page-item">
+                            <a class="page-link next-button">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
     </div>
-    {% endif %}
 
 {% endblock %}
 
@@ -57,12 +59,12 @@
 {% endblock %}
 
 {% block javascript %}
-{# Permet de conserver le contenu des parents #}
-{{ parent() }}
+    {# Permet de conserver le contenu des parents #}
+    {{ parent() }}
 
-<script type="application/javascript" src="/js/AppelAjax.js"></script>
-<script type="application/javascript" src="/js/PaginationButtons.js"></script>
-<script type="application/javascript" src="/js/ShowOneGalerie.js"></script>
+    <script type="application/javascript" src="/js/AppelAjax.js"></script>
+    <script type="application/javascript" src="/js/PaginationButtons.js"></script>
+    <script type="application/javascript" src="/js/ShowOneGalerie.js"></script>
 
 {% endblock %}
 

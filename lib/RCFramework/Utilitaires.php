@@ -4,6 +4,8 @@
 namespace RCFramework;
 
 
+use http\Exception\RuntimeException;
+
 abstract class Utilitaires
 {
     const EMAIL_VENDEUR_TEST = 'romain.charles@rocketmail.com';
@@ -39,23 +41,77 @@ abstract class Utilitaires
         }
     }
 
-/*
-    public static function deletedirectory ($dir)
+
+    public static function deletedirectory($dir)
     {
+
         foreach (scandir($dir) as $sousElement)
         {
+            /*self::var_dump($sousElement);
+            exit;*/
+
+            if (in_array($sousElement, ['.', '..']))
+            {
+                continue;
+            }
+
+            $sousElement = $dir . DIRECTORY_SEPARATOR . $sousElement;
+
             if (is_dir($sousElement))
             {
-                Utilitaires::deletedirectory($sousElement);
+                self::deletedirectory($sousElement);
             }
             else
             {
-                unlink($sousElement);
+                if (unlink($sousElement) === false)
+                {
+                    throw new RuntimeException("Echec de la suppression du fichier " . $sousElement . " : " . error_get_last()["message"]);
+                }
             }
         }
-        return rmdir($dir);
+        if (rmdir($dir) === false)
+        {
+            throw new RuntimeException("Echec de la suppression du répertoire " . $dir . " : " . error_get_last()["message"]);
+        }
     }
-*/
+
+//    Versions alternatives de la fonction deletedirectory
+    /*
+    $directoryIterator = new RecursiveDirectoryIterator(
+        $repertoireASupprimer,
+        FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS
+    );
+    $mainIterator = new RecursiveIteratorIterator(
+        $directoryIterator,
+        RecursiveIteratorIterator::CHILD_FIRST
+    );
+
+/** @var SplFileInfo $sousElement */
+    /*
+    foreach ($mainIterator as $sousElement) {
+        if ($sousElement->isDir()) {
+            rmdir($sousElement->getPathname());
+        }
+        else {
+            unlink($sousElement->getPathname());
+        }
+    }
+    rmdir($repertoireASupprimer);
+    */
+
+    /*
+    Version ultra compacte
+
+    foreach (
+        new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($repertoireASupprimer,FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        ) as $sousElement
+    ) {
+        ($sousElement->isDir() ? 'rmdir' : 'unlink')($sousElement->getPathname());
+    }
+    rmdir($repertoireASupprimer);
+    */
 
 
     public static function var_dump($var)
@@ -68,7 +124,7 @@ abstract class Utilitaires
     public static function logException($exception)
     {
         $message = 'EXCEPTION [' . get_class($exception) . '] : ' . $exception->getMessage() . ' (' . $exception->getFile() . ':' . $exception->getLine() . ')';
-        $message.= "\ntrace : ". $exception->getTraceAsString();
+        $message .= "\ntrace : " . $exception->getTraceAsString();
         static::logMessage($message);
     }
 

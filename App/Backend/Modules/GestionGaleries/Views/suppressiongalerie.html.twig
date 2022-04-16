@@ -10,8 +10,11 @@
         {% for galerie in all_galeries %}
             <div class="selection_galerie">
                 <div class="entete_nom_galerie">{{ galerie.nom_galerie }}</div>
-                <img alt="description" src="/images/{{ galerie.nom_galerie }}/Miniature/{{ galerie.chemin_miniature }}">
-{#                Attention : pour bien préciser qu'on va transmettre un tableau avec potentiellement plusieurs entrées, à la fin du name on ajoute[]#}
+{#                On teste si galerie.chemin_miniature contient quelque chose pour éviter les erreurs de la balise img #}
+                {% if galerie.chemin_miniature %}
+                    <img alt="miniature {{ galerie.nom_galerie }}" src="/images/{{ galerie.nom_galerie }}/Miniature/{{ galerie.chemin_miniature }}">
+                {% endif %}
+                {#                Attention : pour bien préciser qu'on va transmettre un tableau avec potentiellement plusieurs entrées, à la fin du name on ajoute[]#}
                 <input type="checkbox" class="checkbox_suppr_galerie" id="{{ galerie.id }}" name="checkbox_suppr_galerie[]" value="{{ galerie.id }}" />
                 <label for="{{ galerie.id }}">Supprimer</label>
 

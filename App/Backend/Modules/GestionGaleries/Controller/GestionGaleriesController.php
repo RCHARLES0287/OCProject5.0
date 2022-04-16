@@ -118,8 +118,8 @@ class GestionGaleriesController extends BackController
         }
         else
         {
-            /*var_dump($request->postData('checkbox_suppr_photo'));
-            exit;*/
+//            var_dump($request->postData('checkbox_suppr_galerie'));
+//            exit;
             $newGaleriesManager = new GaleriesManager();
             $newPhotosManager = new PhotosManager();
 
@@ -152,16 +152,14 @@ class GestionGaleriesController extends BackController
                 }
 
 
-                $cheminDossierASupprimer = __DIR__ . '/../../../../../Web/images/' . $newGalerieEntity->nom_galerie();
 
                 try
                 {
-//                    unlink($cheminDossierASupprimer);
-                    $suppressionDossier = Utilitaires::deletedirectory($cheminDossierASupprimer);
-                    if ($suppressionDossier === true)
-                    {
-                        Utilitaires::logMessage("Le dossier a été correctement supprimé");
-                    }
+                    $cheminDossierASupprimer = __DIR__ . '/../../../../../Web/images/' . $newGalerieEntity->nom_galerie();
+
+                    Utilitaires::deletedirectory($cheminDossierASupprimer);
+
+                    Utilitaires::logMessage("Le dossier a été correctement supprimé");
                 }
                 catch (Throwable $exception)
                 {
@@ -172,115 +170,6 @@ class GestionGaleriesController extends BackController
             }
         }
     }
-
 }
 
-/*
-foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dirPath,
-                                        FilesystemIterator::SKIP_DOTS),
-    RecursiveIteratorIterator::CHILD_FIRST) as $path)
-{
-    $path->isDir() && !$path->isLink() ? rmdir($path->getPathname()) : unlink($path->getPathname());
-}
-rmdir($dirPath);*/
-
-
-/*
-function deleteTree($dir){
-    foreach(glob($dir . "/*") as $element){
-        if(is_dir($element)){
-            deleteTree($element); // On rappel la fonction deleteTree
-            rmdir($element); // Une fois le dossier courant vidé, on le supprime
-        } else { // Sinon c'est un fichier, on le supprime
-            unlink($element);
-        }
-        // On passe à l'élément suivant
-    }
-}
-
-$dir = "path/to/folder";
-deleteTree($dir); // On vide le contenu de notre dossier
-rmdir($dir); // Et on le supprime*/
-
-
-/*
-function destroy_dir($dir) {
-    if (!is_dir($dir) || is_link($dir)) return unlink($dir);
-    foreach (scandir($dir) as $file) {
-        if ($file == '.' || $file == '..') continue;
-        if (!destroy_dir($dir . DIRECTORY_SEPARATOR . $file)) {
-            chmod($dir . DIRECTORY_SEPARATOR . $file, 0777);
-            if (!destroy_dir($dir . DIRECTORY_SEPARATOR . $file)) return false;
-        };
-    }
-    return rmdir($dir);
-} */
-
-
-/*
-function deletedirectory ($dir)
-{
-    foreach (scandir($dir) as $sousElement)
-    {
-        if (is_dir($sousElement))
-        {
-            deletedirectory($sousElement);
-        }
-        else
-        {
-            unlink($sousElement);
-        }
-    }
-    return rmdir($dir);
-}
-
-
-$dossierASupprimer = ';;;;;';
-$suppressionDossier = deletedirectory($dossierASupprimer);
-if ($suppressionDossier === true)
-{
-    echo "Le dossier a bien été supprimé";
-}
-*/
-
-
-
-
-
-
-/*
-$directoryIterator = new RecursiveDirectoryIterator(
-    $repertoireASupprimer,
-    FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS
-);
-$mainIterator = new RecursiveIteratorIterator(
-    $directoryIterator,
-    RecursiveIteratorIterator::CHILD_FIRST
-);
-
-/** @var SplFileInfo $sousElement */
-/*
-foreach ($mainIterator as $sousElement) {
-    if ($sousElement->isDir()) {
-        rmdir($sousElement->getPathname());
-    }
-    else {
-        unlink($sousElement->getPathname());
-    }
-}
-rmdir($repertoireASupprimer);*/
-
-
-/*
-Version ultra compacte
-
-foreach (
-    new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($repertoireASupprimer,FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS),
-        RecursiveIteratorIterator::CHILD_FIRST
-    ) as $sousElement
-) {
-    ($sousElement->isDir() ? 'rmdir' : 'unlink')($sousElement->getPathname());
-}
-rmdir($repertoireASupprimer);*/
 
