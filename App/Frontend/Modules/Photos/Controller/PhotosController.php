@@ -24,24 +24,52 @@ class PhotosController extends \RCFramework\BackController
 
     public function executeShowonegalerie(HTTPRequest $request)
     {
-        /*var_dump($request->postData('galerie_id'));
-        exit;*/
-        if (!Utilitaires::emptyMinusZero($request->postData('galerie_id')))
+        if ($request->getExists('galerie_id'))
         {
-
             $photosManager = new PhotosManager();
             $galerieManager = new GaleriesManager();
+            $galerieEntity = $galerieManager->getOneGalerie($request->getData('galerie_id'));
 
-            $galeriePhotosData = $photosManager->getOneGaleriePhotos($request->postData('galerie_id'));
-            $galerieEntity = $galerieManager->getOneGalerie($request->postData('galerie_id'));
+            if ($request->getExists('new_page_number'))
+            {
+
+                $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), $request->getData('new_page_number'));
+
+                $newPagePhotosHTML = '';
+                foreach ($newPagePhotos as $photo)
+                {
+//                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
+                    $newPagePhotosHTML .= '<div class="photo_dans_galerie">
+                                                <div class="descriptif_photo">' . $photo->serial_number() . ' : ' . $photo->lieu() . '</div>
+                                                <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">
+                                           </div>';
+                }
+
+                echo $newPagePhotosHTML;
+                header('Content-Type: text/html; charset=utf-8');
+                exit;
+            }
+
+            $numberOfPhotos = $photosManager->getOneGalerieNumberOfPhotos($request->getData('galerie_id'));
+//            Ceil() si le résultat n'est pas un entier, renvoie l'arrondi à l'entier supérieur
+            $numberOfPages = ceil($numberOfPhotos / (float)Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES);
+
+            $galeriePhotosData = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), 1);
 
             $this->page->addVar('photos', $galeriePhotosData);
             $this->page->addVar('galerie_entity', $galerieEntity);
-
+            $this->page->addVar('number_of_photos', $numberOfPhotos);
+            $this->page->addVar('number_of_pages', $numberOfPages);
+            $this->page->addVar('start_page', 1);
         }
 
     }
 
+
+    public function executeShowonepagefromgalerie(HTTPRequest $request)
+    {
+
+    }
 
     public function executeShowOnePhoto(HTTPRequest $request)
     {

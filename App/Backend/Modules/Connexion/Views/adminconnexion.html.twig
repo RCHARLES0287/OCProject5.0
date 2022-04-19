@@ -1,0 +1,17 @@
+{% extends 'Backend/Templates/backend_layout.html.twig' %}
+
+{% block backend_content %}
+
+    <h2>Espace connexion administrateur</h2>
+
+    <form class="log_in_form" id="formulaire_log_in_admin" action="/admin/connexionform" method="post" novalidate>
+        <label for="email_adress">Email</label>
+        <input name="email_adress" id="email_adress" type="email">
+
+        <label for="password">Mot de passe</label>
+        <input name="password" id="password" type="password">
+
+        <button id="validation_admin" class="btn btn-primary" name="bouton_validation_admin" type="submit">Valider</button>
+    </form>
+
+{% endblock %}

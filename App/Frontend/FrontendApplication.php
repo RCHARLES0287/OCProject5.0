@@ -4,10 +4,14 @@
 namespace App\Frontend;
 
 
+use App\TraitLayoutContent;
 use Model\GaleriesManager;
+use RCFramework\Application;
 
-class FrontendApplication extends \RCFramework\Application
+class FrontendApplication extends Application
 {
+    use TraitLayoutContent;
+
     public function __construct()
     {
         parent::__construct();

@@ -1,20 +1,70 @@
 {% extends 'Frontend/Templates/frontend_layout.html.twig' %}
 
 {% block frontend_content %}
-    <section>
 
-        <p>Voici l'ensemble des photos de la galerie "{{ galerie_entity.nom_galerie }}"</p>
+    <div id="page_contenu_galerie">
 
-        <div class="affichage_galerie">
-            {% for photo in photos %}
-                <div class="photo_dans_galerie">
-                    {{ photo.serial_number }} : {{ photo.lieu }}
-                    <img alt="description" src="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}">
-                </div>
-            {% endfor %}
-        </div>
-    </section>
+        <h2>Galerie "{{ galerie_entity.nom_galerie }}"</h2>
+
+        <section class="contenu_galerie">
+
+            <div class="affichage_galerie" data-galerieid="{{ galerie_entity.id }}">
+                {% for photo in photos %}
+                    <div class="bloc_photo">
+                        <div class="photo_dans_galerie shadow-4-strong">
+                            <a href="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}"
+                               title="{{ photo.serial_number }}">
+                                <img alt="description"
+                                     src="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}">
+                            </a>
+                        </div>
+                        <div class="descriptif_photo">{{ photo.serial_number }} : {{ photo.lieu }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </section>
+
+        {% if number_of_pages > 1 %}
+            <div class="pagination" id="pagination_galerie" data-numberofpages="{{ number_of_pages }}"
+                 data-startpage="{{ start_page }}">
+                <nav aria-label="...">
+                    <ul class="pagination pagination-circle">
+
+                        <li class="page-item">
+                            <a class="page-link previous-button">Previous</a>
+                        </li>
+
+                        {% for currentpage in 1..number_of_pages %}
+                            <li class="page-item page-number-button {% if currentpage == start_page %} active {% endif %}"
+                                data-pagenumber="{{ currentpage }}" aria-current="page">
+                                <a class="page-link" href="#">{{ currentpage }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <li class="page-item">
+                            <a class="page-link next-button">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+    </div>
+
 {% endblock %}
 
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/unegalerie.css">
+{% endblock %}
 
+{% block javascript %}
+    {# Permet de conserver le contenu des parents #}
+    {{ parent() }}
+
+    <script type="application/javascript" src="/js/AppelAjax.js"></script>
+    <script type="application/javascript" src="/js/PaginationButtons.js"></script>
+    <script type="application/javascript" src="/js/ShowOneGalerie.js"></script>
+
+{% endblock %}
 

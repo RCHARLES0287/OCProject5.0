@@ -1,0 +1,20 @@
+{% extends 'Backend/Templates/backend_layout.html.twig' %}
+
+{% block backend_content %}
+
+    <h2>Ajout galerie</h2>
+
+    <form class="ajout_galerie_form" id="formulaire_ajout_galerie" action="/admin/ajoutgalerieform" method="post" enctype="multipart/form-data" novalidate>
+
+        <label for="choix_galerie_name">Nom de la galerie</label>
+        <input name="galerie_name" id="choix_galerie_name" type="text" required>
+
+        <label for="choix_miniature">Choisir une miniature</label>
+        <input name="choix_miniature" id="choix_miniature" type="file" accept="image/*" required>
+
+
+        <button id="validation_galerie" class="btn btn-primary" name="bouton_validation_galerie" type="submit">Valider</button>
+    </form>
+
+{% endblock %}
+

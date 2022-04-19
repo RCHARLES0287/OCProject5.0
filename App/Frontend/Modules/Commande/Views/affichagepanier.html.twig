@@ -1,0 +1,59 @@
+{% extends 'Frontend/Templates/frontend_layout.html.twig' %}
+
+{% block frontend_content %}
+
+    <h2>Panier</h2>
+
+    <section class="visualisation_panier">
+
+        {% for unArticle in orderedArticles %}
+
+            <div class="un_article_panier">
+
+                <div class="photo_serial_number_panier">Code article
+                    : {{ unArticle.orderedArticle.serial_number }}</div>
+                <div class="photo_dimensions_panier">Dimensions : {{ unArticle.selectedDimensions.dimensions }}</div>
+                <div class="number_of_articles_panier"
+                     data-idphoto="{{ unArticle.orderedArticle.id }}"
+                     data-iddimensions="{{ unArticle.selectedDimensions.id }}"
+                     data-articleqty="{{ unArticle.numberOfArticles }}">Quantité :
+
+                    <button type="button" data-modiftype="remove" class="btn btn-primary qte_button">-
+                    </button>
+
+                    <span class="number_of_articles_panier_span"
+                          id="number_of_articles_panier_span_{{ unArticle.orderedArticle.id }}"> {{ unArticle.numberOfArticles }}
+                    </span>
+
+                    <button type="button" data-modiftype="add" class="btn btn-primary qte_button">+
+                    </button>
+                </div>
+                <div class="prix_article_panier">Prix unitaire : {{ unArticle.photoTarif }} €</div>
+                <div class="prix_total_article">Prix total par article
+                    : {{ unArticle.numberOfArticles * unArticle.photoTarif }} €
+                </div>
+            </div>
+
+        {% endfor %}
+
+        <div>
+            <form action="/validationpanier" method="post">
+                <button type="submit" id="bouton_validation_panier">Passer commande</button>
+            </form>
+        </div>
+
+        {#
+        <div>
+            <button type="submit" id="bouton_validation_panier" formaction="/logginginform">Passer commande</button>
+        </div>
+        #}
+
+    </section>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="application/javascript" src="/js/AddingOrRemovingOneToQuantityAjax.js"></script>
+<script type="application/javascript" src="/js/affichagePanier.js"></script>
+{% endblock %}
+

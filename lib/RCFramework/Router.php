@@ -54,6 +54,6 @@ class Router
             }
         }
 
-        throw new \RuntimeException('Aucune route ne correspond à l\'URL', self::NO_ROUTE);
+        throw new \RuntimeException('Aucune route ne correspond à l\'URL "' .$url.'"', self::NO_ROUTE);
     }
 }

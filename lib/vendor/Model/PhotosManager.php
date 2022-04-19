@@ -7,6 +7,7 @@ namespace Model;
 use Entity\PhotoEntity;
 use PDO;
 use RCFramework\Manager;
+use RCFramework\Utilitaires;
 
 class PhotosManager extends Manager
 {
@@ -18,6 +19,24 @@ class PhotosManager extends Manager
     public function getAllPhotos()
     {
         $answerPhotosData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos');
+        $answerPhotosData->execute();
+
+        $photosFeatures = [];
+
+        $dbPhotos = $answerPhotosData->fetchAll();
+
+        foreach ($dbPhotos as $photo)
+        {
+            $photosFeatures[] = new PhotoEntity($photo);
+        }
+
+        return $photosFeatures;
+    }
+
+    public function getOneGaleriePhotos($galerieId):array
+    {
+        $answerPhotosData = $this->db->prepare('SELECT * FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
+        $answerPhotosData->bindValue('galerieId', $galerieId, PDO::PARAM_INT);
         $answerPhotosData->execute();
 
         $photosFeatures = [];
@@ -51,16 +70,50 @@ class PhotosManager extends Manager
         }
     }
 
-    public function getOneGaleriePhotos($galerieId)
+    public function getOneGalerieNumberOfPhotos($galerieId)
     {
-        $answerPhotosData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
-        $answerPhotosData->execute(array(
+        $answerNumberOfPhotosData = $this->db->prepare('SELECT count(*) FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
+        $answerNumberOfPhotosData->execute(array(
             'galerieId' => $galerieId
         ));
+
+        return $answerNumberOfPhotosData->fetchColumn();
+    }
+
+    public function getOneGaleriePhotosWithPageNumber($galerieId, $pageNumber):array
+    {
+
+        /*var_dump($galerieId);
+        var_dump($pageNumber);
+        exit;*/
+
+        $answerPhotosData = $this->db->prepare('SELECT * 
+                                                        FROM rc_photographe_photos 
+                                                        WHERE photos_galerie_id=:galerieId 
+                                                        ORDER BY photos_id
+                                                        LIMIT :photos_par_page
+                                                        OFFSET :nombre_photos_a_ignorer');
+
+        /*$answerPhotosData = $this->db->prepare('SELECT *
+                                                        FROM rc_photographe_photos 
+                                                        WHERE photos_galerie_id=:galerieId 
+                                                        ORDER BY photos_id
+                                                        LIMIT 6
+                                                        OFFSET 6');*/
+        $answerPhotosData->bindValue('galerieId', $galerieId, PDO::PARAM_INT);
+        $answerPhotosData->bindValue('photos_par_page', Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES, PDO::PARAM_INT);
+        $answerPhotosData->bindValue('nombre_photos_a_ignorer', Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES * ($pageNumber - 1), PDO::PARAM_INT);
+        $answerPhotosData->execute();
 
         $photosFeatures = [];
 
         $dbPhotos = $answerPhotosData->fetchAll();
+
+
+        /*var_dump($dbPhotos);
+        exit;*/
+
+
 
         foreach ($dbPhotos as $photo)
         {
@@ -92,7 +145,36 @@ class PhotosManager extends Manager
         return $photosFeatures;
     }
 
-    public function saveOnePhoto(PhotoEntity $newPhotoEntity)
+
+    public function getAllPhotosFromTexteRecherche($texteRecherche)
+    {
+        $answerPhotosData = $this->db->prepare('SELECT *
+                                                    FROM rc_photographe_photos
+                                                    WHERE (photos_name, photos_lieu, photos_description)');
+        $answerPhotosData->execute();
+        $photosFeatures = [];
+
+        /*
+        Equivaut au bloc while juste en dessous, mais avec une étape (et une variable supplémentaire)
+        $dbPhotos = $answerPhotosData->fetchAll();
+
+        foreach ($dbPhotos as $photo)
+        {
+            $photosFeatures[] = new PhotoEntity($photo);
+        }
+        */
+
+        while (($photo = $answerPhotosData->fetch())!== false)
+        {
+            $photosFeatures[] = new PhotoEntity($photo);
+        }
+
+        return $photosFeatures;
+    }
+
+
+
+    public function saveOnePhoto(PhotoEntity &$newPhotoEntity)
     {
         $testPhotoExist = $this->checkPhotoSerialNumber($newPhotoEntity);
         if ($testPhotoExist === true)
@@ -112,6 +194,8 @@ class PhotosManager extends Manager
         {
             throw new \Exception("Une photo porte déjà ce numéro de série");
         }
+        //        lastInsertId sert à alimenter automatiquement l'id de l'entité qui a été passée en paramètre suite à sa création dans la BDD
+        $newPhotoEntity->setId($this->db->lastInsertId());
     }
 
     public function updateOnePhoto(PhotoEntity $photoEntity, $photoId)
@@ -131,6 +215,24 @@ class PhotosManager extends Manager
         ));
     }
 
+    public function updateOrdreCarousel($photoId, $ordreCarousel)
+    {
+        $req = $this->db->prepare('UPDATE rc_photographe_photos
+                                            SET photos_ordre_carousel=null
+                                            WHERE photos_ordre_carousel=:ordreCarousel');
+        $req->execute(array(
+            'ordreCarousel' => $ordreCarousel
+        ));
+
+        $req = $this->db->prepare('UPDATE rc_photographe_photos
+                                            SET photos_ordre_carousel=:newOrdreCarousel
+                                            WHERE photos_id=:photoId');
+        $req->execute(array(
+            'photoId' => $photoId,
+            'newOrdreCarousel' => $ordreCarousel
+        ));
+    }
+
     public function deleteOnePhoto($photoId)
     {
         $req = $this->db->prepare('DELETE FROM rc_photographe_photos WHERE photos_id=:photoId');
@@ -138,6 +240,15 @@ class PhotosManager extends Manager
             'photoId' => $photoId
         ));
     }
+
+
+    public function deleteAllPhotosWithGalerieId ($galerieId)
+    {
+        $req = $this->db->prepare('DELETE FROM rc_photographe_photos WHERE photos_galerie_id=:galerieId');
+        $req->bindValue('galerieId', $galerieId, PDO::PARAM_INT);
+        $req->execute();
+    }
+
 
     public function checkPhotoSerialNumber(PhotoEntity $photoEntity)
     {
@@ -158,4 +269,23 @@ class PhotosManager extends Manager
             return false;
         }
     }
+
+
+    public function getAllPhotosForCarousel(): array
+    {
+        $photosFeatures = [];
+        $answerPhotosData = $this->db->prepare('SELECT * FROM rc_photographe_photos WHERE photos_ordre_carousel IS NOT NULL ORDER BY photos_ordre_carousel ASC');
+
+        $answerPhotosData->execute();
+        $dbPhotos = $answerPhotosData->fetchAll();
+
+        foreach ($dbPhotos as $dbPhoto)
+        {
+            $photosFeatures [] = new PhotoEntity($dbPhoto);
+        }
+
+        return $photosFeatures;
+    }
 }
+
+

@@ -1,0 +1,55 @@
+
+img
+{
+    width: 100px;
+    height: 100px;
+}
+
+.zone_cible
+{
+    background-color: grey;
+    width: 100px;
+    height: 100px;
+}
+
+
+#all_photos_available_carousel
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    row-gap: 30px;
+}
+
+
+.all_photos
+{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+
+#formulaire_carousel
+{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    row-gap: 10px;
+}
+
+#zones_cibles
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.bloc_zone_cible
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

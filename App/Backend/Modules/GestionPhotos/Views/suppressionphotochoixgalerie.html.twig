@@ -1,0 +1,37 @@
+{% extends 'Backend/Templates/backend_layout.html.twig' %}
+
+{% block backend_content %}
+
+    <h2>Choix des photos à supprimer</h2>
+
+    <p>Voici l'ensemble des galeries</p>
+
+    <form id="formulaire_suppression_photos" action="/admin/confirmationsuppressionphoto" method="post">
+        {% for galerie in all_galeries %}
+            <div class="selection_galerie">
+                <button class="bouton_selection_galerie btn btn-primary" type="button" data-idgalerie="{{ galerie.id }}">{{ galerie.nom_galerie }}</button>
+                <div class="photos_a_supprimer" id="photos_galerie_{{ galerie.id }}"></div>
+
+            </div>
+        {% endfor %}
+
+        <button id="bouton_validation_suppression_photos" type="submit">Valider suppression</button>
+    </form>
+
+{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/suppressionphotochoixgalerie.css">
+{% endblock %}
+
+{% block javascript %}
+    {# Permet de conserver le contenu des parents #}
+    {{ parent() }}
+
+    <script type="application/javascript" src="/js/AppelAjax.js"></script>
+    <script type="application/javascript" src="/js/AffichagePhotosPourSuppression.js"></script>
+    <script type="application/javascript" src="/js/BoiteDeDialogueConfirmation.js"></script>
+    <script type="application/javascript" src="/js/SuppressionPhotoChoixGalerie.js"></script>
+
+{% endblock %}

@@ -4,16 +4,20 @@
 namespace Entity;
 
 
-use RCFramework\Entity;
+use RCFramework\EntityAuthentificationUser;
 use RCFramework\Utilitaires;
 
-class AdminEntity extends Entity
+class AdminEntity extends EntityAuthentificationUser
 {
     protected const CLASS_PREFIX = 'admins';
-    private string $login;
-    private string $password;
 
-    public function setLogin($login)
+
+
+
+    /*private string $login;
+    private string $password;*/
+
+    /*public function setLogin($login)
     {
         if (Utilitaires::emptyMinusZero($login))
         {
@@ -46,6 +50,6 @@ class AdminEntity extends Entity
     public function password():string
     {
         return $this->password;
-    }
+    }*/
 }
 

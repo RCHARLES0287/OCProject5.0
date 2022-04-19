@@ -11,7 +11,7 @@ class Ligne_de_commandeEntity extends Entity
 {
     protected const CLASS_PREFIX = 'lignes_de_commandes';
     private int $commande_id;
-    private string $nom_prenom_adresse;
+//    private string $nom_prenom_adresse;
     private string $photo_serial_number;
     private string $photo_name;
     private string $dimensions;
@@ -22,7 +22,7 @@ class Ligne_de_commandeEntity extends Entity
     {
         if (Utilitaires::emptyMinusZero($commande_id))
         {
-            throw new \Exception("L'id de la commande doit être défini");
+            $this->commande_id = null;
         }
         else
         {
@@ -36,22 +36,28 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setNom_prenom_adresse($nom_prenom_adresse)
+    /*public function setNom_prenom_adresse($nom, $prenom, $numeroDeRue, $nomDeRue, $codePostal, $ville, $pays)
     {
-        if (Utilitaires::emptyMinusZero($nom_prenom_adresse))
+        if (Utilitaires::emptyMinusZero($nom) &&
+            Utilitaires::emptyMinusZero($prenom) &&
+            Utilitaires::emptyMinusZero($numeroDeRue) &&
+            Utilitaires::emptyMinusZero($nomDeRue) &&
+            Utilitaires::emptyMinusZero($codePostal) &&
+            Utilitaires::emptyMinusZero($ville) &&
+            Utilitaires::emptyMinusZero($pays))
         {
             throw new \Exception('Les nom, prénom et adresse doivent être renseignés');
         }
         else
         {
-            $this->nom_prenom_adresse = $nom_prenom_adresse;
+            $this->nom_prenom_adresse = $nom . '/' . $prenom . '/' . $numeroDeRue . '/' . $nomDeRue . '/' . $codePostal . '/' . $ville . '/' . $pays;
         }
     }
 
     public function nom_prenom_adresse():string
     {
         return $this->nom_prenom_adresse;
-    }
+    }*/
 
 
     public function setPhoto_serial_number($photo_serial_number)
@@ -74,7 +80,7 @@ class Ligne_de_commandeEntity extends Entity
 
     public function setPhoto_name($photo_name)
     {
-        if (Utilitaires::emptyMinusZero($photo_serial_number))
+        if (Utilitaires::emptyMinusZero($photo_name))
         {
             throw new \Exception('Le nom de la photo doit être défini');
         }
@@ -108,7 +114,7 @@ class Ligne_de_commandeEntity extends Entity
     }
 
 
-    public function setTarif($tarif)
+    public function setTarif(float $tarif)
     {
         if (Utilitaires::emptyMinusZero($tarif))
         {
@@ -134,7 +140,7 @@ class Ligne_de_commandeEntity extends Entity
         }
         else
         {
-            $this->tarif = $nombre_exemplaires;
+            $this->nombre_exemplaires = $nombre_exemplaires;
         }
     }
 

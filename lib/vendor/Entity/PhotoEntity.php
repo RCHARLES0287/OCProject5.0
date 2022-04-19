@@ -4,6 +4,7 @@
 namespace Entity;
 
 
+use Model\GaleriesManager;
 use RCFramework\Entity;
 use RCFramework\Utilitaires;
 
@@ -18,6 +19,8 @@ class PhotoEntity extends Entity
     private ?int $type_id;
     private ?string $lieu;
     private ?string $description;
+
+    public const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'gif', 'png'];
 
     public function setGalerie_id($galerie_id)
     {
@@ -142,5 +145,13 @@ class PhotoEntity extends Entity
     public function description():?string
     {
         return $this->description;
+    }
+
+    public function cheminPhoto():?string
+    {
+        $newGalerieManager = new GaleriesManager();
+        $newGalerieEntity = $newGalerieManager->getOneGalerie($this->galerie_id);
+
+        return '/images/' . $newGalerieEntity->nom_galerie() . '/' . $this->serial_number;
     }
 }

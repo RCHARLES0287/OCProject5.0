@@ -1,0 +1,21 @@
+{% extends 'Frontend/Templates/frontend_layout.html.twig' %}
+
+{% block frontend_content %}
+
+    <section class="log_in_section">
+        <form class="log_in_form" id="formulaire_log_in" action="/loggingin" method="post" novalidate>
+            <label for="email_adress">Email</label>
+            <input name="email_adress" id="email_adress" type="email">
+
+            <label for="password">Mot de passe</label>
+            <input name="password" id="password" type="password">
+
+            <button id="validation_logging_in" class="btn btn-primary" name="bouton_validation_logging_in" type="submit">Valider</button>
+        </form>
+    </section>
+
+    <h2>Pas encore enregistré? C'est par <a href="/signingupform">ici</a> !</h2>
+
+
+
+{% endblock %}

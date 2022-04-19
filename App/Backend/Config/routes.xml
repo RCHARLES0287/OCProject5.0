@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <routes>
-    <route url="" module="" action=""/>
+    <route url="/admin/connexion" module="Connexion" action="adminconnexion"/>
+    <route url="/admin/connexionform" module="Connexion" action="adminconnexionform"/>
+    <route url="/admin/deconnexion" module="Connexion" action="admindeconnexion"/>
+
+    <route url="/admin/ajoutphoto" module="GestionPhotos" action="addonephoto"/>
+    <route url="/admin/ajoutphotoform" module="GestionPhotos" action="ajoutphotoform"/>
+    <route url="/admin/suppressionphotochoixgalerie" module="GestionPhotos" action="suppressionphotochoixgalerie"/>
+    <route url="/admin/confirmationsuppressionphoto" module="GestionPhotos" action="confirmationsuppressionphoto"/>
+
+    <route url="/admin/ordrecarousel" module="GestionPhotos" action="ordrecarousel"/>
+    <route url="/admin/validateordrecarousel" module="GestionPhotos" action="validateordrecarousel"/>
+
+    <route url="/admin/ajoutgalerie" module="GestionGaleries" action="ajoutgalerie"/>
+    <route url="/admin/ajoutgalerieform" module="GestionGaleries" action="ajoutgalerieform"/>
+    <route url="/admin/confirmationsuppressiongaleries" module="GestionGaleries" action="confirmationsuppressiongaleries"/>
+    <route url="/admin/suppressiongalerie" module="GestionGaleries" action="suppressiongalerie"/>
+    <route url="/admin/suppressiongalerieform" module="GestionGaleries" action="suppressiongalerieform"/>
+
+    <route url="/admin/accueiladmin" module="Accueiladmin" action="accueiladmin"/>
+
+
 </routes>
+
 
