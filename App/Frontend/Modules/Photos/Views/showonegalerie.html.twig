@@ -11,7 +11,7 @@
             <div class="affichage_galerie" data-galerieid="{{ galerie_entity.id }}">
                 {% for photo in photos %}
                     <div class="bloc_photo">
-                        <div class="photo_dans_galerie">
+                        <div class="photo_dans_galerie shadow-4-strong">
                             <a href="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}"
                                title="{{ photo.serial_number }}">
                                 <img alt="description"
