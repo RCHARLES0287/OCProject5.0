@@ -50,6 +50,7 @@ class Page extends ApplicationComponent
         ob_start();
 
 
+
 ///TODO Penser à faire un try..catch sur le echo ci-dessous
         echo $twig->render($this->contentFile, $this->vars);
 

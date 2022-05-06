@@ -146,11 +146,15 @@ class PhotosManager extends Manager
     }
 
 
-    public function getAllPhotosFromTexteRecherche($texteRecherche)
+    public function getAllPhotosFromTexteRecherche($texteRecherche): array
     {
         $answerPhotosData = $this->db->prepare('SELECT *
                                                     FROM rc_photographe_photos
-                                                    WHERE (photos_name, photos_lieu, photos_description)');
+                                                    WHERE (photos_name LIKE :critereRecherche
+                                                    OR photos_lieu LIKE :critereRecherche
+                                                    OR photos_description LIKE :critereRecherche)');
+        $answerPhotosData->bindValue('critereRecherche', '%' . $texteRecherche . '%', PDO::PARAM_STR);
+
         $answerPhotosData->execute();
         $photosFeatures = [];
 

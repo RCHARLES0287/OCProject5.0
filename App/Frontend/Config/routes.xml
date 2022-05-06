@@ -27,6 +27,7 @@
 
 
     <route url="/sendsearchrequest" module="Recherche" action="sendsearchrequest"/>
+    <route url="/resultatsrecherche" module="Recherche" action="resultatsrecherche"/>
 
 
 </routes>

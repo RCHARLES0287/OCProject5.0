@@ -39,6 +39,15 @@ class PhotoEntity extends Entity
         return $this->galerie_id;
     }
 
+    public function chemin_photo():string
+    {
+        $newGalerieManager = new GaleriesManager();
+        $newGalerieEntity = $newGalerieManager->getOneGalerie($this->galerie_id());
+        $galerieName = $newGalerieEntity->nom_galerie();
+
+        return $galerieName . '/' . $this->serial_number();
+    }
+
 
     public function setOrdre_carousel($ordre_carousel)
     {
