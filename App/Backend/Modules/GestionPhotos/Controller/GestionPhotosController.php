@@ -135,7 +135,7 @@ class GestionPhotosController extends BackController
             {
 //                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
 //                Attention : pour bien préciser qu'on va transmettre un tableau avec potentiellement plusieurs entrées, à la fin du name on ajoute[]
-                $galeriePhotosHTML .= '<div class="photo_dans_galerie">
+                $galeriePhotosHTML .= '<div class="photo_dans_galerie photo_dans_mosaique">
                                                 <div class="descriptif_photo">' . $photo->serial_number() . ' : ' . $photo->lieu() . '</div>
                                                 <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">
                                                 

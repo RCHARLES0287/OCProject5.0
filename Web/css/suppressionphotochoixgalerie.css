@@ -11,7 +11,7 @@
 /*    width: 70px;*/
 /*}*/
 
-.photo_dans_galerie img
+.photo_dans_galerie img, .photo_dans_mosaique img
 {
     width: 100px;
 }

@@ -1,5 +1,5 @@
 
-#page_contenu_galerie
+#page_contenu_mosaique
 {
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
     align-items: center;
 }
 
-.affichage_galerie
+.affichage_mosaique
 {
     width: 100%;
     display: flex;
@@ -27,8 +27,9 @@
 }
 
 
-.photo_dans_galerie img
+.photo_dans_mosaique img
 {
+    max-width: 100%;
     width: 30vw;
     height: 30vw;
     object-fit: contain;
@@ -41,15 +42,11 @@
     /*background-color: white;*/
 }
 
-
-.photo_dans_galerie img
-{
-    max-width: 100%;
-}
-
+/*
 .pagination
 {
     margin-top: 20px;
 }
+*/
 
 

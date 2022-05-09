@@ -10,7 +10,8 @@ class PaginationButtons {
         this.numberOfPages = $("[data-numberofpages]").data('numberofpages');
         this.urlOneGalerie = '/showonegalerie?galerie_id=' + $("[data-galerieid]").data('galerieid');
 
-        this.divGalerieARemplacer = '.affichage_galerie';
+        // this.divGalerieARemplacer = '.affichage_galerie';
+        this.divGalerieARemplacer = '.affichage_mosaique';
         this.activePageTargetClass = '.page-item.active';
         this.newPageNumber = 1;
 

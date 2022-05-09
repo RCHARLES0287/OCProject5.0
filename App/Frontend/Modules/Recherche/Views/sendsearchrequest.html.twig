@@ -2,32 +2,40 @@
 
 {% block frontend_content %}
 
-    <h2>Résultats de la recherche : {{ texte_recherche }}</h2>
+    <div id="page_contenu_mosaique">
 
-    <section class="contenu_recherche">
+        <h2>Résultats de la recherche : {{ texte_recherche }}</h2>
 
-        <div class="affichage_recherche">
-            {% for photo in photos_trouvees %}
-                {% set cheminPhoto = photo.chemin_photo %}
-                <div class="bloc_photo">
-                    <div class="photo_dans_galerie shadow-4-strong">
+        <section class="contenu_recherche">
 
-                        <a href="/images/{{ cheminPhoto }}"
-                           title="{{ photo.serial_number }}">
-                            <img alt="description"
-                                 src="/images/{{ cheminPhoto }}">
-                        </a>
+            <div class="affichage_mosaique affichage_recherche">
+                {% for photo in photos_trouvees %}
+                    {% set cheminPhoto = photo.chemin_photo %}
+                    <div class="bloc_photo">
+                        <div class="photo_dans_recherche photo_dans_mosaique shadow-4-strong">
+
+                            <a href="/images/{{ cheminPhoto }}"
+                               title="{{ photo.serial_number }}">
+                                <img alt="description"
+                                     src="/images/{{ cheminPhoto }}">
+                            </a>
+                        </div>
+                        <div class="descriptif_photo">{{ photo.serial_number }} : {{ photo.lieu }}</div>
                     </div>
-                    <div class="descriptif_photo">{{ photo.serial_number }} : {{ photo.lieu }}</div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
 
-    </section>
+        </section>
 
+    </div>
 
 {% endblock %}
 
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/mosaiquephoto.css">
+{% endblock %}
 
 
 

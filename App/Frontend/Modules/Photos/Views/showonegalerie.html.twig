@@ -2,16 +2,16 @@
 
 {% block frontend_content %}
 
-    <div id="page_contenu_galerie">
+    <div id="page_contenu_mosaique">
 
         <h2>Galerie "{{ galerie_entity.nom_galerie }}"</h2>
 
         <section class="contenu_galerie">
 
-            <div class="affichage_galerie" data-galerieid="{{ galerie_entity.id }}">
+            <div class="affichage_mosaique affichage_galerie" data-galerieid="{{ galerie_entity.id }}">
                 {% for photo in photos %}
                     <div class="bloc_photo">
-                        <div class="photo_dans_galerie shadow-4-strong">
+                        <div class="photo_dans_galerie photo_dans_mosaique shadow-4-strong">
                             <a href="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}"
                                title="{{ photo.serial_number }}">
                                 <img alt="description"
@@ -26,7 +26,7 @@
         </section>
 
         {% if number_of_pages > 1 %}
-            <div class="pagination" id="pagination_galerie" data-numberofpages="{{ number_of_pages }}"
+            <div class="pagination" id="pagination_mosaique" data-numberofpages="{{ number_of_pages }}"
                  data-startpage="{{ start_page }}">
                 <nav aria-label="...">
                     <ul class="pagination pagination-circle">
@@ -55,7 +55,7 @@
 
 {% block css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/css/unegalerie.css">
+    <link rel="stylesheet" href="/css/mosaiquephoto.css">
 {% endblock %}
 
 {% block javascript %}
