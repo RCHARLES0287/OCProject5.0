@@ -39,6 +39,19 @@ class PhotosController extends \RCFramework\BackController
                 foreach ($newPagePhotos as $photo)
                 {
 //                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
+                    $newPagePhotosHTML .= Utilitaires::remplacementMosaique(
+                        '/images/'. $galerieEntity->nom_galerie() .'/'. $photo->serial_number(),
+                        $photo->serial_number(),
+                        $photo->serial_number() . ' : ' . $photo->lieu());
+                }
+
+
+
+
+                /*
+                foreach ($newPagePhotos as $photo)
+                {
+//                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
                     $newPagePhotosHTML .= '<div class="bloc_photo">
                                                 <div class="photo_dans_galerie photo_dans_mosaique shadow-4-strong">
                                                     <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">
@@ -46,6 +59,7 @@ class PhotosController extends \RCFramework\BackController
                                                 <div class="descriptif_photo">' . $photo->serial_number() . ' : ' . $photo->lieu() . '</div>
                                            </div>';
                 }
+                */
 
 /*
                 {

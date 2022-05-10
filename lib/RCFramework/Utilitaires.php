@@ -114,6 +114,21 @@ abstract class Utilitaires
     */
 
 
+    public static function remplacementMosaique($cheminImage, $serialNumber, $descriptifPhoto): string
+    {
+        return '<div class="bloc_photo">
+                    <div class="photo_dans_galerie photo_dans_mosaique shadow-4-strong">
+                        <a href="'. $cheminImage .'"
+                               title="'. $serialNumber .'">
+                            <img alt="description" src="'. $cheminImage .'">
+                        </a>
+                    </div>
+                    <div class="descriptif_photo">'. $descriptifPhoto .'</div>
+                </div>';
+    }
+
+
+
     public static function var_dump($var)
     {
         echo '<pre>';
