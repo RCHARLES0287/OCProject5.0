@@ -39,9 +39,11 @@ class PhotosController extends \RCFramework\BackController
                 foreach ($newPagePhotos as $photo)
                 {
 //                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
-                    $newPagePhotosHTML .= '<div class="photo_dans_galerie photo_dans_mosaique">
+                    $newPagePhotosHTML .= '<div class="bloc_photo">
+                                                <div class="photo_dans_galerie photo_dans_mosaique shadow-4-strong">
+                                                    <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">
+                                                </div>
                                                 <div class="descriptif_photo">' . $photo->serial_number() . ' : ' . $photo->lieu() . '</div>
-                                                <img alt="description" src="/images/' . $galerieEntity->nom_galerie() . '/' . $photo->serial_number() .'">
                                            </div>';
                 }
 
