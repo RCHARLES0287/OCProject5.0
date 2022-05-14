@@ -4,7 +4,7 @@
 namespace RCFramework;
 
 
-class Page extends ApplicationComponent
+class Page
 {
     protected $contentFile;
     protected $vars = [];

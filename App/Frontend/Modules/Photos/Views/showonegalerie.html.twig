@@ -10,6 +10,18 @@
 
             <div class="affichage_mosaique affichage_galerie" data-galerieid="{{ galerie_entity.id }}">
                 {% for photo in photos %}
+
+{#                    only sert à n'authoriser comme variables que les variables données dans le "with" et les variables globales de Twig #}
+                    {% include '/Templates/_mosaique.html.twig'
+                        with {
+                            'chemin_image':'/images/' ~ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number,
+                            'serial_number': photo.serial_number,
+                            'descriptif_photo': photo.serial_number ~ ' : ' ~ photo.lieu
+                        }
+                        only
+                    %}
+
+                    {#
                     <div class="bloc_photo">
                         <div class="photo_dans_galerie photo_dans_mosaique shadow-4-strong">
                             <a href="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}"
@@ -20,6 +32,7 @@
                         </div>
                         <div class="descriptif_photo">{{ photo.serial_number }} : {{ photo.lieu }}</div>
                     </div>
+                    #}
                 {% endfor %}
             </div>
 

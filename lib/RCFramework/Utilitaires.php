@@ -116,15 +116,16 @@ abstract class Utilitaires
 
     public static function remplacementMosaique($cheminImage, $serialNumber, $descriptifPhoto): string
     {
-        return '<div class="bloc_photo">
-                    <div class="photo_dans_galerie photo_dans_mosaique shadow-4-strong">
-                        <a href="'. $cheminImage .'"
-                               title="'. $serialNumber .'">
-                            <img alt="description" src="'. $cheminImage .'">
-                        </a>
-                    </div>
-                    <div class="descriptif_photo">'. $descriptifPhoto .'</div>
-                </div>';
+        $pageMosaique = new Page();
+
+        $pageMosaique->setContentFile('/Templates/_mosaique.html.twig');
+
+        $pageMosaique->addVar('chemin_image', $cheminImage);
+        $pageMosaique->addVar('serial_number', $serialNumber);
+        $pageMosaique->addVar('descriptif_photo', $descriptifPhoto);
+
+        return $pageMosaique->getGeneratedPage();
+
     }
 
 
