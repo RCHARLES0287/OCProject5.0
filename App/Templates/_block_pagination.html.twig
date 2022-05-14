@@ -1,31 +1,33 @@
-{% block _block_pagination %}
-    {% if number_of_pages > 1 %}
-        <div class="pagination" id="pagination_mosaique" data-numberofpages="{{ number_of_pages }}"
-             data-startpage="{{ start_page }}">
-            <nav aria-label="...">
-                <ul class="pagination pagination-circle">
 
-                    <li class="page-item">
-                        <a class="page-link previous-button">Previous</a>
+
+
+{% if number_of_pages > 1 %}
+    <div class="pagination" id="pagination_mosaique" data-numberofpages="{{ number_of_pages }}"
+         data-startpage="{{ start_page }}">
+        <nav aria-label="...">
+            <ul class="pagination pagination-circle">
+
+                <li class="page-item">
+                    <a class="page-link previous-button">Previous</a>
+                </li>
+
+                {% for currentpage in 1..number_of_pages %}
+                    <li class="page-item page-number-button {% if currentpage == start_page %} active {% endif %}"
+                        data-pagenumber="{{ currentpage }}" aria-current="page">
+                        <a class="page-link" href="#">{{ currentpage }}</a>
                     </li>
+                {% endfor %}
 
-                    {% for currentpage in 1..number_of_pages %}
-                        <li class="page-item page-number-button {% if currentpage == start_page %} active {% endif %}"
-                            data-pagenumber="{{ currentpage }}" aria-current="page">
-                            <a class="page-link" href="#">{{ currentpage }}</a>
-                        </li>
-                    {% endfor %}
+                <li class="page-item">
+                    <a class="page-link next-button">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% endif %}
 
-                    <li class="page-item">
-                        <a class="page-link next-button">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    {% endif %}
-{% endblock %}
 
-{#{% block css %}
+{# {% block css %}
     {{ parent() }}
     <link rel="stylesheet" href="/css/pagination.css">
-{% endblock %}#}
+{% endblock %} #}

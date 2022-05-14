@@ -54,6 +54,15 @@
     <link rel="stylesheet" href="/css/mosaiquephoto.css">
 {% endblock %}
 
+{% block javascript %}
+    {# Permet de conserver le contenu des parents #}
+    {{ parent() }}
+
+    <script type="application/javascript" src="/js/AppelAjax.js"></script>
+    <script type="application/javascript" src="/js/PaginationButtons.js"></script>
+    <script type="application/javascript" src="/js/SendSearchRequest.js"></script>
+
+{% endblock %}
 
 
 

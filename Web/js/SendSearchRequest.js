@@ -1,0 +1,6 @@
+$(function () {
+
+    new PaginationButtons();
+
+});
+
