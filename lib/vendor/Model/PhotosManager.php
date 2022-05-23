@@ -146,14 +146,33 @@ class PhotosManager extends Manager
     }
 
 
-    public function getAllPhotosFromTexteRecherche($texteRecherche): array
+    public function getNombrePhotosFromTexteRecherche($texteRecherche)
+    {
+        $answerPhotosData = $this->db->prepare('SELECT COUNT(*)
+                                                    FROM rc_photographe_photos
+                                                    WHERE (photos_name LIKE :critereRecherche
+                                                    OR photos_lieu LIKE :critereRecherche
+                                                    OR photos_description LIKE :critereRecherche)
+                                                    ');
+        $answerPhotosData->bindValue('critereRecherche', '%' . $texteRecherche . '%', PDO::PARAM_STR);
+        $answerPhotosData->execute();
+
+        return $answerPhotosData->fetchColumn();
+    }
+
+    public function getAllPhotosFromTexteRechercheWithPageNumber($texteRecherche, $pageNumber): array
     {
         $answerPhotosData = $this->db->prepare('SELECT *
                                                     FROM rc_photographe_photos
                                                     WHERE (photos_name LIKE :critereRecherche
                                                     OR photos_lieu LIKE :critereRecherche
-                                                    OR photos_description LIKE :critereRecherche)');
+                                                    OR photos_description LIKE :critereRecherche)
+                                                    ORDER BY photos_id
+                                                    LIMIT :photos_par_page
+                                                    OFFSET :nombre_photos_a_ignorer');
         $answerPhotosData->bindValue('critereRecherche', '%' . $texteRecherche . '%', PDO::PARAM_STR);
+        $answerPhotosData->bindValue('photos_par_page', Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES, PDO::PARAM_INT);
+        $answerPhotosData->bindValue('nombre_photos_a_ignorer', Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES * ($pageNumber - 1), PDO::PARAM_INT);
 
         $answerPhotosData->execute();
         $photosFeatures = [];

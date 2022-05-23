@@ -18,13 +18,13 @@ class IdentificationController extends \RCFramework\BackController
 
     public function executeLoggingin (HTTPRequest $request)
     {
-        if (!Utilitaires::emptyMinusZero($request->postData('email_adress'))
-            && !Utilitaires::emptyMinusZero($request->postData('password')))
+        if (!Utilitaires::emptyMinusZero($request->dataPost('email_adress'))
+            && !Utilitaires::emptyMinusZero($request->dataPost('password')))
         {
             $UtilisateurManager = new UtilisateursManager();
             $SQLRequest = 'SELECT * FROM rc_photographe_utilisateurs WHERE utilisateurs_email=:utilisateurEmail';
-            $utilisateurEntity = $UtilisateurManager->compareIdentificationWithDb($request->postData('email_adress'),
-                                                                                    $request->postData('password'),
+            $utilisateurEntity = $UtilisateurManager->compareIdentificationWithDb($request->dataPost('email_adress'),
+                                                                                    $request->dataPost('password'),
                                                                                     $SQLRequest,
                                                                                     'utilisateurEmail');
 

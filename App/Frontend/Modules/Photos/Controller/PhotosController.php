@@ -28,12 +28,12 @@ class PhotosController extends \RCFramework\BackController
         {
             $photosManager = new PhotosManager();
             $galerieManager = new GaleriesManager();
-            $galerieEntity = $galerieManager->getOneGalerie($request->getData('galerie_id'));
+            $galerieEntity = $galerieManager->getOneGalerie($request->dataGet('galerie_id'));
 
             if ($request->getExists('new_page_number'))
             {
 
-                $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), $request->getData('new_page_number'));
+                $newPagePhotos = $photosManager->getOneGaleriePhotosWithPageNumber($request->dataGet('galerie_id'), $request->dataGet('new_page_number'));
 
                 $newPagePhotosHTML = '';
                 foreach ($newPagePhotos as $photo)
@@ -44,9 +44,6 @@ class PhotosController extends \RCFramework\BackController
                         $photo->serial_number(),
                         $photo->serial_number() . ' : ' . $photo->lieu());
                 }
-
-
-
 
                 /*
                 foreach ($newPagePhotos as $photo)
@@ -83,11 +80,11 @@ class PhotosController extends \RCFramework\BackController
                 exit;
             }
 
-            $numberOfPhotos = $photosManager->getOneGalerieNumberOfPhotos($request->getData('galerie_id'));
+            $numberOfPhotos = $photosManager->getOneGalerieNumberOfPhotos($request->dataGet('galerie_id'));
 //            Ceil() si le résultat n'est pas un entier, renvoie l'arrondi à l'entier supérieur
             $numberOfPages = ceil($numberOfPhotos / (float)Utilitaires::NOMBRE_PHOTOS_PAR_PAGE_GALERIES);
 
-            $galeriePhotosData = $photosManager->getOneGaleriePhotosWithPageNumber($request->getData('galerie_id'), 1);
+            $galeriePhotosData = $photosManager->getOneGaleriePhotosWithPageNumber($request->dataGet('galerie_id'), 1);
 
             $this->page->addVar('photos', $galeriePhotosData);
             $this->page->addVar('galerie_entity', $galerieEntity);

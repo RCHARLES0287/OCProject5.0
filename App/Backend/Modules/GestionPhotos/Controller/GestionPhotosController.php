@@ -125,9 +125,9 @@ class GestionPhotosController extends BackController
         if ($request->getExists('idgalerie'))
         {
             $newGalerieManager = new GaleriesManager();
-            $galerieEntity = $newGalerieManager->getOneGalerie($request->getData('idgalerie'));
+            $galerieEntity = $newGalerieManager->getOneGalerie($request->dataGet('idgalerie'));
             $newPhotoManager = new PhotosManager();
-            $selectedGaleriePhotos = $newPhotoManager->getOneGaleriePhotos($request->getData('idgalerie'));
+            $selectedGaleriePhotos = $newPhotoManager->getOneGaleriePhotos($request->dataGet('idgalerie'));
 
 
             $galeriePhotosHTML = '';
@@ -170,7 +170,7 @@ class GestionPhotosController extends BackController
             $newGalerieManager = new GaleriesManager();
 
 
-            $photosId = $request->postData('checkbox_suppr_photo');
+            $photosId = $request->dataPost('checkbox_suppr_photo');
             foreach ($photosId as $photoId)
             {
                 $newPhotoEntity = $newPhotoManager->getOnePhoto($photoId);

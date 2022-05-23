@@ -16,7 +16,7 @@ class HTTPRequest
         return isset($_COOKIE[$key]);
     }
 
-    public function getData($key)
+    public function dataGet($key)
     {
         return isset($_GET[$key]) ? $_GET[$key] : null;
     }
@@ -31,7 +31,7 @@ class HTTPRequest
         return $_SERVER['REQUEST_METHOD'];
     }
 
-    public function postData($key)
+    public function dataPost($key)
     {
         return isset($_POST[$key]) ? $_POST[$key] : null;
     }

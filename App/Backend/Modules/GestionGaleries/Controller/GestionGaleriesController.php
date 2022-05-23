@@ -123,7 +123,7 @@ class GestionGaleriesController extends BackController
             $newGaleriesManager = new GaleriesManager();
             $newPhotosManager = new PhotosManager();
 
-            $galeriesId = $request->postData('checkbox_suppr_galerie');
+            $galeriesId = $request->dataPost('checkbox_suppr_galerie');
             foreach ($galeriesId as $galerieId)
             {
                 $newGalerieEntity = $newGaleriesManager->getOneGalerie($galerieId);

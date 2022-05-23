@@ -1,6 +1,9 @@
 class PaginationButtons {
 
-    constructor() {
+    constructor(urlCible, divGalerieARemplacer) {
+
+        console.log(urlCible);
+        console.log(divGalerieARemplacer);
 
         $(".previous-button").click(this.previousButtonBehaviour.bind(this));
         $(".next-button").click(this.nextButtonBehaviour.bind(this));
@@ -8,10 +11,10 @@ class PaginationButtons {
 
         this.currentPage = $("[data-startpage]").data('startpage');
         this.numberOfPages = $("[data-numberofpages]").data('numberofpages');
-        this.urlOneGalerie = '/showonegalerie?galerie_id=' + $("[data-galerieid]").data('galerieid');
+        this.urlCible = urlCible;
 
         // this.divGalerieARemplacer = '.affichage_galerie';
-        this.divGalerieARemplacer = '.affichage_mosaique';
+        this.divGalerieARemplacer = divGalerieARemplacer;
         this.activePageTargetClass = '.page-item.active';
         this.newPageNumber = 1;
 
@@ -35,8 +38,8 @@ class PaginationButtons {
 
     prepareAjaxCall ()
     {
-        const urlGalerieAndPage = this.urlOneGalerie + '&new_page_number=' + this.newPageNumber;
-        this.newAppelAjax.callAndExtract(urlGalerieAndPage, this.jsReturnTreatment.bind(this));
+        const urlAndPage = this.urlCible + '&new_page_number=' + this.newPageNumber;
+        this.newAppelAjax.callAndExtract(urlAndPage, this.jsReturnTreatment.bind(this));
     }
 
 

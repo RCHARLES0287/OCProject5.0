@@ -18,8 +18,8 @@ class ConnexionController extends BackController
 
     public function executeAdminconnexionform (HTTPRequest $request)
     {
-        if (!Utilitaires::emptyMinusZero($request->postData('email_adress'))
-            && !Utilitaires::emptyMinusZero($request->postData('password')))
+        if (!Utilitaires::emptyMinusZero($request->dataPost('email_adress'))
+            && !Utilitaires::emptyMinusZero($request->dataPost('password')))
         {
             /*var_dump('On est bien dans le controller de connexion admin');
             exit;*/
@@ -31,8 +31,8 @@ class ConnexionController extends BackController
             /*var_dump($request->postData('password'));
             exit;*/
 
-            $administrateurEntity = $AdministrateurManager->compareIdentificationWithDb($request->postData('email_adress'),
-                                                                                    $request->postData('password'),
+            $administrateurEntity = $AdministrateurManager->compareIdentificationWithDb($request->dataPost('email_adress'),
+                                                                                    $request->dataPost('password'),
                                                                                     $SQLRequest,
                                                                                     'adminLogin');
 
