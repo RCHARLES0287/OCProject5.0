@@ -17,7 +17,14 @@
             integrity="sha512-9PSp7LjOrKa8teKpNGcBfno5hk3BhDCDAs4CKjZ/aQpaVqQ/VmHV+WBjWUV2KjXySB5CbVt4/Qu8KeCVt+HvGg=="
             crossorigin="anonymous"
     />
-    <!--    Feuille de style-->
+    <!--    Feuille de style jQuery-ui  -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+          integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+
+    <!--    Feuille de style    -->
     <link rel="stylesheet" href="/css/style.css"/>
 {#    Remplace le favicon par une image vide#}
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -65,7 +72,7 @@
                         <a class="nav-link" href="/loggingoutform">Log out</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <form action="/sendsearchrequest" method="get">
+                        <form autocomplete="off" action="/sendsearchrequest" method="get">
                             <input id="champ_recherche" type="search" name="texte_recherche">
                             <input type="submit" name="send_recherche" value="Rechercher">
                         </form>
@@ -165,6 +172,13 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous">
 </script>
+<!--    CDN jQuery-ui  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+        integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer">
+</script>
+
 
 {% block javascript %}
 {# Permet de conserver le contenu des parents #}{#
@@ -176,6 +190,9 @@ je garde cette version pour mémoire*/
 <script type="application/javascript" src="/js/ChangingMenu.js"></script>
 <script type="application/javascript" src="/js/ComportementGeneralLayout.js"></script>
 #}
+
+    <script type="application/javascript" src="/js/AutocompletionSearch.js"></script>
+    <script type="application/javascript" src="/js/ComportementGeneralLayout.js"></script>
 {% endblock %}
 </body>
 </html>

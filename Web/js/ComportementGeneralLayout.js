@@ -3,5 +3,7 @@
 je garde cette version pour mémoire*/
 
 $(function () {
-    new ChangingMenu();
+    // new ChangingMenu();
+
+    new AutocompletionSearch();
 });
