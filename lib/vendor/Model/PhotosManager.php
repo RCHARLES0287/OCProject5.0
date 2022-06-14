@@ -51,7 +51,7 @@ class PhotosManager extends Manager
         return $photosFeatures;
     }
 
-    public function getOnePhoto($photoId)
+    public function getOnePhoto($photoId): PhotoEntity
     {
         $answerPhotoData = $this->db->prepare('SELECT photos_id, photos_galerie_id, photos_ordre_carousel, photos_serial_number, photos_name, photos_type_id, photos_lieu, photos_description FROM rc_photographe_photos WHERE photos_id=:photoId');
         $answerPhotoData->execute(array(
@@ -195,7 +195,28 @@ class PhotosManager extends Manager
         return $photosFeatures;
     }
 
+    public function getSamplePhotosFromAutocompleteRecherche($texteRecherche)
+    {
+        $answerPhotosData = $this->db->prepare('SELECT *
+                                                    FROM rc_photographe_photos
+                                                    WHERE (photos_name LIKE :critereRecherche
+                                                    OR photos_lieu LIKE :critereRecherche
+                                                    OR photos_description LIKE :critereRecherche)
+                                                    ORDER BY photos_id
+                                                    LIMIT :photos_par_page');
+        $answerPhotosData->bindValue('critereRecherche', '%' . $texteRecherche . '%', PDO::PARAM_STR);
+        $answerPhotosData->bindValue('photos_par_page', Utilitaires::NOMBRE_RESULTATS_RECHERCHE_AUTOCOMPLETE, PDO::PARAM_INT);
 
+        $answerPhotosData->execute();
+        $photosFeatures = [];
+
+        while (($photo = $answerPhotosData->fetch())!== false)
+        {
+            $photosFeatures[] = new PhotoEntity($photo);
+        }
+
+        return $photosFeatures;
+    }
 
     public function saveOnePhoto(PhotoEntity &$newPhotoEntity)
     {

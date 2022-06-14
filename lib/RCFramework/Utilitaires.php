@@ -13,6 +13,7 @@ abstract class Utilitaires
     ///Todo Repasser sur la vraie adresse mail du vendeur
     const FRAIS_DE_PORT = 250;
     const NOMBRE_PHOTOS_PAR_PAGE_GALERIES = 6;
+    const NOMBRE_RESULTATS_RECHERCHE_AUTOCOMPLETE = 4;
 
 
     public static function emptyMinusZero($value)

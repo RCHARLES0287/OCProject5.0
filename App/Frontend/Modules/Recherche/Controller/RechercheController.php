@@ -17,14 +17,14 @@ class RechercheController extends BackController
 {
     public function executeSendsearchrequest(HTTPRequest $request)
     {
+        $newPhotosManager = new PhotosManager();
+
         if (isset($_GET["texte_recherche"]))
         {
             $texteRecherche = $_GET["texte_recherche"];
 //            Pour supprimer les espaces en début et fin de chaine dans la requête de l'internaute
             $texteRecherche = trim($texteRecherche);
 //            Pas besoin de gérer la casse ou les accents car déjà paramétré en MySQL dans PHPMyAdmin
-
-            $newPhotosManager = new PhotosManager();
 
 
             if ($request->getExists('new_page_number'))
@@ -44,10 +44,12 @@ class RechercheController extends BackController
                         $photo->serial_number(),
                         $photo->serial_number() . ' : ' . $photo->lieu());
                 }
-                echo $newPagePhotosHTML;
                 header('Content-Type: text/html; charset=utf-8');
+                ob_clean();
+                echo $newPagePhotosHTML;
                 exit;
             }
+
 
             $matchingPhotos = $newPhotosManager->getAllPhotosFromTexteRechercheWithPageNumber($texteRecherche, 1);
 //            $matchingPhotos = $newPhotosManager->getAllPhotos();
@@ -61,6 +63,27 @@ class RechercheController extends BackController
             $this->page->addVar('number_of_pages', $numberOfPages);
             $this->page->addVar('start_page', 1);
         }
+
+        else if ($request->getExists('term'))
+        {
+            $newAutocompleteRecherchePhotos = $newPhotosManager->getSamplePhotosFromAutocompleteRecherche($request->dataGet('term'));
+
+            $autocompleteResults = [];
+
+            /**
+             * @var PhotoEntity $photo
+             */
+            foreach ($newAutocompleteRecherchePhotos as $photo)
+            {
+                $autocompleteResults []= ["label"=>$photo->name(), "value"=>$photo->chemin_photo(), "id"=>$photo->id()];
+            }
+            $autocompleteResultsJson = json_encode($autocompleteResults, JSON_THROW_ON_ERROR);
+            header('Content-Type: application/json; charset=utf-8');
+            ob_clean();
+            echo $autocompleteResultsJson;
+            exit;
+        }
+
     }
 
 
