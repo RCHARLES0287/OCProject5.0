@@ -5,5 +5,5 @@ je garde cette version pour mémoire*/
 $(function () {
     // new ChangingMenu();
 
-    new AutocompletionSearch();
+    new AutocompletionSearch("#champ_recherche", "/sendsearchrequest");
 });

@@ -21,12 +21,12 @@ class AutocompletionSearch {
                         response( data );
                     }
                 } );
-            },
+            }.bind(this),
             minLength: 2,
             select: function (event, ui) {
                 event.preventDefault();
-                // window.location.href=window.location.protocol+'//'+window.location.host+'/images/'+ui.item.value;
-                window.location.href=window.location.protocol+'//'+window.location.host+'/showonephoto?photo_id='+ui.item.id;
+                // window.location.href=window.location.protocol+'//'+window.location.host+'/showonephoto?photo_id='+ui.item.id;
+                window.location.href='/showonephoto?photo_id='+ui.item.id;
             }
 
         } );
