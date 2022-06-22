@@ -22,6 +22,29 @@ class PhotosController extends \RCFramework\BackController
     }
 
 
+    public function executeShowonephoto(HTTPRequest $request)
+    {
+        /*var_dump('Entrée dans le controller des photos');
+        exit;*/
+
+        if (($request->getExists('photo_id')))
+//        if (($request->getExists('photo_id') && is_int($request->dataGet('photo_id'))))
+        {
+            /*var_dump('Entrée dans le controller des photos ET DANS LA CONDITION');
+            exit;*/
+
+            $photosManager = new PhotosManager();
+
+            $onePhoto = $photosManager->getOnePhoto($request->dataGet('photo_id'));
+
+            /*var_dump($onePhoto);
+            exit;*/
+
+            $this->page->addVar('photo', $onePhoto);
+        }
+    }
+
+
     public function executeShowonegalerie(HTTPRequest $request)
     {
         if ($request->getExists('galerie_id'))
@@ -101,8 +124,4 @@ class PhotosController extends \RCFramework\BackController
 
     }
 
-    public function executeShowOnePhoto(HTTPRequest $request)
-    {
-
-    }
 }
