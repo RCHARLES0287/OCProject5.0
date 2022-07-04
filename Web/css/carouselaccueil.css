@@ -13,6 +13,31 @@
 }
 
 
+/*Zones de défilement du carousel*/
+.carousel-control-prev, .carousel-control-next
+{
+    opacity: 0;
+    border: none;
+}
+
+
+/*Zones de défilement du carousel*/
+.carousel-control-prev:hover, .carousel-control-next:hover
+{
+    opacity: 0.3;
+    border: none;
+}
+
+
+/*Zones de défilement du carousel*/
+.carousel-control-prev-icon, .carousel-control-next-icon
+{
+    opacity: 1;
+    color: black;
+}
+
+
+
 
 /*
 

@@ -1,7 +1,14 @@
 /*Feuille de style du projet*/
 
+/*Police Montserrat de Google Fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap');
+
+
 body
 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 200;
+    color: rgba(55, 55, 55, 1);
     /*position: relative;*/
     /*min-height: 100vh;*/
     /*margin-bottom: 40px;*/
@@ -10,12 +17,39 @@ body
     justify-content: space-between;*/
     /*background-color: #e7bae4;*/
     /*background-color: #f6dbf4;*/
-    background-color: #f5e9f4;
+    /*background-color: #f5e9f4;*/
+    background-color: #ffffff;
 }
+
+
+h1
+{
+    font-weight: 500;
+}
+
+
+h2
+{
+    font-weight: 300;
+}
+
+
+#separateur_titre_general
+{
+    font-weight: 100;
+}
+
+
+a
+{
+    color: rgba(55, 55, 55, 1);
+}
+
 
 main
 {
     min-height: 100vh;
+    margin-top: 30px;
     margin-bottom: 30px;
     /*display: flex;
     flex-direction: column;
@@ -35,6 +69,21 @@ footer
 
 }
 
+
+#bandeau_header_general
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#liste_menu_general li
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
 .un_article_panier
 {

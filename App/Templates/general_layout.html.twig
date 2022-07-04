@@ -35,16 +35,15 @@
 <body>
 
 <header>
-    <nav class="navbar">
+    <nav id="bandeau_header_general" class="navbar">
         <h1 id="titre principal">
-            <a href="/">Romain CHARLES<br>
-                PHOTOGRAPHE</a>
+            <a href="/">ROMAIN CHARLES <span id="separateur_titre_general">|</span> PHOTOGRAPHE</a>
         </h1>
         <label>
             <input hidden id="admin_connection_status" value="{{ adminConnectionStatus }}">
         </label>
         <div class="menu_general">
-            <ul class="nav">
+            <ul id="liste_menu_general" class="nav">
                 {% if adminConnectionStatus == false %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="menu_galerie" href="#" role="button"
@@ -60,7 +59,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Boutique</a>
+                        <a class="nav-link" href="#">Boutique</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/affichagepanier">Panier</a>
