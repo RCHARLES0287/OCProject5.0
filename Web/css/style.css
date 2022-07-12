@@ -6,15 +6,15 @@
 
 body
 {
+    min-height: 100vh;
     font-family: 'Montserrat', sans-serif;
     font-weight: 200;
     color: rgba(55, 55, 55, 1);
     /*position: relative;*/
     /*min-height: 100vh;*/
     /*margin-bottom: 40px;*/
-    /*display: flex;
+    display: flex;
     flex-direction: column;
-    justify-content: space-between;*/
     /*background-color: #e7bae4;*/
     /*background-color: #f6dbf4;*/
     /*background-color: #f5e9f4;*/
@@ -48,13 +48,26 @@ a
 
 main
 {
-    min-height: 100vh;
+    /*min-height: 100vh;*/
+    /*flex-grow : 1 autorise le main à grandir pour occuper l'espace disponible. Permet de décaler le footer en bas de page*/
+    flex-grow: 1;
     margin-top: 30px;
     margin-bottom: 30px;
-    /*display: flex;
+    display: flex;
     flex-direction: column;
-    justify-content: flex-start;*/
+    justify-content: flex-start;
+    align-items: center;
 }
+
+
+/*main > section:first-child*/
+main > section
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 footer
 {
