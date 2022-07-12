@@ -599,47 +599,56 @@ class CommandeController extends BackController
 
     public function executeAffichagepanier (HTTPRequest $request)
     {
-        /*
-        var_dump('On est entré dans le panier');
-        var_dump($_SESSION['panier']);
-        exit;
-        */
-        $orderedArticles = [];
 
-        foreach ($_SESSION['panier'] as $oneArticle)
+        /*var_dump('On est entré dans le panier');
+        var_dump($_SESSION['panier']);
+        exit;*/
+
+        if ($_SESSION['panier'] != null)
+        /*{
+            $this->page->addVar('orderedArticles', 'panier vide');
+        }
+        else*/
         {
+            $orderedArticles = [];
+
+            foreach ($_SESSION['panier'] as $oneArticle)
+            {
+                /*
+                var_dump($oneArticle);
+                exit;
+                */
+
+                $newPhotoManager = new PhotosManager();
+                $orderedArticle = $newPhotoManager->getOnePhoto($oneArticle["articleId"]);
+
+                $newDimensionsManager = new DimensionsManager();
+                $selectedDimensions = $newDimensionsManager->getOneEntryOfDimensions($oneArticle["dimensionsId"]);
+
+                $numberOfArticles = $oneArticle["nombreArticles"];
+
+                $newTarifsManager = new TarifsManager();
+                $tarifsEntity = $newTarifsManager->getOnePhotoAndDimensionsTarif($oneArticle["articleId"], $oneArticle["dimensionsId"]);
+                $photoTarif = $tarifsEntity->prix();
+
+
+                $orderedArticles [] = [
+                    'orderedArticle' => $orderedArticle,
+                    'selectedDimensions' => $selectedDimensions,
+                    'numberOfArticles' => $numberOfArticles,
+                    'photoTarif' => $photoTarif
+                ];
+            }
+
+            $this->page->addVar('orderedArticles', $orderedArticles);
+
             /*
-            var_dump($oneArticle);
+            var_dump($orderedArticles);
             exit;
             */
-
-            $newPhotoManager = new PhotosManager();
-            $orderedArticle = $newPhotoManager->getOnePhoto($oneArticle["articleId"]);
-
-            $newDimensionsManager = new DimensionsManager();
-            $selectedDimensions = $newDimensionsManager->getOneEntryOfDimensions($oneArticle["dimensionsId"]);
-
-            $numberOfArticles = $oneArticle["nombreArticles"];
-
-            $newTarifsManager = new TarifsManager();
-            $tarifsEntity = $newTarifsManager->getOnePhotoAndDimensionsTarif($oneArticle["articleId"], $oneArticle["dimensionsId"]);
-            $photoTarif = $tarifsEntity->prix();
-
-
-            $orderedArticles [] = [
-                'orderedArticle' => $orderedArticle,
-                'selectedDimensions' => $selectedDimensions,
-                'numberOfArticles' => $numberOfArticles,
-                'photoTarif' => $photoTarif
-            ];
         }
 
-        $this->page->addVar('orderedArticles', $orderedArticles);
 
-        /*
-        var_dump($orderedArticles);
-        exit;
-        */
 
     }
 }
