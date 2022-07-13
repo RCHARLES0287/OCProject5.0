@@ -5,41 +5,76 @@
     <section class="sign_in_section">
         <form class="sign_in_form" id="formulaire_sign_in" action="/signingup" method="post" novalidate>
 
-            <label for="prenom">Prénom</label>
-            <input name="prenom" id="prenom" type="text" required><br>
+            <div class="champ_signup_form">
+                <label for="prenom">Prénom</label>
+                <input name="prenom" id="prenom" type="text" required><br>
+            </div>
 
-            <label for="nom">Nom</label>
-            <input name="nom" id="nom" type="text" required><br>
 
-            <label for="birthdate">Date de naissance</label>
-            <input name="birthdate" id="birthdate" type="date" required><br>
+            <div class="champ_signup_form">
+                <label for="nom">Nom</label>
+                <input name="nom" id="nom" type="text" required><br>
+            </div>
 
-            <label for="numero_rue">Numéro de rue</label>
-            <input name="numero_rue" id="numero_rue" type="text" required><br>
 
-            <label for="nom_rue">Nom de rue</label>
-            <input name="nom_rue" id="nom_rue" type="text" required><br>
+            <div class="champ_signup_form">
+                <label for="birthdate">Date de naissance</label>
+                <input name="birthdate" id="birthdate" type="date" required><br>
+            </div>
 
-            <label for="complement_adresse">Complément d'adresse</label>
-            <input name="complement_adresse" id="complement_adresse" type="text"><br>
 
-            <label for="code_postal">Code postal</label>
-            <input name="code_postal" id="code_postal" type="text" required><br>
+            <div class="champ_signup_form">
+                <label for="numero_rue">Numéro de rue</label>
+                <input name="numero_rue" id="numero_rue" type="text" required><br>
+            </div>
 
-            <label for="ville">Ville</label>
-            <input name="ville" id="ville" type="text" required><br>
 
-            <label for="pays">Pays</label>
-            <input name="pays" id="pays" type="text" required><br>
+            <div class="champ_signup_form">
+                <label for="nom_rue">Nom de rue</label>
+                <input name="nom_rue" id="nom_rue" type="text" required><br>
+            </div>
 
-            <label for="telephone">Téléphone</label>
-            <input name="telephone" id="telephone" type="text"><br>
 
-            <label for="email_adress">Email</label>
-            <input name="email_adress" id="email_adress" type="email" required><br>
+            <div class="champ_signup_form">
+                <label for="complement_adresse">Complément d'adresse</label>
+                <input name="complement_adresse" id="complement_adresse" type="text"><br>
+            </div>
 
-            <label for="password">Mot de passe</label>
-            <input name="password" id="password" type="password" required><br>
+
+            <div class="champ_signup_form">
+                <label for="code_postal">Code postal</label>
+                <input name="code_postal" id="code_postal" type="text" required><br>
+            </div>
+
+
+            <div class="champ_signup_form">
+                <label for="ville">Ville</label>
+                <input name="ville" id="ville" type="text" required><br>
+            </div>
+
+
+            <div class="champ_signup_form">
+                <label for="pays">Pays</label>
+                <input name="pays" id="pays" type="text" required><br>
+            </div>
+
+
+            <div class="champ_signup_form">
+                <label for="telephone">Téléphone</label>
+                <input name="telephone" id="telephone" type="text"><br>
+            </div>
+
+
+            <div class="champ_signup_form">
+                <label for="email_adress">Email</label>
+                <input name="email_adress" id="email_adress" type="email" required><br>
+            </div>
+
+
+            <div class="champ_signup_form">
+                <label for="password">Mot de passe</label>
+                <input name="password" id="password" type="password" required><br>
+            </div>
 
 
             <button id="validation_signingin_in" class="btn btn-primary" name="bouton_validation_signingin_in" type="submit">Valider</button>
@@ -47,6 +82,12 @@
     </section>
 
 
-
-
 {% endblock %}
+
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/signingupform.css">
+{% endblock %}
+
+

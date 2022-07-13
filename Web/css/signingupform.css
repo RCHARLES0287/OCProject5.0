@@ -1,0 +1,20 @@
+
+#formulaire_sign_in
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+.champ_signup_form
+{
+    width: 100%;
+    padding: 0px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+

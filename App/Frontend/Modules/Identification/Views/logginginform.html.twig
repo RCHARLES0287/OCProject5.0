@@ -19,3 +19,10 @@
 
 
 {% endblock %}
+
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/logginginform.css">
+{% endblock %}
+

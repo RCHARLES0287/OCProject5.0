@@ -83,6 +83,22 @@ footer
 }
 
 
+button, input[type="submit"]
+{
+    /*background-color: #00ced1;*/
+    background-color: #d6d2f9;
+    border: 1px solid #3e3e3e;
+    border-radius: 3px;
+}
+
+
+button:active, input[type="submit"]:active
+{
+    background-color: #aaa2f1;
+}
+
+
+
 #bandeau_header_general
 {
     display: flex;
