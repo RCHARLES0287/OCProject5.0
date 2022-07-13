@@ -47,6 +47,9 @@ abstract class Application
             // On récupère la route correspondante à l'URL.
             $matchedRoute = $router->getRoute($this->httpRequest->requestURI());
 
+            var_dump($matchedRoute);
+            exit;
+
         } catch (\RuntimeException $e)
         {
             Utilitaires::logException($e);

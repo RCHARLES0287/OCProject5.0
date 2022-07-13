@@ -17,6 +17,9 @@ class RechercheController extends BackController
 {
     public function executeSendsearchrequest(HTTPRequest $request)
     {
+        var_dump('bingo');
+        exit;
+
         $newPhotosManager = new PhotosManager();
 
         if (isset($_GET["texte_recherche"]))
@@ -83,6 +86,12 @@ class RechercheController extends BackController
             echo $autocompleteResultsJson;
             exit;
         }
+
+        /*else
+        {
+            $this->page->addVar('photos_trouvees', []);
+            $this->page->addVar('texte_recherche', []);
+        }*/
 
     }
 
