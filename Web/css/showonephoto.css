@@ -1,0 +1,20 @@
+
+
+.affichage_une_photo
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.affichage_une_photo img, .affichage_une_photo div
+{
+    max-width: 60%;
+}
+
+
+
+
+

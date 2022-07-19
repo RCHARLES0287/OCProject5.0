@@ -17,7 +17,7 @@
                 {% endfor %}
             </select>
             <div class="zone_prix">
-                prix :
+                Prix unitaire :
                 <span id="prix_article"></span>
                 €
             </div>
@@ -45,6 +45,12 @@
 <script type="application/javascript" src="/js/PlacingAssociatedValue.js"></script>
 <script type="application/javascript" src="/js/ValidatingFormAjax.js"></script>
 <script type="application/javascript" src="/js/showOneArticle.js"></script>
+{% endblock %}
+
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/showonearticle.css">
 {% endblock %}
 
 

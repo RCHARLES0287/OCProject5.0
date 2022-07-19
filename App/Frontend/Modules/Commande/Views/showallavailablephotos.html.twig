@@ -3,16 +3,27 @@
 {% block frontend_content %}
     <section>
 
-        <p>Voici l'ensemble des photos disponibles à la vente</p>
+        <h2>Photos disponibles à la vente</h2>
 
         <div class="affichage_available_photos">
             {% for photo in all_available_photos %}
                 <div class="available_photo">
-                    {{ photo.serial_number }} : {{ photo.nom }}
+
                     <a href="/showonearticle?galerie_id={{ photo.galerie_id }}&amp;photo_id={{ photo.id }}"><img alt="description" src="/images/{{ galeries[photo.galerie_id()].nom_galerie ~ '/' ~ photo.serial_number }}"></a>
+
+                    <p>{{ photo.name }} : {{ photo.serial_number }}</p>
 
                 </div>
             {% endfor %}
         </div>
     </section>
 {% endblock %}
+
+
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/showallavailablephotos.css">
+{% endblock %}
+
+

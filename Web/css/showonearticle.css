@@ -1,0 +1,25 @@
+
+
+.visionnage_article
+{
+    width: 100%;
+}
+
+
+#formulaire_panier
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+#formulaire_panier *
+{
+    margin-top: 10px;
+}
+
+
+

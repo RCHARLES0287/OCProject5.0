@@ -1,0 +1,44 @@
+
+
+
+section
+{
+    width: 100%;
+}
+
+
+
+.affichage_available_photos
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.available_photo
+{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.available_photo a
+{
+    width: 100%;
+}
+
+
+a img
+{
+    width: 100%;
+}
+
+
+
+
