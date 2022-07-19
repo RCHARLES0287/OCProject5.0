@@ -30,25 +30,14 @@ abstract class Application
         // On parcourt les routes du fichier XML.
         foreach ($routes as $route)
         {
-            $vars = [];
-
-            // On regarde si des variables sont présentes dans l'URL.
-            if ($route->hasAttribute('vars'))
-            {
-                $vars = explode(', ', $route->getAttribute('vars'));
-            }
-
             // On ajoute la route au routeur.
-            $router->addRoute(new Route($route->getAttribute('url'), $route->getAttribute('module'), $route->getAttribute('action'), $vars));
+            $router->addRoute(new Route($route->getAttribute('url'), $route->getAttribute('module'), $route->getAttribute('action')));
         }
 
         try
         {
             // On récupère la route correspondante à l'URL.
             $matchedRoute = $router->getRoute($this->httpRequest->requestURI());
-
-            var_dump($matchedRoute);
-            exit;
 
         } catch (\RuntimeException $e)
         {
@@ -59,9 +48,6 @@ abstract class Application
                 $this->httpResponse->redirect404($this);
             }
         }
-
-        // On ajoute les variables de l'URL au tableau $_GET.
-        $_GET = array_merge($_GET, $matchedRoute->vars());
 
         // On instancie le contrôleur.
         $controllerClass = 'App\\' . $this->name . '\\Modules\\' . $matchedRoute->module() . '\\Controller\\' . $matchedRoute->module() . 'Controller';
