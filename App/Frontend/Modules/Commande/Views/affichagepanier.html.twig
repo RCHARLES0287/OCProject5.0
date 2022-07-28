@@ -20,25 +20,29 @@
                     <div class="photo_serial_number_panier">Code article
                         : {{ unArticle.orderedArticle.serial_number }}</div>
                     <div class="photo_dimensions_panier">Dimensions : {{ unArticle.selectedDimensions.dimensions }}</div>
-                    <div class="number_of_articles_panier"
-                         data-idphoto="{{ unArticle.orderedArticle.id }}"
-                         data-iddimensions="{{ unArticle.selectedDimensions.id }}"
-                         data-articleqty="{{ unArticle.numberOfArticles }}">Quantité :
 
-                        <button type="button" data-modiftype="remove" class="btn btn-primary qte_button">-
-                        </button>
+                    <div class="prix_par_article">
+                        <div class="number_of_articles_panier"
+                             data-idphoto="{{ unArticle.orderedArticle.id }}"
+                             data-iddimensions="{{ unArticle.selectedDimensions.id }}"
+                             data-articleqty="{{ unArticle.numberOfArticles }}">Quantité :
 
-                        <span class="number_of_articles_panier_span"
-                              id="number_of_articles_panier_span_{{ unArticle.orderedArticle.id }}"> {{ unArticle.numberOfArticles }}
+                            <button type="button" data-modiftype="remove" class="btn btn-primary qte_button">-
+                            </button>
+
+                            <span class="number_of_articles_panier_span"
+                                  id="number_of_articles_panier_span_{{ unArticle.orderedArticle.id }}"> {{ unArticle.numberOfArticles }}
                         </span>
 
-                        <button type="button" data-modiftype="add" class="btn btn-primary qte_button">+
-                        </button>
+                            <button type="button" data-modiftype="add" class="btn btn-primary qte_button">+
+                            </button>
+                        </div>
+                        <div class="prix_article_panier">Prix unitaire : {{ unArticle.photoTarif }} €</div>
+                        <div class="prix_total_article">Prix total par article
+                            : {{ unArticle.numberOfArticles * unArticle.photoTarif }} €
+                        </div>
                     </div>
-                    <div class="prix_article_panier">Prix unitaire : {{ unArticle.photoTarif }} €</div>
-                    <div class="prix_total_article">Prix total par article
-                        : {{ unArticle.numberOfArticles * unArticle.photoTarif }} €
-                    </div>
+
                 </div>
 
             {% endfor %}
@@ -63,4 +67,11 @@
 <script type="application/javascript" src="/js/AddingOrRemovingOneToQuantityAjax.js"></script>
 <script type="application/javascript" src="/js/affichagePanier.js"></script>
 {% endblock %}
+
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/affichagepanier.css">
+{% endblock %}
+
 
