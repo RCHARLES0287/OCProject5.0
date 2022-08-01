@@ -6,12 +6,14 @@ class AddingOrRemovingOneToQuantityAjax {
      * @param inputsData le tableau de clés et valeurs pour alimenter le paramètre data de la requête Ajax. Clés = les clés qui alimenteront $_POST. Valeurs = le sélecteur de l'attribut name de la balise voulue
      * @param urlTarget l'URL qui pointera vers la méthode de traitement du formulaire
      * @param newValueLocation la balise qui recevra la nouvelle quantité
+     * @param newPriceLocation la balise qui recevra le nouveau prix
      */
-    constructor(objetSelect, inputsData, urlTarget, newValueLocation) {
+    constructor(objetSelect, inputsData, urlTarget, newValueLocation, newPriceLocation) {
         this.objetSelect = objetSelect;
         this.inputsData = inputsData;
         this.urlTarget = urlTarget;
         this.newValueLocation = newValueLocation;
+        this.newPriceLocation = newPriceLocation;
 
         this.addOrRemoveOneToQuantityAjax();
     }
@@ -46,6 +48,7 @@ class AddingOrRemovingOneToQuantityAjax {
 
                         if (data.status === 'Succès') {
                             clickedButton.siblings(this.newValueLocation).html(data.newQuantity);
+                            $(this.newPriceLocation).html(data.prixTotalPhoto);
                         }
                     }.bind(this),
                     error: function (jqXHR, status, errorMessage) {

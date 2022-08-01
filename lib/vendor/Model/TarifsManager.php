@@ -74,7 +74,7 @@ class TarifsManager extends Manager
      * @return TarifEntity renvoie l'entité tarif associée à l'Id de la photo et à l'Id des dimensions
      * @throws \Exception si aucun tarif n'est trouvé avec ces paramètres
      */
-    public function getOnePhotoAndDimensionsTarif($photoId, $dimensionsId)
+    public function getOnePhotoAndDimensionsTarif(int $photoId, int $dimensionsId): TarifEntity
     {
         $answerTarifData = $this->db->prepare('SELECT *
                                                         FROM rc_photographe_tarifs

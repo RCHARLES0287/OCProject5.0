@@ -160,6 +160,7 @@ class CommandeController extends BackController
 
                 $isFound = false;
                 $newQuantity = 0;
+                $prixTotalPhoto= 0;
                 //                Le "&" devant la variable $lignePanier indique qu'on veut la référence de l'objet (autrement dit son adresse). Ainsi on peut mettre à jour le tableau en manipulant directement la variable du foreach.
                 foreach ($_SESSION['panier'] as &$lignePanier)
                 {
@@ -174,6 +175,11 @@ class CommandeController extends BackController
                             $lignePanier['nombreArticles'] -= 1;
                         }
                         $newQuantity = $lignePanier['nombreArticles'];
+
+                        $tarifsManager = new TarifsManager();
+                        $tarifPhotoEntity = $tarifsManager->getOnePhotoAndDimensionsTarif($lignePanier['articleId'], $lignePanier['dimensionsId']);
+                        $prixTotalPhoto = $tarifPhotoEntity->prix() * $newQuantity;
+
                         $isFound = true;
 //                        Dans la mesure où on ne peut trouver l'élément qu'une seule fois dans le tableau, on stoppe la boucle immédiatement avec le "break"
                         break;
@@ -189,7 +195,8 @@ class CommandeController extends BackController
                     }
 //                    Pas de else car on est dans le cas où la ligne photo-dimensions n'existe pas dans le panier (donc impossible de soustraire)
                 }
-                echo json_encode(['status'=>'Succès', 'newQuantity'=>$newQuantity]);
+
+                echo json_encode(['status'=>'Succès', 'newQuantity'=>$newQuantity, 'prixTotalPhoto'=>$prixTotalPhoto]);
             }
             catch (\Throwable $exception) {
                 Utilitaires::logException($exception);

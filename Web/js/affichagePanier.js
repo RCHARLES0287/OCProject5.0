@@ -14,8 +14,10 @@ $(function () {
         '.qte_button',
         {'idPhoto': 'idphoto', 'idDimensions': 'iddimensions', 'nombreArticles': 'articleqty'},
         '/addorremoveonetoquantity',
-        '.number_of_articles_panier_span'
+        '.number_of_articles_panier_span',
+        '.prix_total_article_span'
     );
+
 
 
     /*
