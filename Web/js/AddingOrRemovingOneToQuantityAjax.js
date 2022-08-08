@@ -5,13 +5,15 @@ class AddingOrRemovingOneToQuantityAjax {
      * @param objetSelect la balise (le sélecteur) sur laquelle porte l'action du button
      * @param inputsData le tableau de clés et valeurs pour alimenter le paramètre data de la requête Ajax. Clés = les clés qui alimenteront $_POST. Valeurs = le sélecteur de l'attribut name de la balise voulue
      * @param urlTarget l'URL qui pointera vers la méthode de traitement du formulaire
+     * @param newParentLocation la balise parent qui englobe la quantité et le prix total
      * @param newValueLocation la balise qui recevra la nouvelle quantité
      * @param newPriceLocation la balise qui recevra le nouveau prix
      */
-    constructor(objetSelect, inputsData, urlTarget, newValueLocation, newPriceLocation) {
+    constructor(objetSelect, inputsData, urlTarget, newParentLocation, newValueLocation, newPriceLocation) {
         this.objetSelect = objetSelect;
         this.inputsData = inputsData;
         this.urlTarget = urlTarget;
+        this.newParentLocation = newParentLocation;
         this.newValueLocation = newValueLocation;
         this.newPriceLocation = newPriceLocation;
 
@@ -47,9 +49,11 @@ class AddingOrRemovingOneToQuantityAjax {
                         console.log(data.status);
 
                         if (data.status === 'Succès') {
-                            clickedButton.siblings(this.newValueLocation).html(data.newQuantity);
-                            $(this.newPriceLocation).html(data.prixTotalPhoto);
+                            const parent = clickedButton.parents(this.newParentLocation).first();
+                            parent.find(this.newValueLocation).html(data.newQuantity);
+                            parent.find(this.newPriceLocation).html(data.prixTotalPhoto);
                         }
+
                     }.bind(this),
                     error: function (jqXHR, status, errorMessage) {
                         console.log(status + ':' + errorMessage);
