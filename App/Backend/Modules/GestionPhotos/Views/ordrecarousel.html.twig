@@ -9,10 +9,13 @@
         {% for unePhoto in allPhotos %}
 
             <div class="all_photos" id="{{ unePhoto.id }}">
-                <p>{{ unePhoto.serial_number }} : {{ unePhoto.lieu }}</p>
-                <img alt="description"
-                     src="/images/{{ allGaleries[unePhoto.galerie_id()].nom_galerie ~ '/' ~ unePhoto.serial_number }}"
-                     draggable="true">
+                <div class="bloc_image shadow-4-strong">
+                    <img alt="description"
+                         src="/images/{{ allGaleries[unePhoto.galerie_id()].nom_galerie ~ '/' ~ unePhoto.serial_number }}"
+                         draggable="true">
+                </div>
+                <p hidden>{{ unePhoto.serial_number }}</p>
+
             </div>
 
         {% endfor %}
