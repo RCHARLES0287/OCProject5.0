@@ -1,3 +1,16 @@
+
+
+
+#formulaire_suppression_photos
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+
 .photos_a_supprimer
 {
     display: flex;
@@ -6,12 +19,19 @@
     flex-wrap: wrap;
 }
 
-/*.photo_a_supprimer*/
-/*{*/
-/*    width: 70px;*/
-/*}*/
 
 .photo_dans_galerie img, .photo_dans_mosaique img
 {
     width: 100px;
+}
+
+.selection_galerie
+{
+    margin: 5px;
+}
+
+
+.bouton_selection_galerie
+{
+    background-color: gainsboro;
 }

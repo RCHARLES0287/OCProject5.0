@@ -9,7 +9,7 @@
     <form id="formulaire_suppression_photos" action="/admin/confirmationsuppressionphoto" method="post">
         {% for galerie in all_galeries %}
             <div class="selection_galerie">
-                <button class="bouton_selection_galerie btn btn-primary" type="button" data-idgalerie="{{ galerie.id }}">{{ galerie.nom_galerie }}</button>
+                <button class="bouton_selection_galerie" type="button" data-idgalerie="{{ galerie.id }}">{{ galerie.nom_galerie }}</button>
                 <div class="photos_a_supprimer" id="photos_galerie_{{ galerie.id }}"></div>
 
             </div>

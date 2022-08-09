@@ -10,7 +10,7 @@
 
             <div class="all_photos" id="{{ unePhoto.id }}">
                 <div class="bloc_image shadow-4-strong">
-                    <img alt="description"
+                    <img alt="{{ unePhoto.description }}"
                          src="/images/{{ allGaleries[unePhoto.galerie_id()].nom_galerie ~ '/' ~ unePhoto.serial_number }}"
                          draggable="true">
                 </div>
@@ -30,7 +30,7 @@
             <div class="bloc_zone_cible">
                 <div class="zone_cible" id="zone_1">
                     <input type="hidden" name="input_1" value="">
-                    <div> Emplacement 1</div>
+                    <div class="emplacement"> Emplacement 1</div>
                 </div>
                 <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
             </div>
@@ -39,7 +39,7 @@
             <div class="bloc_zone_cible">
                 <div class="zone_cible" id="zone_2">
                     <input type="hidden" name="input_2" value="">
-                    <div> Emplacement 2</div>
+                    <div class="emplacement"> Emplacement 2</div>
                 </div>
                 <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
             </div>
@@ -47,7 +47,7 @@
             <div class="bloc_zone_cible">
                 <div class="zone_cible" id="zone_3">
                     <input type="hidden" name="input_3" value="">
-                    <div> Emplacement 3</div>
+                    <div class="emplacement"> Emplacement 3</div>
                 </div>
                 <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
             </div>
@@ -55,7 +55,7 @@
             <div class="bloc_zone_cible">
                 <div class="zone_cible" id="zone_4">
                     <input type="hidden" name="input_4" value="">
-                    <div> Emplacement 4</div>
+                    <div class="emplacement"> Emplacement 4</div>
                 </div>
                 <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
             </div>
@@ -63,13 +63,13 @@
             <div class="bloc_zone_cible">
                 <div class="zone_cible" id="zone_5">
                     <input type="hidden" name="input_5" value="">
-                    <div> Emplacement 5</div>
+                    <div class="emplacement"> Emplacement 5</div>
                 </div>
                 <input class="reset_dropzone" type="reset" value="Vider l'emplacement">
             </div>
         </div>
 
-        <button id="validation_ordre_carousel" class="btn btn-primary" name="bouton_validation_ordre_carousel"
+        <button id="validation_ordre_carousel" name="bouton_validation_ordre_carousel"
                 type="submit">Valider ordre
         </button>
     </form>
