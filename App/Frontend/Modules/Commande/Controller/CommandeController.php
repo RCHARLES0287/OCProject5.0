@@ -549,6 +549,7 @@ class CommandeController extends BackController
             $to = Utilitaires::EMAIL_VENDEUR;
             $sujet = "Paiement invalide";
             $body = $req;
+            $text="";
             foreach ($_POST as $key => $value) {
                 $text.= $key . " = " .$value ."nn";
             }

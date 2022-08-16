@@ -47,6 +47,7 @@ abstract class Application
                 // Si aucune route ne correspond, c'est que la page demandée n'existe pas.
                 $this->httpResponse->redirect404($this);
             }
+            exit;
         }
 
         // On instancie le contrôleur.

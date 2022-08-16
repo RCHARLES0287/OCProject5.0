@@ -1,6 +1,0 @@
-{
-    "require": {
-        "fpdf/fpdf": "^1.83",
-        "jrosset/envreader": "^1.0"
-    }
-}
