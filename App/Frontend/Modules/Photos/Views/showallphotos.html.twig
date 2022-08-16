@@ -4,15 +4,16 @@
     <section>
         <p>Voici l'ensemble des photos</p>
         {{ photos|map(p=>"#{p.lieu}")|join(', ') }}
-        <p>
+        <div>
             {% for photo in photos %}
         <div class="photo_dans_galerie photo_dans_mosaique">
             {{ photo.serial_number }} : {{ photo.lieu }}
             <img alt="description" src="/images/{{ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number }}">
         </div>
             {% endfor %}
-        </p>
+        </div>
     </section>
 {% endblock %}
+
 
 

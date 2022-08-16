@@ -4,6 +4,7 @@
 namespace RCFramework;
 
 
+use Entity\PhotoEntity;
 use http\Exception\RuntimeException;
 
 abstract class Utilitaires
@@ -115,15 +116,13 @@ abstract class Utilitaires
     */
 
 
-    public static function remplacementMosaique($cheminImage, $serialNumber, $descriptifPhoto): string
+    public static function remplacementMosaique(PhotoEntity $photoEntity): string
     {
         $pageMosaique = new Page();
 
         $pageMosaique->setContentFile('/Templates/_mosaique.html.twig');
 
-        $pageMosaique->addVar('chemin_image', $cheminImage);
-        $pageMosaique->addVar('serial_number', $serialNumber);
-        $pageMosaique->addVar('descriptif_photo', $descriptifPhoto);
+        $pageMosaique->addVar('photoEntity', $photoEntity);
 
         return $pageMosaique->getGeneratedPage();
 

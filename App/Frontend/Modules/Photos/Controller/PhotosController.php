@@ -28,12 +28,14 @@ class PhotosController extends \RCFramework\BackController
         exit;*/
 
         if (($request->getExists('photo_id')))
-//        if (($request->getExists('photo_id') && is_int($request->dataGet('photo_id'))))
         {
             /*var_dump('Entrée dans le controller des photos ET DANS LA CONDITION');
             exit;*/
 
             $photosManager = new PhotosManager();
+
+            /*var_dump("Voici l'id de la photo" . $request->dataGet('photo_id'));
+            exit;*/
 
             $onePhoto = $photosManager->getOnePhoto($request->dataGet('photo_id'));
 
@@ -62,10 +64,7 @@ class PhotosController extends \RCFramework\BackController
                 foreach ($newPagePhotos as $photo)
                 {
 //                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
-                    $newPagePhotosHTML .= Utilitaires::remplacementMosaique(
-                        '/images/'. $galerieEntity->nom_galerie() .'/'. $photo->serial_number(),
-                        $photo->serial_number(),
-                        $photo->serial_number() . ' : ' . $photo->lieu());
+                    $newPagePhotosHTML .= Utilitaires::remplacementMosaique($photo);
                 }
 
                 /*

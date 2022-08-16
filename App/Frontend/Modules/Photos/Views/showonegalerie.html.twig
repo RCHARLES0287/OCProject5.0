@@ -14,10 +14,7 @@
 {#                    only sert à n'authoriser comme variables que les variables données dans le "with" et les variables globales de Twig #}
                     {% include '/Templates/_mosaique.html.twig'
                         with {
-                            'id': photo.id,
-                            'chemin_image':'/images/' ~ galerie_entity.nom_galerie ~ '/' ~ photo.serial_number,
-                            'serial_number': photo.serial_number,
-                            'descriptif_photo': photo.serial_number ~ ' : ' ~ photo.lieu
+                            'photoEntity': photo
                         }
                         only
                     %}

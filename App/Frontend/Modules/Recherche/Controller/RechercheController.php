@@ -39,10 +39,7 @@ class RechercheController extends BackController
                 foreach ($newPagePhotos as $photo)
                 {
 //                    Le .= sert à concaténer la nouvelle chaine à la suite de la variable
-                    $newPagePhotosHTML .= Utilitaires::remplacementMosaique(
-                        '/images/'. $photo->chemin_photo(),
-                        $photo->serial_number(),
-                        $photo->serial_number() . ' : ' . $photo->lieu());
+                    $newPagePhotosHTML .= Utilitaires::remplacementMosaique($photo);
                 }
                 header('Content-Type: text/html; charset=utf-8');
                 ob_clean();

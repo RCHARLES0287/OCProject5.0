@@ -45,7 +45,7 @@ class PhotoEntity extends Entity
         $newGalerieEntity = $newGalerieManager->getOneGalerie($this->galerie_id());
         $galerieName = $newGalerieEntity->nom_galerie();
 
-        return $galerieName . '/' . $this->serial_number();
+        return '/images/' . $galerieName . '/' . $this->serial_number();
     }
 
 

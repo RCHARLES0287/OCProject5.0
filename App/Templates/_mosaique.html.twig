@@ -3,10 +3,10 @@
 
 <div class="bloc_photo">
     <div class="photo_dans_galerie photo_dans_mosaique shadow-4-strong">
-        <a href="/showonephoto?photo_id={{ id }}"
-           title="{{ serial_number }}">
-            <img alt="{{ serial_number }}"
-                 src="{{ chemin_image }}">
+        <a href="/showonephoto?photo_id={{ photoEntity.id }}"
+           title="{{ photoEntity.serial_number }}">
+            <img alt="{{ photoEntity.serial_number }}"
+                 src="{{ photoEntity.chemin_photo }}">
         </a>
         {#
         <a href="{{ chemin_image }}"
@@ -16,7 +16,7 @@
         </a>
         #}
     </div>
-    <div class="descriptif_photo">{{ descriptif_photo }}</div>
+    <div class="descriptif_photo">{{ photoEntity.serial_number ~ ' : ' ~ photoEntity.lieu }}</div>
 </div>
 
 

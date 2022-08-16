@@ -10,14 +10,11 @@
 
             <div class="affichage_mosaique affichage_recherche">
                 {% for photo in photos_trouvees %}
-                    {% set cheminPhoto = photo.chemin_photo %}
 
                     {#                    only sert à n'authoriser comme variables que les variables données dans le "with" et les variables globales de Twig #}
                     {% include '/Templates/_mosaique.html.twig'
                         with {
-                            'chemin_image':'/images/' ~ cheminPhoto,
-                            'serial_number': photo.serial_number,
-                            'descriptif_photo': photo.serial_number ~ ' : ' ~ photo.lieu
+                        'photoEntity':photo
                         }
                         only
                     %}
