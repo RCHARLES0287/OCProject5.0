@@ -3,7 +3,6 @@
 <routes>
     <route url="/" module="Accueil" action="accueil"/>
 
-    <route url="/showallphotos" module="Photos" action="showallphotos"/>
     <route url="/showonegalerie" module="Photos" action="showonegalerie"/>
     <route url="/showonepagefromgalerie" module="Photos" action="showonepagefromgalerie"/>
     <route url="/showonephoto" module="Photos" action="showonephoto"/>

@@ -12,16 +12,6 @@ use RCFramework\Utilitaires;
 
 class PhotosController extends \RCFramework\BackController
 {
-    public function executeShowallphotos(HTTPRequest $request)
-    {
-        $photosManager = new PhotosManager();
-
-        $allPhotosData = $photosManager->getAllPhotos();
-
-        $this->page->addVar('photos', $allPhotosData);
-    }
-
-
     public function executeShowonephoto(HTTPRequest $request)
     {
         /*var_dump('Entrée dans le controller des photos');
