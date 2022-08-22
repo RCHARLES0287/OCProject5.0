@@ -72,7 +72,9 @@
                     </li>
                     <li class="nav-item dropdown">
                         <form autocomplete="off" action="/sendsearchrequest" method="get">
+                            <label for="champ_recherche" hidden></label>
                             <input id="champ_recherche" type="search" name="texte_recherche">
+
                             <input type="submit" name="send_recherche" value="Rechercher">
                         </form>
                         {# <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -104,8 +106,7 @@
                             </a>
                         </div>
                     </li>
-
-
+                    
 
                     {#
                     <li class="nav-item">

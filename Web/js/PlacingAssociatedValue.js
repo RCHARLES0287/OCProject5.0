@@ -34,7 +34,7 @@ class PlacingAssociatedValue {
         console.log(this.newLocation);
         console.log(this.dataName);
 
-        $(this.objetSelect).change(function (event){
+        $(this.objetSelect).change(function (){
             console.log('On est entré dans l\'event change');
             /// valeur associée au dataName
             let dataValue = $('option[value="'+$(this.objetSelect).val()+'"]', $(this.objetSelect)).data(this.dataName);

@@ -318,7 +318,7 @@ class CommandeController extends BackController
             }
             else
             {
-                ///TODO Gérer le cas où la panier a une quantité égale à zéro
+                throw new \Exception("Le panier est vide");
             }
         }
         else
