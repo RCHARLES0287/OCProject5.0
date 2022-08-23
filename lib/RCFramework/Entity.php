@@ -65,6 +65,7 @@ class Entity implements \ArrayAccess
         {
             return $this->$var(); // c'est en fait le getter que l'on va appeler ici. On peut d'ailleurs appeler les getters "getVar()" par exemple.
         }
+        return null;
     }
 
     public function offsetSet($var, $value)

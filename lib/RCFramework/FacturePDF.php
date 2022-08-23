@@ -11,8 +11,6 @@ use tFPDF;
 
 class FacturePDF extends tFPDF
 {
-    private float $col = 0; // Colonne courante
-    private float $y0;      // Ordonnée du début des colonnes
     private float $y0bloc;  // Ordonnée du début du bloc
     const PAYPAL = 'Paypal';
 
@@ -126,7 +124,6 @@ class FacturePDF extends tFPDF
     private function SetCol($col)
     {
         // Positionnement sur une colonne
-        $this->col = $col;
         $x = 10+$col*($this->GetPageWidth()/2);
         $this->SetLeftMargin($x);
         $this->SetX($x);

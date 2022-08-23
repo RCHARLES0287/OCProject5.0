@@ -1,4 +1,6 @@
 
+// noinspection JSUnusedGlobalSymbols
+
 class CarouselAdmin {
 
     constructor() {
