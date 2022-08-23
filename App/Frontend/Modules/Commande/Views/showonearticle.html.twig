@@ -6,9 +6,8 @@
     </section>
     <section class="infos_et_commande">
         <form id="formulaire_panier" class="formulaire_un_article" action="/validateonearticle" method="post" novalidate>
-            <input name="id_photo" type="hidden" value="{{ selected_photo.id }}">
-            <label for="dimensions_deroulant" hidden></label>
-            <select id="dimensions_deroulant" class="form-select dimensions_article" name="id_dimensions">
+            <input name="id_photo" type="hidden" value="{{ selected_photo.id }}" required>
+            <select id="dimensions_deroulant" class="form-select dimensions_article" name="id_dimensions" aria-label="Dimensions" required>
                 <option value="" selected disabled hidden>Dimensions</option>
                 {% for photoTarif in photoTarifs %}
                 <option class="menu_deroulant_dimensions"
@@ -24,9 +23,8 @@
             </div>
 
             <div>
-                <span>Quantité : </span>
-                <label for="quantite_article" hidden></label>
-                <select id="quantite_article" class="form-select" name="nombre_articles">
+                <span id="quantite_article_label">Quantité : </span>
+                <select id="quantite_article" class="form-select" name="nombre_articles" aria-labelledby="quantite_article_label" required>
                     <option value="" selected disabled hidden>-</option>
                     <option value="1">1</option>
                     <option value="2">2</option>

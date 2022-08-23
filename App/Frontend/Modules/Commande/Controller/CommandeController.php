@@ -86,7 +86,9 @@ class CommandeController extends BackController
 
     public function executeValidateonearticle (HTTPRequest $request)
     {
-        if (isset($_POST['idPhoto']) && isset($_POST['idDimensions']) && isset($_POST['nombreArticles'])) {
+        header('Content-Type: application/json');
+
+        if (!Utilitaires::emptyMinusZero($_POST['idPhoto']) && !Utilitaires::emptyMinusZero($_POST['idDimensions']) && !Utilitaires::emptyMinusZero($_POST['nombreArticles'])) {
             try
             {
                 $articleId = $_POST['idPhoto'];
@@ -137,7 +139,6 @@ class CommandeController extends BackController
             echo json_encode(['status'=>'Erreur', 'message'=>'Echec de l\'ajout au panier']);
         }
 
-        header('Content-Type: application/json');
         exit;
     }
 
@@ -619,6 +620,7 @@ class CommandeController extends BackController
         else*/
         {
             $orderedArticles = [];
+
 
             foreach ($_SESSION['panier'] as $oneArticle)
             {
