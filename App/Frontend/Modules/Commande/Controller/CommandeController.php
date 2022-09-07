@@ -415,7 +415,7 @@ class CommandeController extends BackController
                         exit;
                     }
                     ///todo réécrire les lignes ci-dessus avec PDO et en utilisant mes managers
-                    // Vérification de la concordance du
+
 
                     Utilitaires::logMessage("Commande trouvée");
 
@@ -427,7 +427,6 @@ class CommandeController extends BackController
 
                     $totalCommandeAvecPort = $newCommandeEntity->montant_total() + Utilitaires::FRAIS_DE_PORT;
 
-//                    if ($_POST['mc_gross'] == $newCommandeEntity->montant_total()) {
                     if ($_POST['mc_gross'] == $totalCommandeAvecPort) {
 
                         Utilitaires::logMessage("Le montant est bon");
@@ -439,6 +438,23 @@ class CommandeController extends BackController
                             $newRangFactureCommandeManager = new RangFactureCommandeManager();
                             Utilitaires::logMessage("Création Manager");
                             $numeroFacture = $newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande(RangFactureCommandeManager::FACTURE);
+
+                            /// todo envoyer le mail de confirmation (en html) au client avec la facture
+
+                            $idUtilisateur = $newCommandeEntity->id_utilisateur();
+                            $utilisateurManager = new UtilisateursManager();
+                            $utilisateurEntity = $utilisateurManager->getOneUtilisateur($idUtilisateur);
+
+                            $cheminFacture = __DIR__ . '/facture_numero_'.$numeroFacture.'.pdf';
+
+                            Mailing::sendingEmail($utilisateurEntity->email(),
+                                        '',
+                                        Utilitaires::EMAIL_VENDEUR_TEST,
+                                            $cheminFacture,
+                                        'Confirmation commande numéro ' . $newCommandeEntity->numero_commande(),
+                                        'Merci pour votre commande. Le paiement pour la commande ' . $newCommandeEntity->numero_commande() . ' a bien été validé. <br>'
+                                                . 'Vous trouverez ci-jointe la facture numéro ' . $newCommandeEntity->numero_facture());
+
                             Utilitaires::logMessage("Numéro facture :");
                             Utilitaires::logMessage($numeroFacture);
 
@@ -492,7 +508,7 @@ class CommandeController extends BackController
                         $total = 1350;
                         $date = '25/06/2021';*/
 
-                        $cheminFacture = __DIR__ . '/facture_numero_'.$numeroFacture.'.pdf';
+
 
 
                         $newFacturePDF = new FacturePDF($newCommandeEntity, $cheminFacture);
@@ -504,7 +520,7 @@ class CommandeController extends BackController
                                                 Utilitaires::EMAIL_VENDEUR_TEST,
                                                 $cheminFacture,
                                                 'test email validation commande',
-                                                'Merci pour votre commande. Le paiement pour la commande ' . $newCommandeEntity->numero_commande() . ' a bien été reçu. <br>'
+                                                'Merci pour votre commande. Le paiement pour la commande ' . $newCommandeEntity->numero_commande() . ' a bien été validé. <br>'
                                                 . 'Vous trouverez ci-jointe la facture numéro ' . $newCommandeEntity->numero_facture());
 
                         Utilitaires::logMessage("Mail envoyé");

@@ -30,8 +30,8 @@ abstract class Mailing
             //Recipients
             Utilitaires::logMessage("Construction mail");
             $mail->setFrom(Utilitaires::EMAIL_VENDEUR_TEST);
-//            $mail->addAddress($emailDestinataire);
-            $mail->addAddress(Utilitaires::EMAIL_VENDEUR_TEST);
+            $mail->addAddress($emailDestinataire);
+//            $mail->addAddress(Utilitaires::EMAIL_VENDEUR_TEST);
 //            $mail->addReplyTo('info@example.com', 'Information');
             if (!Utilitaires::emptyMinusZero($emailEnCopie))
             {
@@ -65,11 +65,11 @@ abstract class Mailing
         }
         catch (Exception $e)
         {
-            Utilitaires::logMessage("Bla bla bla");
+//            Utilitaires::logMessage("Bla bla bla");
             Utilitaires::logException($e);
 //            Utilitaires::logMessage("Erreur dans l'envoi du mail " . $mail->ErrorInfo);
         }
-        Utilitaires::logMessage("Bla bla bla bla bla bla");
+//        Utilitaires::logMessage("Bla bla bla bla bla bla");
 
     }
 }
