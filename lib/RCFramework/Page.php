@@ -46,6 +46,10 @@ class Page
         ]);
 //        Pour fournir le $_SESSION en global à Twig
         $twig->addGlobal('GlobalSession', $_SESSION);
+//        Pour fournir le $_GET en global à Twig
+        $twig->addGlobal('GlobalGet', $_GET);
+//        Pour fournir le $_POST en global à Twig
+        $twig->addGlobal('GlobalPost', $_POST);
 
         ob_start();
 

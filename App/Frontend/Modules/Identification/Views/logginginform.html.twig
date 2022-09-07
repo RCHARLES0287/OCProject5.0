@@ -2,6 +2,14 @@
 
 {% block frontend_content %}
 
+    {% if GlobalGet.failedauthentification == 1 %}
+
+        <p class="text-danger font-weight-bold">
+            Erreur d'authentification
+        </p>
+
+    {% endif %}
+
     <section class="log_in_section">
         <form class="log_in_form" id="formulaire_log_in" action="/loggingin" method="post" novalidate>
             <label for="email_adress">Email</label>

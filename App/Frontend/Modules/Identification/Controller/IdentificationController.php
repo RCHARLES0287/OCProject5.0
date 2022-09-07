@@ -38,12 +38,18 @@ class IdentificationController extends \RCFramework\BackController
 //            Cette autre méthode serait utilisée pour passer le prénom dans une variable utilisable avec Twig dans la vue si on n'avait pas fourni le $_SESSION en global à Twig dans le fichier page.php
 //            $this->page->addVar('prenomUtilisateur', $_SESSION['utilisateur_entity']->prenom());
             }
+            else
+            {
+                header('Location:/logginginform?failedauthentification=1');
+                exit;
+            }
             if (!Utilitaires::emptyMinusZero($_SESSION['loggingin_redirection']))
             {
                 header('Location: ' .$_SESSION['loggingin_redirection']);
                 unset($_SESSION['loggingin_redirection']);
                 exit;
             }
+
         }
     }
 

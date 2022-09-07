@@ -43,7 +43,8 @@ abstract class BackController extends ApplicationComponent
         {
             $this->page->addVar('exception', $e);
             header("content-type: text/plain; charset=utf-8");
-            var_dump($e);
+            Utilitaires::logException($e);
+            echo $e->getMessage();
             exit;
         }
     }
