@@ -3,13 +3,18 @@
 namespace App\Backend\Modules\GestionPhotos\Controller;
 
 use App\Backend\Modules\Connexion\Controller\ConnexionController;
+use Entity\DimensionsEntity;
 use Entity\PhotoEntity;
 use Exception;
+use Model\DimensionsManager;
 use Model\GaleriesManager;
 use Model\PhotosManager;
+use Model\TarifsManager;
 use RCFramework\Application;
 use RCFramework\BackController;
+use RCFramework\Entity;
 use RCFramework\HTTPRequest;
+use RCFramework\Utilitaires;
 
 class GestionPhotosController extends BackController
 {
@@ -184,7 +189,123 @@ class GestionPhotosController extends BackController
             }
         }
     }
+
+
+    public function executeGestiondimensions (HTTPRequest $request)
+    {
+        $dimensionsManager = new DimensionsManager();
+        $allDimensions = $dimensionsManager->getAllDimensions();
+
+        /*var_dump($allDimensions);
+        exit;*/
+
+        $this->page->addVar('alldimensions', $allDimensions);
+    }
+
+    public function executeDeletedimensions (HTTPRequest $request)
+    {
+        if ($request->getExists('dim_id'))
+        {
+            /*var_dump($request->dataGet('dim_id'));
+            exit;*/
+
+            $dimensionsManager = new DimensionsManager();
+
+            try
+            {
+                $dimensionsManager->deleteDimensions($request->dataGet('dim_id'));
+            }
+            catch (Exception $e)
+            {
+                Utilitaires::logException($e);
+                Utilitaires::logMessage("Echec de la suppression des dimensions sélectionnées");
+                echo "Echec de la suppression des dimensions sélectionnées";
+            }
+        }
+        header('Location: /admin/gestiondimensions');
+        exit;
+    }
+
+
+    public function executeAdddimensions (HTTPRequest $request)
+    {
+        /*var_dump('On est dans le controller');
+        exit;*/
+
+        if ($request->postExists('new_dimensions'))
+        {
+            /*var_dump('POST ok');
+            exit;*/
+
+            $dimensionEntity = new DimensionsEntity();
+            $dimensionEntity->setDimensions($request->dataPost('new_dimensions'));
+
+            $dimensionsManager = new DimensionsManager();
+
+            /*var_dump($dimensionEntity->dimensions());
+            exit;*/
+
+            try
+            {
+                $dimensionsManager->saveDimensions($dimensionEntity);
+
+                /*var_dump('manager ok');
+                exit;*/
+
+            }
+            catch (Exception $e)
+            {
+                Utilitaires::logException($e);
+                Utilitaires::logMessage("Echec de l'ajout des dimensions sélectionnées");
+                echo "Echec de l'ajout des dimensions sélectionnées";
+            }
+        }
+        header('Location: /admin/gestiondimensions');
+        exit;
+    }
+
+
+    /*public function executeGestiontarifs (HTTPRequest $request)
+    {
+        $newTarifsManager = new TarifsManager();
+        $allTarifs = $newTarifsManager->getAllTarifs();
+
+        var_dump($allTarifs);
+        exit;
+
+
+    }*/
+
+
+    public function executeGestiontarifsphotos (HTTPRequest $request)
+    {
+        $photosManager = new PhotosManager();
+        $allPhotos = $photosManager->getAllPhotos();
+
+        $dimensionsManager = new DimensionsManager();
+        $allDimensions = $dimensionsManager->getAllDimensions();
+
+        $tarifsManager = new TarifsManager();
+        $allTarifs = $tarifsManager->getAllTarifs();
+
+        $this->page->addVar('all_photos', $allPhotos);
+        $this->page->addVar('all_dimensions', $allDimensions);
+        $this->page->addVar('all_tarifs', $allTarifs);
+
+        /*var_dump($allTarifs);
+        exit;*/
+    }
+
+
+    public function executeChangetarifsphotos (HTTPRequest $request)
+    {
+
+    }
+
+
 }
-/*
-<input type="checkbox" class="checkbox_suppr_photo" id="' . $photo->id() .'" name="checkbox_suppr_photo" value="' . $photo->id() . '" />
-                                                <label for="' . $photo->id() . '">Supprimer</label>*/
+
+
+
+
+

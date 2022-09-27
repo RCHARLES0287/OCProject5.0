@@ -439,13 +439,24 @@ class CommandeController extends BackController
                             Utilitaires::logMessage("Création Manager");
                             $numeroFacture = $newRangFactureCommandeManager->getAndUpdateCurrentNumeroFactureCommande(RangFactureCommandeManager::FACTURE);
 
+                            Utilitaires::logMessage('facture numero : ' . $numeroFacture);
+
+                            $newCommandeEntity->setNumero_facture($numeroFacture);
+                            $newCommandeEntity->setDatefacturation(date('c'));
+                            $newCommandeManager->updateCommande($newCommandeEntity);
+
+
                             /// todo envoyer le mail de confirmation (en html) au client avec la facture
 
                             $idUtilisateur = $newCommandeEntity->id_utilisateur();
                             $utilisateurManager = new UtilisateursManager();
                             $utilisateurEntity = $utilisateurManager->getOneUtilisateur($idUtilisateur);
 
-                            $cheminFacture = __DIR__ . '/facture_numero_'.$numeroFacture.'.pdf';
+                            $cheminFacture = __DIR__ . '/../../../../../Factures_generees/facture_numero_'.$numeroFacture.'.pdf';
+
+                            $newFacturePDF = new FacturePDF($newCommandeEntity, $cheminFacture);
+
+                            Utilitaires::logMessage($utilisateurEntity->email());
 
                             Mailing::sendingEmail($utilisateurEntity->email(),
                                         '',
@@ -466,11 +477,7 @@ class CommandeController extends BackController
                         }
 
 
-                        Utilitaires::logMessage('facture numero : ' . $numeroFacture);
 
-                        $newCommandeEntity->setNumero_facture($numeroFacture);
-                        $newCommandeEntity->setDatefacturation(date('c'));
-                        $newCommandeManager->updateCommande($newCommandeEntity);
 
 
                         Utilitaires::logMessage("Envoi du mail");
@@ -511,7 +518,7 @@ class CommandeController extends BackController
 
 
 
-                        $newFacturePDF = new FacturePDF($newCommandeEntity, $cheminFacture);
+
 
 
 

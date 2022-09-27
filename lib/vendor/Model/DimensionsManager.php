@@ -5,6 +5,7 @@ namespace Model;
 
 
 use Entity\DimensionsEntity;
+use PDO;
 use RCFramework\Manager;
 
 class DimensionsManager extends Manager
@@ -55,15 +56,14 @@ class DimensionsManager extends Manager
     public function saveDimensions(DimensionsEntity $newDimensionsEntity)
     {
         $req = $this->db->prepare('INSERT INTO rc_photographe_dimensions(dimensions_dimensions) VALUES (:dimensions_dimensions)');
-        $req->execute(array(
-            'dimensions_dimensions' => $newDimensionsEntity->dimensions()
-        ));
+        $req->bindValue('dimensions_dimensions', $newDimensionsEntity->dimensions(), PDO::PARAM_STR);
+        $req->execute();
     }
 
     public function deleteDimensions($dimensionsId)
     {
         $req = $this->db->prepare('DELETE FROM rc_photographe_dimensions WHERE dimensions_id=:dimensionsId');
-        $req->bindValue('dimensionsId',$dimensionsId, \PDO::PARAM_INT);
+        $req->bindValue('dimensionsId',$dimensionsId, PDO::PARAM_INT);
         $req->execute();
     }
 }

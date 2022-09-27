@@ -9,6 +9,12 @@
     <route url="/admin/ajoutphotoform" module="GestionPhotos" action="ajoutphotoform"/>
     <route url="/admin/suppressionphotochoixgalerie" module="GestionPhotos" action="suppressionphotochoixgalerie"/>
     <route url="/admin/confirmationsuppressionphoto" module="GestionPhotos" action="confirmationsuppressionphoto"/>
+    <route url="/admin/gestiondimensions" module="GestionPhotos" action="gestiondimensions"/>
+    <route url="/admin/deletedimensions" module="GestionPhotos" action="deletedimensions"/>
+    <route url="/admin/adddimensions" module="GestionPhotos" action="adddimensions"/>
+    <route url="/admin/gestiontarifs" module="GestionPhotos" action="gestiontarifs"/>
+    <route url="/admin/gestiontarifsphotos" module="GestionPhotos" action="gestiontarifsphotos"/>
+    <route url="/admin/changetarifsphotos" module="GestionPhotos" action="changetarifsphotos"/>
 
     <route url="/admin/ordrecarousel" module="GestionPhotos" action="ordrecarousel"/>
     <route url="/admin/validateordrecarousel" module="GestionPhotos" action="validateordrecarousel"/>

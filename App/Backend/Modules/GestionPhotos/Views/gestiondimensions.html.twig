@@ -1,0 +1,38 @@
+{% extends 'Backend/Templates/backend_layout.html.twig' %}
+
+{% block backend_content %}
+
+    <h2>Gestion des dimensions</h2>
+
+    <h3>Suppression de dimensions</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Dimensions en cm</th>
+                <th scope="col">Suppression</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dimensions in alldimensions %}
+                <tr>
+                    <th scope="row">{{ dimensions.dimensions }}</th>
+                    <td hidden>{{ dimensions.id }}</td>
+                    <td><a href="/admin/deletedimensions?dim_id={{ dimensions.id }}">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <h3>Ajout de dimensions</h3>
+
+    <form class="formulaire_ajout_dimensions" action="/admin/adddimensions" method="post" novalidate>
+        <label for="new_dimensions">Nouvelles dimensions</label>
+        <input id="new_dimensions" name="new_dimensions" type="text">
+        <button class="btn btn-outline-success" type="submit">Ajouter</button>
+    </form>
+
+
+{% endblock %}
+
