@@ -1,0 +1,85 @@
+{% extends 'Backend/Templates/backend_layout.html.twig' %}
+
+{% block backend_content %}
+
+    <h2>Gestion des tarifs des photos</h2>
+
+    <section id="all_photos_pricing">
+
+        {% for photo in all_photos %}
+            <div class="photo_pricing">
+
+                <img alt="{{ photo.name }}" src="{{ photo.cheminPhoto }}">
+
+                <p class="description_photo">{{ photo.name }} : {{ photo.serial_number }}</p>
+
+                <form class="formulaire_tarifs_photo" action="/admin/changetarifsphotos" method="post" novalidate>
+
+                    <label for="photo_dimensions_select">Choisir les dimensions</label>
+                    <select class="choix_dimensions browser-default custom-select" id="photo_dimensions_select" name="dimensions">
+                        <option selected>Dimensions</option>
+                        {% for dimensions in all_dimensions %}
+                            <option value="{{ dimensions.id }}">{{ dimensions.dimensions }}</option>
+                        {% endfor %}
+                    </select>
+
+                </form>
+
+
+
+            </div>
+        {% endfor %}
+
+    </section>
+
+
+
+{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/gestiontarifsphotos.css">
+{% endblock %}
+
+{% block javascript %}
+    {# Permet de conserver le contenu des parents #}
+    {{ parent() }}
+
+    <script type="application/javascript" src="/js/ModifyInputWithChangeOnSelect.js"></script>
+    <script type="application/javascript" src="/js/gestiontarifsphotos.js"></script>
+
+{% endblock %}
+
+
+{#<form id="formulaire_panier" class="formulaire_un_article" action="/validateonearticle" method="post" novalidate>
+    <input name="id_photo" type="hidden" value="{{ selected_photo.id }}" required>
+    <select id="dimensions_deroulant" class="form-select dimensions_article" name="id_dimensions" aria-label="Dimensions" required>
+        <option value="" selected disabled hidden>Dimensions</option>
+        {% for photoTarif in photoTarifs %}
+            <option class="menu_deroulant_dimensions"
+                    data-prix="{{ photoTarif.prix }}"
+                    value="{{ photoTarif.dimensions_id }}">{{ allDimensions[photoTarif.dimensions_id].dimensions }}
+            </option>
+        {% endfor %}
+    </select>
+    <div class="zone_prix">
+        Prix unitaire :
+        <span id="prix_article"></span>
+        €
+    </div>
+
+    <div>
+        <span id="quantite_article_label">Quantité : </span>
+        <select id="quantite_article" class="form-select" name="nombre_articles" aria-labelledby="quantite_article_label" required>
+            <option value="" selected disabled hidden>-</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+    <button id="validation_article" class="btn btn-primary" name="bouton_validation_article" type="submit">Ajouter au panier</button>
+
+</form>#}
+

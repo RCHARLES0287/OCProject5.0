@@ -14,10 +14,30 @@ class TarifsManager extends Manager
         parent::__construct();
     }
 
-    public function getAllTarifs($photoId)
+    public function getAllTarifs()
     {
-        $answerTarifsData = $this->db->prepare('SELECT tarifs_photo_id, tarifs_dimensions_id, tarifs_prix 
-                                                        FROM rc_photographe_tarifs 
+        $answerTarifsData = $this->db->prepare('SELECT * 
+                                                        FROM rc_photographe_tarifs
+                                                        ORDER BY tarifs_prix');
+        $answerTarifsData->execute();
+
+        $tarifsFeatures = [];
+
+        $dbTarifs = $answerTarifsData->fetchAll();
+
+        foreach ($dbTarifs as $tarif)
+        {
+            $tarifsFeatures[] = new TarifEntity($tarif);
+        }
+
+        return $tarifsFeatures;
+    }
+
+
+    /*public function getAllTarifs($photoId)
+    {
+        $answerTarifsData = $this->db->prepare('SELECT tarifs_photo_id, tarifs_dimensions_id, tarifs_prix
+                                                        FROM rc_photographe_tarifs
                                                         WHERE tarifs_photo_id=:photoId
                                                         ORDER BY tarifs_prix');
         $answerTarifsData->execute(array(
@@ -34,7 +54,7 @@ class TarifsManager extends Manager
         }
 
         return $tarifsFeatures;
-    }
+    }*/
 
     /**
      * @param int $photoId
