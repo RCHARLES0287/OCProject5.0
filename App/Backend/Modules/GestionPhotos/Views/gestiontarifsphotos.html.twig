@@ -15,14 +15,20 @@
 
                 <form class="formulaire_tarifs_photo" action="/admin/changetarifsphotos" method="post" novalidate>
 
-                    <label for="photo_dimensions_select">Choisir les dimensions</label>
-                    <select class="choix_dimensions browser-default custom-select" id="photo_dimensions_select" name="dimensions">
+                    <label for="photo_dimensions_select_{{ photo.id }}">Choisir les dimensions</label>
+                    <select class="choix_dimensions browser-default custom-select"
+                            id="photo_dimensions_select_{{ photo.id }}"
+                            name="dimensions"
+                            data-idphoto="{{ photo.id }}">
+
                         <option selected>Dimensions</option>
                         {% for dimensions in all_dimensions %}
                             <option value="{{ dimensions.id }}">{{ dimensions.dimensions }}</option>
                         {% endfor %}
                     </select>
 
+                    <label for="tarif_associe_{{ photo.id }}">Tarif</label>
+                    <input name="tarif_associe" class="tarifs_associes" id="tarif_associe_{{ photo.id }}" type="number">
                 </form>
 
 
@@ -45,7 +51,8 @@
     {# Permet de conserver le contenu des parents #}
     {{ parent() }}
 
-    <script type="application/javascript" src="/js/ModifyInputWithChangeOnSelect.js"></script>
+    <script type="application/javascript" src="/js/AppelAjax.js"></script>
+    <script type="application/javascript" src="/js/ModifyPrixWithChangeOnDimensions.js"></script>
     <script type="application/javascript" src="/js/gestiontarifsphotos.js"></script>
 
 {% endblock %}

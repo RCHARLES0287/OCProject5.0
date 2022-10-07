@@ -6,6 +6,7 @@ namespace Model;
 
 use Entity\TarifEntity;
 use RCFramework\Manager;
+use RCFramework\NonexistantEntityException;
 
 class TarifsManager extends Manager
 {
@@ -92,7 +93,7 @@ class TarifsManager extends Manager
      * @param int $photoId
      * @param int $dimensionsId
      * @return TarifEntity renvoie l'entité tarif associée à l'Id de la photo et à l'Id des dimensions
-     * @throws \Exception si aucun tarif n'est trouvé avec ces paramètres
+     * @throws NonexistantEntityException si aucun tarif n'est trouvé avec ces paramètres
      */
     public function getOnePhotoAndDimensionsTarif(int $photoId, int $dimensionsId): TarifEntity
     {
@@ -108,7 +109,7 @@ class TarifsManager extends Manager
 
         if ($dbTarif === false)
         {
-            throw new \Exception("Aucun tarif n'est défini pour la photo portant l'Id " . $photoId . " avec les dimensions portant l'Id " . $dimensionsId );
+            throw new NonexistantEntityException("Aucun tarif n'est défini pour la photo portant l'Id " . $photoId . " avec les dimensions portant l'Id " . $dimensionsId );
         }
         else
         {

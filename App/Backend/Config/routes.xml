@@ -15,6 +15,7 @@
     <route url="/admin/gestiontarifs" module="GestionPhotos" action="gestiontarifs"/>
     <route url="/admin/gestiontarifsphotos" module="GestionPhotos" action="gestiontarifsphotos"/>
     <route url="/admin/changetarifsphotos" module="GestionPhotos" action="changetarifsphotos"/>
+    <route url="/admin/getonetarif" module="GestionPhotos" action="getonetarif"/>
 
     <route url="/admin/ordrecarousel" module="GestionPhotos" action="ordrecarousel"/>
     <route url="/admin/validateordrecarousel" module="GestionPhotos" action="validateordrecarousel"/>

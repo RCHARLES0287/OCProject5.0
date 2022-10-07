@@ -14,6 +14,7 @@ use RCFramework\Application;
 use RCFramework\BackController;
 use RCFramework\Entity;
 use RCFramework\HTTPRequest;
+use RCFramework\NonexistantEntityException;
 use RCFramework\Utilitaires;
 
 class GestionPhotosController extends BackController
@@ -297,6 +298,40 @@ class GestionPhotosController extends BackController
     }
 
 
+    /**
+     * @param HTTPRequest $request
+     * @throws Exception
+     */
+    public function executeGetOneTarif (HTTPRequest $request)
+    {
+        if ($request->getExists('id_photo') && ($request->getExists('id_dimensions')))
+        {
+            /*Utilitaires::logMessage($request->dataGet('id_photo'));
+            Utilitaires::logMessage($request->dataGet('id_dimensions'));*/
+
+            $tarifsManager = new TarifsManager();
+
+            try
+            {
+                $tarifEntity = $tarifsManager->getOnePhotoAndDimensionsTarif($request->dataGet('id_photo'), $request->dataGet('id_dimensions'));
+                $resultTarif = json_encode($tarifEntity->prix(), JSON_THROW_ON_ERROR);
+            }
+            catch (NonexistantEntityException $exception)
+            {
+                $resultTarif = json_encode(false, JSON_THROW_ON_ERROR);
+            }
+
+            Utilitaires::logMessage($resultTarif);
+
+//            Bien mettre le header avant le echo. Cela évite une erreur si une partie des données est déjà en cours d'envoi.
+            header('Content-Type: application/json; charset=utf-8');
+            echo $resultTarif;
+            exit;
+        }
+    }
+
+
+
     public function executeChangetarifsphotos (HTTPRequest $request)
     {
 
@@ -304,6 +339,7 @@ class GestionPhotosController extends BackController
 
 
 }
+
 
 
 
