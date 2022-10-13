@@ -5,6 +5,7 @@ namespace App\Backend\Modules\GestionPhotos\Controller;
 use App\Backend\Modules\Connexion\Controller\ConnexionController;
 use Entity\DimensionsEntity;
 use Entity\PhotoEntity;
+use Entity\TarifEntity;
 use Exception;
 use Model\DimensionsManager;
 use Model\GaleriesManager;
@@ -318,7 +319,7 @@ class GestionPhotosController extends BackController
             }
             catch (NonexistantEntityException $exception)
             {
-                $resultTarif = json_encode(false, JSON_THROW_ON_ERROR);
+                $resultTarif = json_encode('', JSON_THROW_ON_ERROR);
             }
 
             Utilitaires::logMessage($resultTarif);
@@ -334,9 +335,63 @@ class GestionPhotosController extends BackController
 
     public function executeChangetarifsphotos (HTTPRequest $request)
     {
+        if ($request->postExists('dimensions')
+            && $request->postExists('id_photo')
+            && $request->postExists('tarif_associe')
+            && $request->postExists('marqueur_save_vs_delete'))
+        {
+            $newTarifEntity = new TarifEntity();
+            $newTarifEntity->setDimensions_id($request->dataPost('dimensions'));
+            $newTarifEntity->setPhoto_id($request->dataPost('id_photo'));
+            $newTarifEntity->setPrix($request->dataPost('tarif_associe'));
 
+            $tarifsManager = new TarifsManager();
+
+            switch ($request->dataPost('marqueur_save_vs_delete'))
+            {
+                case 'save' :
+                    try
+                    {
+//                        Cas du succès de l'enregistrement du nouveau tarif
+                        $tarifsManager->saveOneTarif($newTarifEntity);
+
+                        header('Location: /admin/gestiontarifsphotos?message_retour_modification_tarif=1');
+                        exit;
+                    }
+                    catch (Exception $exception)
+                    {
+//                        Cas de l'échec de l'enregistrement du nouveau tarif
+//                        echo "Echec de l'enregistrement du nouveau tarif dans la BDD";
+                        Utilitaires::logException($exception);
+                        header('Location: /admin/gestiontarifsphotos?message_retour_modification_tarif=2');
+                    }
+                    break;
+                case 'delete' :
+                    try
+                    {
+//                        Cas du succès de la suppression d'un tarif
+                        $tarifsManager->deleteOneTarif($newTarifEntity);
+
+                        header('Location: /admin/gestiontarifsphotos?message_retour_modification_tarif=3');
+                        exit;
+                    }
+                    catch (Exception $exception)
+                    {
+//                        Cas de l'échec de la suppression d'un tarif
+                        Utilitaires::logException($exception);
+                        header('Location: /admin/gestiontarifsphotos?message_retour_modification_tarif=4');
+                    }
+            }
+        }
+        else
+        {
+            throw new Exception("Paramètre(s) manquant(s) pour l'enregistrement du nouveau tarif");
+        }
+
+        ///todo Ajouter le paramètre en fin d'url pour indiquer à la vue si elle doit afficher une confirmation
+        header('Location: /admin/gestiontarifsphotos');
+        exit;
     }
-
 
 }
 

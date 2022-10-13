@@ -5,6 +5,7 @@ namespace Model;
 
 
 use Entity\TarifEntity;
+use PDO;
 use RCFramework\Manager;
 use RCFramework\NonexistantEntityException;
 
@@ -120,11 +121,11 @@ class TarifsManager extends Manager
     public function saveOneTarif(TarifEntity $newTarifEntity)
     {
         $req = $this->db->prepare('INSERT INTO rc_photographe_tarifs(tarifs_photo_id, tarifs_dimensions_id, tarifs_prix) VALUES (:tarifs_photo_id, :tarifs_dimensions_id, :tarifs_prix)');
-        $req->execute(array(
-            'tarifs_photo_id' => $newTarifEntity->photo_id(),
-            'tarifs_dimensions_id' => $newTarifEntity->dimensions_id(),
-            'tarifs_prix' => $newTarifEntity->prix()
-        ));
+        $req->bindValue('tarifs_photo_id', $newTarifEntity->photo_id(), PDO::PARAM_INT);
+        $req->bindValue('tarifs_dimensions_id', $newTarifEntity->dimensions_id(), PDO::PARAM_INT);
+        $req->bindValue('tarifs_prix', $newTarifEntity->prix(), PDO::PARAM_STR);
+
+        $req->execute();
     }
 
 
@@ -141,13 +142,13 @@ class TarifsManager extends Manager
     }
 
 
-    public function deleteOneTarif($photoId, $dimensionsId)
+    public function deleteOneTarif(TarifEntity $tarifEntity)
     {
         $req = $this->db->prepare('DELETE FROM rc_photographe_tarifs WHERE tarifs_photo_id=:photoId AND tarifs_dimensions_id=:dimensionsId');
-        $req->execute(array(
-            'photoId' => $photoId,
-            'dimensionsId' => $dimensionsId
-        ));
+        $req->bindValue('photoId', $tarifEntity->photo_id(), PDO::PARAM_INT);
+        $req->bindValue('dimensionsId', $tarifEntity->dimensions_id(), PDO::PARAM_INT);
+
+        $req->execute();
     }
 
 }

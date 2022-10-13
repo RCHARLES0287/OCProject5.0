@@ -4,6 +4,25 @@
 
     <h2>Gestion des tarifs des photos</h2>
 
+    {% if GlobalGet.message_retour_modification_tarif %}
+        <div class="message_validation_">
+            {% switch GlobalGet.message_retour_modification_tarif %}
+                {% case 1 %}
+                    Le nouveau tarif a bien été enregistré
+
+                {% case 2 %}
+                    Echec de l'ajout du nouveau tarif
+
+                {% case 3 %}
+                    Le tarif a bien été supprimé
+
+                {% case 4 %}
+                    Echec de la suppression du tarif
+
+            {% endswitch %}
+        </div>
+    {% endif %}
+
     <section id="all_photos_pricing">
 
         {% for photo in all_photos %}
@@ -13,24 +32,29 @@
 
                 <p class="description_photo">{{ photo.name }} : {{ photo.serial_number }}</p>
 
-                <form class="formulaire_tarifs_photo" action="/admin/changetarifsphotos" method="post" novalidate>
+                <form class="formulaire_tarifs_photo" action="/admin/changetarifsphotos" method="post">
+
+                    <input type="hidden" name="id_photo" value="{{ photo.id }}" class="reference_id_photo">
 
                     <label for="photo_dimensions_select_{{ photo.id }}">Choisir les dimensions</label>
                     <select class="choix_dimensions browser-default custom-select"
                             id="photo_dimensions_select_{{ photo.id }}"
                             name="dimensions"
-                            data-idphoto="{{ photo.id }}">
+                            data-idphoto="{{ photo.id }}"
+                            required>
 
-                        <option selected>Dimensions</option>
+                        <option selected disabled>Dimensions</option>
                         {% for dimensions in all_dimensions %}
                             <option value="{{ dimensions.id }}">{{ dimensions.dimensions }}</option>
                         {% endfor %}
                     </select>
 
                     <label for="tarif_associe_{{ photo.id }}">Tarif</label>
-                    <input name="tarif_associe" class="tarifs_associes" id="tarif_associe_{{ photo.id }}" type="number">
-                </form>
+                    <input name="tarif_associe" class="tarifs_associes" id="tarif_associe_{{ photo.id }}" type="number" required>
 
+                    <button name="marqueur_save_vs_delete" value="save" type="submit">Enregistrer</button>
+                    <button style="display: none" name="marqueur_save_vs_delete" value="delete" type="submit">Supprimer</button>
+                </form>
 
 
             </div>

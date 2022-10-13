@@ -10,15 +10,20 @@ class ModifyPrixWithChangeOnDimensions {
         this.urlCible = '/admin/getonetarif?';
         // this.detectChangeOnSelect();
         $(this.objetSelect).change(this.detectChangeOnSelect.bind(this));
-        this.selectedOpt = '';
+        this.selectedOption = '';
     }
 
-    remplissageChampTarifAjax (response) {
+    remplissageChampTarifAjax (response_raw) {
+        let response = JSON.parse(response_raw);
         console.log(response);
-        if (response !== false) {
-            // $(this.objetSelect).siblings('input[class="tarifs_associes"]').val(response);
-            $(this.selectedOpt).siblings('input[class="tarifs_associes"]').val(response);
-        }
+        console.log(typeof response);
+
+        $(this.selectedOption).siblings('input[class="tarifs_associes"]').val(response);
+
+        // https://api.jquery.com/toggle/#toggle-display
+        $(this.selectedOption).siblings('button[name="marqueur_save_vs_delete"][value="save"]').toggle(response === '');
+        $(this.selectedOption).siblings('button[name="marqueur_save_vs_delete"][value="delete"]').toggle(response !== '');
+
     }
 
     detectChangeOnSelect (e) {
@@ -27,15 +32,15 @@ class ModifyPrixWithChangeOnDimensions {
         console.log("changement du select repéré");
         e.preventDefault();
 
-        var selectedOption = $(e.target);
-        this.selectedOpt = $(e.target);
+        // const selectedOption = $(e.target);
+        this.selectedOption = $(e.target);
 
-        console.log(selectedOption);
+        console.log(this.selectedOption);
 
         // let valueSelectedOption = selectedOption.val();
-        let idDimensions = selectedOption.val();
+        const idDimensions = this.selectedOption.val();
 
-        let idPhoto = selectedOption.data("idphoto");
+        const idPhoto = this.selectedOption.data("idphoto");
 
         console.log(idDimensions);
         console.log(idPhoto);
@@ -43,5 +48,6 @@ class ModifyPrixWithChangeOnDimensions {
         const urlWithParameters = this.urlCible + 'id_photo=' + idPhoto + '&id_dimensions=' + idDimensions;
         this.newAppelAjax.callAndExtract(urlWithParameters, this.remplissageChampTarifAjax.bind(this));
     }
+
 }
 
