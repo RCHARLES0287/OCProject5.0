@@ -6,20 +6,26 @@
 
     {% if GlobalGet.message_retour_modification_tarif %}
         <div class="message_validation_">
-            {% switch GlobalGet.message_retour_modification_tarif %}
-                {% case 1 %}
+
+
+                {% if GlobalGet.message_retour_modification_tarif == 1 %}
+
                     Le nouveau tarif a bien été enregistré
 
-                {% case 2 %}
-                    Echec de l'ajout du nouveau tarif
+                {% elseif GlobalGet.message_retour_modification_tarif == 2 %}
 
-                {% case 3 %}
+                Echec de l'ajout du nouveau tarif
+
+                {% elseif GlobalGet.message_retour_modification_tarif == 3 %}
+
                     Le tarif a bien été supprimé
 
-                {% case 4 %}
+                {% elseif GlobalGet.message_retour_modification_tarif == 4 %}
+
                     Echec de la suppression du tarif
 
-            {% endswitch %}
+                {% endif %}
+
         </div>
     {% endif %}
 

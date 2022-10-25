@@ -388,7 +388,6 @@ class GestionPhotosController extends BackController
             throw new Exception("Paramètre(s) manquant(s) pour l'enregistrement du nouveau tarif");
         }
 
-        ///todo Ajouter le paramètre en fin d'url pour indiquer à la vue si elle doit afficher une confirmation
         header('Location: /admin/gestiontarifsphotos');
         exit;
     }
