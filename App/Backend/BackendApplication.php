@@ -26,7 +26,6 @@ class BackendApplication extends Application
         /** @var BackController $controller */
         $controller = $this->getController();
 
-        ///todo tester que le bloc ci-dessous ne fasse pas bugger le système de connexion de l'admin et faire le nécessaire pour gérer la connexion à l'admin
         if ($controller->getModule() !== 'Connexion' && ConnexionController::isAdminConnected() === false)
         {
             header('Location: /admin/connexion');

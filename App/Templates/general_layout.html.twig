@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr_FRA">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <!--      Fontawesome   -->
@@ -40,7 +40,7 @@
             <a href="/">ROMAIN CHARLES <span id="separateur_titre_general">|</span> PHOTOGRAPHE</a>
         </h1>
         <label>
-            <input hidden id="admin_connection_status" value="{{ adminConnectionStatus }}">
+            <input type="hidden" id="admin_connection_status" value="{{ adminConnectionStatus }}">
         </label>
         <div class="menu_general">
             <ul id="liste_menu_general" class="nav">
@@ -72,7 +72,8 @@
                     </li>
                     <li class="nav-item dropdown">
                         <form autocomplete="off" action="/sendsearchrequest" method="get">
-                            <label for="champ_recherche" hidden></label>
+{#                            &nbsp; correspond à un espace insécable (pour forcer un contenu dans le label) #}
+                            <label for="champ_recherche" hidden>&nbsp;</label>
                             <input id="champ_recherche" type="search" name="texte_recherche">
 
                             <input type="submit" name="send_recherche" value="Rechercher">

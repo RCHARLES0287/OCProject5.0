@@ -37,22 +37,13 @@ try
     }
 
 
-    // Il ne nous suffit plus qu'à déduire le nom de la classe et à l'instancier
+    // Il ne nous reste plus qu'à déduire le nom de la classe et à l'instancier
     $appClass = 'App\\'.$_GET['app'].'\\'.$_GET['app'].'Application';
 
     $app = new $appClass;
 
     $app->run();
 
-//\App\Test::affiche();
-/*
-    $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../App');
-    $twig = new \Twig\Environment($loader, [
-        'cache' => false
-    ]);
-
-    echo $twig->render('Templates/general_layout.html.twig');
-    echo 'tototototo';*/
 }
 catch (Throwable $exception)
 {

@@ -570,9 +570,9 @@ AddCharset utf-8 .css .js .xml .json .rss .atom
 #			User				#
 #########################################################
 
+#   [QSA,L] QSA permet de conserver les éventuels autres paramètres GET. L indique que cette règle sera la dernière appliquée.
 RewriteRule ^admin/ main.php?app=Backend [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
-
 RewriteRule ^(.*)$ main.php?app=Frontend [QSA,L]
 

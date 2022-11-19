@@ -410,11 +410,9 @@ class CommandeController extends BackController
                     catch (\Exception $e)
                     {
                         Utilitaires::logMessage("Erreur : on arrive dans le catch");
-                        ///todo envoyer un mail à l'administrateur pour décrire l'exception
                         Utilitaires::logException($e);
                         exit;
                     }
-                    ///todo réécrire les lignes ci-dessus avec PDO et en utilisant mes managers
 
 
                     Utilitaires::logMessage("Commande trouvée");
@@ -445,8 +443,6 @@ class CommandeController extends BackController
                             $newCommandeEntity->setDatefacturation(date('c'));
                             $newCommandeManager->updateCommande($newCommandeEntity);
 
-
-                            /// todo envoyer le mail de confirmation (en html) au client avec la facture
 
                             $idUtilisateur = $newCommandeEntity->id_utilisateur();
                             $utilisateurManager = new UtilisateursManager();
@@ -532,23 +528,9 @@ class CommandeController extends BackController
 
                         Utilitaires::logMessage("Mail envoyé");
 
-                        /*
-                        $from = "From: " . Utilitaires::EMAIL_VENDEUR;
-                        $to = Utilitaires::EMAIL_VENDEUR;
-                        $sujet = "Confirmation paiement de la commande" . $numeroCommande;
-                        $body = "Merci pour votre commande. Le paiement a bien été effectué.
-                                Vous trouverez votre facture numéro" . $numeroFacture . "en pièce-jointe";
-                        mail($to, $sujet, $body, $from);
-                        */
-
-                        ///todo marche à suivre quand la commande est bien valide (générer numéro de facture etc)
-                        /// Possibilité de finir avec un exit;
                     }
                     else
                     {
-                        // Envoi d'une alerte par mail (voir modèle en bas de cette section)
-                        // Envoi d'un mail au client pour lui dire qu'on ne s'est pas laissé avoir ^^
-                        ///todo marche à suivre quand la commande n'est pas valide
                         Utilitaires::logMessage('Le montant de la commande dans Paypal ne correspond pas à celui de la BDD');
                     }
                 }
